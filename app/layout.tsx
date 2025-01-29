@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/HomeLayout/Navbar";
 import { Footer } from "@/components/HomeLayout/footer";
+import KindeProvider from "./KindeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,22 +32,24 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.className} h-screen antialiased  bg-snowwhite`}
-      >
-        <div className="w-full fixed top-0">
-          <Navbar />
-        </div>
+    <KindeProvider>
+      <html lang="en">
+        <body
+          className={`${inter.className} h-screen antialiased  bg-snowwhite`}
+        >
+          <div className="w-full fixed top-0">
+            <Navbar />
+          </div>
 
-        <main className="h-full md:px-10 px-2">
-          {children}
-          <Footer />
-        </main>
+          <main className="h-full">
+            {children}
+            <Footer />
+          </main>
 
 
 
-      </body>
-    </html>
+        </body>
+      </html>
+    </KindeProvider >
   );
 }

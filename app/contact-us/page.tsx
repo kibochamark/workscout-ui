@@ -1,11 +1,14 @@
 import { ContactForm } from '@/components/HomeComponents/Contact'
+import Wrapcomponent from '@/components/wrapcomponent'
 import React from 'react'
 
 const page = () => {
   return (
-    <div className='mt-14'>
-        <ContactForm/>
-    </div>
+    <Wrapcomponent>
+      <div className='mt-14'>
+        <ContactForm />
+      </div>
+    </Wrapcomponent>
   )
 }
 
