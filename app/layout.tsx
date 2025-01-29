@@ -5,15 +5,6 @@ import { Navbar } from "@/components/HomeLayout/Navbar";
 import { Footer } from "@/components/HomeLayout/footer";
 import KindeProvider from "./KindeProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const inter = Inter({
   variable: "--font-inter",
