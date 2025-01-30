@@ -39,7 +39,7 @@ export function ContactForm() {
         </div>
 
         <motion.div
-          className="bg-gray-50 rounded-lg py-6 space-y-4"
+          className="pb-6 space-y-4"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.6, duration: 1 }}
@@ -53,7 +53,7 @@ export function ContactForm() {
           />
           <div className="space-y-2">
             <h2 className="font-semibold text-lg">WorkScout Office</h2>
-            <a href="mailto:info@workscoutuk.co.uk" className="text-blue-600 hover:underline block">
+            <a href="mailto:info@workscoutuk.co.uk" className="text-primary900 hover:underline block">
               info@workscoutuk.co.uk
             </a>
             <p className="text-muted-foreground">0161 706 0549</p>
