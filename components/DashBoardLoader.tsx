@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { Progress } from './ui/progress'
-import { redirect, useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
 
 const DashBoardLoader = () => {
     const [value, setValue] = useState(0)
