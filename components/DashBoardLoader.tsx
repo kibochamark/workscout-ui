@@ -6,7 +6,6 @@ import { redirect, useRouter } from 'next/navigation'
 const DashBoardLoader = () => {
     const [value, setValue] = useState(0)
 
-    const router = useRouter()
 
     useEffect(() => {
 
