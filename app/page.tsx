@@ -7,6 +7,7 @@ const page = () => {
     <Wrapcomponent>
       <div className='my-12'>
         <Main />
+
       </div>
     </Wrapcomponent>
   )

@@ -9,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Search } from "lucide-react"
 import Link from "next/link"
 import { SubscriptionPlans } from "../subscription/SubscriptionCards"
+import DashBoardLoader from "../DashBoardLoader"
 
 const LOCATIONS = [
     "London",
@@ -58,9 +59,9 @@ export function JobApplicationForm() {
         <div className="grid lg:grid-cols-2 min-h-screen relative">
             {step == 3 ? (
                 <div className="col-span-2">
-                    <SubscriptionPlans handlePrevious={handleBack} />
+                    <SubscriptionPlans handlePrevious={handleBack} handleNext={handleNext} />
                 </div>
-            ) : (
+            ) : step != 4 && (
                 <>
                     <div
                         className="hidden lg:block bg-cover bg-fixed bg-center"
@@ -104,8 +105,8 @@ export function JobApplicationForm() {
 
                             </Link>        </div>
 
-                        <div className="flex-1 px-10 w-full">
-                            {step === 1 ? (
+                        <div className="flex-1 md:px-8   w-full">
+                            {step == 1 ? (
                                 <div className="space-y-6">
                                     <div>
                                         <p className="text-sm text-muted-foreground">Lets get started</p>
@@ -140,8 +141,8 @@ export function JobApplicationForm() {
                             ) : (
                                 <div className="space-y-6">
                                     <div>
-                                        <p className="text-sm text-muted-foreground">Personal Information</p>
-                                        <h1 className="text-2xl font-semibold mt-1">Tell us about yourself</h1>
+                                        {/* <p className="text-sm text-muted-foreground">Personal Information</p> */}
+                                        <h1 className="md:text-2xl text-labe font-semibold mt-1">Please fill out the below details to continue</h1>
                                     </div>
 
                                     <div className="space-y-4">
@@ -255,10 +256,12 @@ export function JobApplicationForm() {
                             )}
 
                             <div className="flex gap-4 mt-8">
+                                {step != 1 && (
+                                    <Button variant="outline" onClick={handleBack} className="flex-1">
+                                        Back
+                                    </Button>
+                                )}
 
-                                <Button variant="outline" onClick={handleBack} className="flex-1">
-                                    Back
-                                </Button>
 
                                 <Button onClick={handleNext} className="flex-1 bg-[#1e1666] hover:bg-[#1e1666]/90">
                                     Continue
@@ -269,6 +272,11 @@ export function JobApplicationForm() {
                 </>
             )
             }
+            {step == 4 && (
+                <div className="col-span-2">
+                    <DashBoardLoader />
+                </div>
+            )}
 
         </div >
     )

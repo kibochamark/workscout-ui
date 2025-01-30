@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 export function Main() {
     return (
-        <div className="grid lg:grid-cols-3 gap-12 px-4 lg:px-0 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-3 relative gap-12 px-4 lg:px-0 max-w-7xl mx-auto">
             {/* Text Section */}
             <motion.div
                 className="space-y-6 my-20 col-span-1"
@@ -52,6 +52,7 @@ export function Main() {
                     </motion.div>
                 </div>
             </motion.div>
+            
 
             {/* Image Section */}
             <motion.div
