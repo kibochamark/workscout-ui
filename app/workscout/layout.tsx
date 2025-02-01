@@ -21,7 +21,7 @@ export default function RootLayout({
     <main className="h-full relative p-0 w-full">
       <Navbar />
       <MobileSideBar/>
-      <section className="bg-[#FFFF0] pt-20">
+      <section className="bg-[#FFFF0]">
         {children}
       </section>
     </main>
