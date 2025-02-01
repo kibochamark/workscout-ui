@@ -1,4 +1,7 @@
+import { Navbar } from "@/components/WorkScoutLayout/NavBar";
+import MobileSidebar from "@/components/WorkScoutLayout/MobileSideBar";
 import type { Metadata } from "next";
+import MobileSideBar from "@/components/WorkScoutLayout/MobileSideBar";
 
 
 
@@ -14,10 +17,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    
-        <main className="h-full p-0 w-full">
-          {children}
-        </main>
+
+    <main className="h-full relative p-0 w-full">
+      <Navbar />
+      <MobileSideBar/>
+      <section className="bg-[#FFFF0] pt-20">
+        {children}
+      </section>
+    </main>
 
 
 

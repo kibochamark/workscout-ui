@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import {  Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/HomeLayout/Navbar";
 import { Footer } from "@/components/HomeLayout/footer";
 import KindeProvider from "./KindeProvider";
+import ReduxProvider from "./ReduxProvider";
 
 
 const inter = Inter({
@@ -33,7 +34,10 @@ export default function RootLayout({
           </div>
 
           <main className="h-full">
-            {children}
+            <ReduxProvider>
+              {children}
+            </ReduxProvider>
+
             <Footer />
           </main>
 
