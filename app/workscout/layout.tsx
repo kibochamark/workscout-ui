@@ -2,7 +2,6 @@ import { Navbar } from "@/components/WorkScoutLayout/NavBar";
 import type { Metadata } from "next";
 import MobileSideBar from "@/components/WorkScoutLayout/MobileSideBar";
 import SideBar from "@/components/WorkScoutLayout/SideBar";
-import ChildrenWrapper from "@/components/WorkScoutLayout/ChildrenWrapper";
 
 
 
