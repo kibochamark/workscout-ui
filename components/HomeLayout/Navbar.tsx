@@ -69,7 +69,7 @@ export function Navbar() {
                                     Logout
                                 </Button>
                             </LogoutLink>
-                            <Link href="/workscout/onboarding">
+                            <Link href="/workscout/dashboard">
                                 <Button variant="default" className="text-base bg-primary900 hover:bg-black/90">
                                     Dashboard
                                 </Button>

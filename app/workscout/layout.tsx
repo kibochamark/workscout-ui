@@ -22,14 +22,14 @@ export default function RootLayout({
     <main className="h-full relative p-0 w-full">
       <Navbar />
       <MobileSideBar />
-      <div className="pt-20">
-        <SideBar />
-      </div>
 
-      <section className="bg-[#FFFF0]">
-        <ChildrenWrapper>
-          {children}
-        </ChildrenWrapper>
+      
+
+
+      <section className="bg-[#FFFF0] flex justify-start relative">
+      <SideBar />
+        {children}
+
       </section>
     </main>
 
