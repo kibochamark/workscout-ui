@@ -2,6 +2,8 @@ import { Navbar } from "@/components/WorkScoutLayout/NavBar";
 import MobileSidebar from "@/components/WorkScoutLayout/MobileSideBar";
 import type { Metadata } from "next";
 import MobileSideBar from "@/components/WorkScoutLayout/MobileSideBar";
+import SideBar from "@/components/WorkScoutLayout/SideBar";
+import ChildrenWrapper from "@/components/WorkScoutLayout/ChildrenWrapper";
 
 
 
@@ -20,9 +22,15 @@ export default function RootLayout({
 
     <main className="h-full relative p-0 w-full">
       <Navbar />
-      <MobileSideBar/>
+      <MobileSideBar />
+      <div className="pt-20">
+        <SideBar />
+      </div>
+
       <section className="bg-[#FFFF0]">
-        {children}
+        <ChildrenWrapper>
+          {children}
+        </ChildrenWrapper>
       </section>
     </main>
 
