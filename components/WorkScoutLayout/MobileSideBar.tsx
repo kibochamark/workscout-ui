@@ -29,7 +29,7 @@ const MobileSideBar = () => {
           exit={{ opacity: 0, x: -40 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
 
-          className='w-[60%] z-[50] overflow-hidden fixed h-screen md:hidden bg-white shadow-lg rounded-r-md flex flex-col'>
+          className='w-[60%] z-[50] overflow-hidden fixed h-screen md:hidden bg-[#fff] shadow-lg rounded-r-md flex flex-col'>
 
           <motion.div
 

@@ -29,7 +29,7 @@ export function Navbar() {
 
     return (
         <div className="md:px:10 px-2 fixed w-full z-[40]">
-            <nav className="flex items-center bg-white shadow-lg backdrop-blur-sm  w-full justify-between  md:px-16 px-4 py-4 gap-2">
+            <nav className="flex items-center bg-[#fff] shadow-lg backdrop-blur-sm  w-full justify-between  md:px-16 px-4 py-4 gap-2">
                 <div className="flex flex-row items-center justify-center gap-2">
                     <ChartNoAxesColumnIncreasing className="w-8 h-8 cursor-pointer md:hidden -rotate-90" onClick={()=>{
                         dispatch(setIsOpen())
