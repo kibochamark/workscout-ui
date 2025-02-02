@@ -2,7 +2,6 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import {  LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
@@ -17,14 +16,16 @@ import { setIsOpen } from "@/redux/Slices/MenuSlice";
 
 
 export function Navbar() {
-    const { isAuthenticated } = useKindeBrowserClient();
     const pathname = usePathname()
+
+
+    const dispatch = useAppDispatch()
+
 
     if (pathname === "/workscout/onboarding") {
         return null
     }
 
-    const dispatch = useAppDispatch()
 
     return (
         <div className="md:px:10 px-2 fixed w-full">
