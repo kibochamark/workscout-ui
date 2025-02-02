@@ -18,7 +18,7 @@ const SideBar = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -64 }}
                 transition={{ duration: 0.8, ease: "easeInOut" }}
-                className='w-64 hidden lg:flex h-[87vh] mb-10 px-[36]  shadow-lg justify-between bg-white fixed m-2   flex-col items-start rounded-r-lg'>
+                className=' lg:flex h-[87vh] mb-10 px-[36]  shadow-lg justify-between bg-white fixed m-2   flex-col items-start rounded-r-lg'>
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
