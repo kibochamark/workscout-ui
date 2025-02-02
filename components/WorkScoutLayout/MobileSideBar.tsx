@@ -89,6 +89,7 @@ const MobileSideBar = () => {
               <ul className='space-y-10'>
               {Menus?.map((menu, idx: number) => (
                         <Link href={menu.link}
+                        key={idx}
                             className={`flex ${pathname == menu.link && "text-primary900 font-bold"} hover:bg-gray-100 py-2 pr-6 hover:rounded-md transition-all duration-300 hover:cursor-pointer justify-start items-start gap-2`}
                         >
                             <motion.li

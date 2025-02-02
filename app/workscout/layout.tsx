@@ -1,5 +1,4 @@
 import { Navbar } from "@/components/WorkScoutLayout/NavBar";
-import MobileSidebar from "@/components/WorkScoutLayout/MobileSideBar";
 import type { Metadata } from "next";
 import MobileSideBar from "@/components/WorkScoutLayout/MobileSideBar";
 import SideBar from "@/components/WorkScoutLayout/SideBar";

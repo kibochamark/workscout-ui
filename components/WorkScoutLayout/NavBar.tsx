@@ -1,17 +1,16 @@
 "use client"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { RegisterLink, LoginLink, LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import {  LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import { usePathname } from "next/navigation";
-import Wrapcomponent from "../wrapcomponent";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { Bell, BellPlus, ChartNoAxesColumnIncreasing, MessageSquare } from "lucide-react";
+import { Bell,  ChartNoAxesColumnIncreasing, MessageSquare } from "lucide-react";
 import { useAppDispatch } from "@/redux/store";
 import { setIsOpen } from "@/redux/Slices/MenuSlice";
 
