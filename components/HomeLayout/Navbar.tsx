@@ -52,7 +52,7 @@ export function Navbar() {
                         <>
 
                             <LoginLink>
-                                <Button variant="ghost" className="text-base border-2  border-black ">
+                                <Button variant="ghost" className="text-base border-2  border-primary900 ">
                                     Login
                                 </Button>
                             </LoginLink>
