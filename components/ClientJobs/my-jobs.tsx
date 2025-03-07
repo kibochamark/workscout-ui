@@ -73,8 +73,8 @@ const jobs = [
 
 export default function MyJobs() {
   const [selectedJobs, setSelectedJobs] = useState<number[]>([])
-  const [dateRange, setDateRange] = useState("6 Jan 2023 - 13 Jan 2023")
-  const [activeActionRow, setActiveActionRow] = useState<number | null>(null)
+  const [dateRange, ] = useState("6 Jan 2023 - 13 Jan 2023")
+//   const [activeActionRow, setActiveActionRow] = useState<number | null>(null)
 
   // Handle checkbox selection
   const handleSelectAll = () => {

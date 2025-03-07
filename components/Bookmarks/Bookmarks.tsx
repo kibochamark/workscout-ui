@@ -71,7 +71,7 @@ const bookmarks = [
 export default function Bookmarks() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [sortBy, setSortBy] = useState("recent")
-  const [filterStatus, setFilterStatus] = useState("all")
+  const [, setFilterStatus] = useState("all")
 
   // Get status color
   const getStatusColor = (status: string) => {

@@ -12,8 +12,8 @@ import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
 export default function JobDashboard() {
-  const [month, setMonth] = useState("January")
-  const [year, setYear] = useState("2023")
+//   const [month, setMonth] = useState("January")
+//   const [year, setYear] = useState("2023")
   const [filter, setFilter] = useState("All")
   const [calendarView, setCalendarView] = useState("Jan")
 
