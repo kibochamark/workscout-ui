@@ -45,7 +45,7 @@ export function Main() {
                         transition={{ delay: 0.6, duration: 0.8 }}
                     >
                         <Link href="/contact-us">
-                            <Button className="w-full mt-6 text-balance text-center">
+                            <Button className="w-full mt-6 text-balance bg-primary900 text-center">
                                 Contact Us
                             </Button>
                         </Link>
