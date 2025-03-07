@@ -8,8 +8,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Search } from "lucide-react"
 import Link from "next/link"
-import { SubscriptionPlans } from "../subscription/SubscriptionCards"
+
 import DashBoardLoader from "../DashBoardLoader"
+import SubscriptionPage from "../subscription/SubscriptionCards"
 
 const LOCATIONS = [
     "London",
@@ -59,7 +60,7 @@ export function JobApplicationForm() {
         <div className="grid lg:grid-cols-2 min-h-screen relative">
             {step == 3 ? (
                 <div className="col-span-2">
-                    <SubscriptionPlans handlePrevious={handleBack} handleNext={handleNext} />
+                    <SubscriptionPage/>
                 </div>
             ) : step != 4 && (
                 <>

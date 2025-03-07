@@ -87,7 +87,7 @@
 
 import SubscriptionPage from '@/components/subscription/SubscriptionCards'
 import ChildrenWrapper from '@/components/WorkScoutLayout/ChildrenWrapper'
-import ProfileForm from '@/components/workscoutprofile/Profile-form'
+
 import React from 'react'
 
 const page = () => {
