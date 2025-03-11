@@ -18,7 +18,7 @@ export default function JobDashboard() {
   const [calendarView, setCalendarView] = useState("Jan")
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6 min-h-screen">
       <div className="mb-6">
         <h1 className="text-2xl font-semibold">Hi, Jane</h1>
         <p className="text-gray-600">Welcome to your personalised metrics dashboard</p>
