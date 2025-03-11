@@ -19,7 +19,7 @@ const bookmarks = [
     description:
       "Defining the overall strategy and vision for the product. This involves understanding the market, identifying customer needs...",
     status: "submitted",
-    image: "/placeholder.svg?height=400&width=600&text=Job+1",
+    image: "/savana.png?height=400&width=600&text=Job+1",
   },
   {
     id: 2,
@@ -28,7 +28,7 @@ const bookmarks = [
     description:
       "Defining the overall strategy and vision for the product. This involves understanding the market, identifying customer needs...",
     status: "shortlisted",
-    image: "/placeholder.svg?height=400&width=600&text=Job+2",
+    image: "/sava2.png?height=400&width=600&text=Job+2",
   },
   {
     id: 3,
@@ -37,7 +37,7 @@ const bookmarks = [
     description:
       "Defining the overall strategy and vision for the product. This involves understanding the market, identifying customer needs...",
     status: "shortlisted",
-    image: "/placeholder.svg?height=400&width=600&text=Job+3",
+    image: "/sava3.png?height=400&width=600&text=Job+3",
   },
   {
     id: 4,
@@ -46,7 +46,7 @@ const bookmarks = [
     description:
       "Defining the overall strategy and vision for the product. This involves understanding the market, identifying customer needs...",
     status: "submitted",
-    image: "/placeholder.svg?height=400&width=600&text=Job+4",
+    image: "/sava5.png?height=400&width=600&text=Job+4",
   },
   {
     id: 5,
@@ -55,7 +55,7 @@ const bookmarks = [
     description:
       "Defining the overall strategy and vision for the product. This involves understanding the market, identifying customer needs...",
     status: "submitted",
-    image: "/placeholder.svg?height=400&width=600&text=Job+5",
+    image: "/sava4.png?height=400&width=600&text=Job+5",
   },
   {
     id: 6,
@@ -64,7 +64,7 @@ const bookmarks = [
     description:
       "Defining the overall strategy and vision for the product. This involves understanding the market, identifying customer needs...",
     status: "shortlisted",
-    image: "/placeholder.svg?height=400&width=600&text=Job+6",
+    image: "/sava6.png?height=400&width=600&text=Job+6",
   },
 ]
 
@@ -155,7 +155,7 @@ export default function Bookmarks() {
             >
               <div className={`relative ${viewMode === "list" ? "w-48 shrink-0" : "aspect-[4/3]"}`}>
                 <Image
-                  src={bookmark.image || "/placeholder.svg"}
+                  src={bookmark.image || "/savana.PNG"}
                   alt={`${bookmark.company} - ${bookmark.title}`}
                   fill
                   className="object-cover"
