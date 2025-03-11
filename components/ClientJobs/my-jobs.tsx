@@ -108,7 +108,7 @@ export default function MyJobs() {
   }
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6 min-h-screen">
       <h1 className="text-2xl font-semibold mb-6">My Jobs</h1>
 
       <Card className="overflow-hidden">
@@ -196,12 +196,12 @@ export default function MyJobs() {
                     </DropdownMenu>
 
                     {/* Expanded action menu for the third row as shown in the screenshot */}
-                    {job.id === 3 && (
+                    {/* {job.id === 3 && (
                       <div className="absolute right-16 top-1/2 -translate-y-1/2 bg-white border rounded-md shadow-md p-2 z-10">
                         <div className="py-1 px-3 hover:bg-gray-100 cursor-pointer">Bookmark</div>
                         <div className="py-1 px-3 hover:bg-gray-100 cursor-pointer">Version History</div>
                       </div>
-                    )}
+                    )} */}
                   </TableCell>
                 </TableRow>
               ))}

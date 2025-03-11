@@ -15,7 +15,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "WorkScout Uk",
-  description: "",
+  description: "Job Hunt Made Easy",
 };
 
 export default function RootLayout({

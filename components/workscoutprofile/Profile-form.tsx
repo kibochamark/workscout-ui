@@ -16,11 +16,11 @@ export default function ProfileForm() {
         <div className="flex justify-between items-start mb-8">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <Image src="/placeholder.svg" alt="Profile picture" width={40} height={40} className="rounded-full" />
+              <Image src="/profile.png" alt="Profile picture" width={40} height={40} className="rounded-full" />
             </div>
             <div>
-              <h2 className="font-medium">Olivia Alana</h2>
-              <p className="text-sm text-muted-foreground">oliviaalana@gmail.com</p>
+              <h2 className="font-medium">Patrick Kingundi</h2>
+              <p className="text-sm text-muted-foreground">patrick@gmail.com</p>
             </div>
           </div>
           <Button variant="default" className="bg-[#14012C] hover:bg-[#14012C]/90">
@@ -32,23 +32,23 @@ export default function ProfileForm() {
           <div className="grid gap-6 md:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="fullName">Full Name</Label>
-              <Input id="fullName" defaultValue="Olivia Alana" />
+              <Input id="fullName" defaultValue="Patrick" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" type="email" defaultValue="oliviaalana@gmail.com" />
+              <Input id="email" type="email" defaultValue="patrick@gmail.com" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="phone">Phone Number</Label>
-              <Input id="phone" type="tel" defaultValue="+254 785434" />
+              <Input id="phone" type="tel" defaultValue="0161 706 0549" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="dob">Date of Birth</Label>
-              <Input id="dob" defaultValue="Kenya" />
+              <Input id="dob" defaultValue="28/11/1995" />
             </div>
             <div className="space-y-2">
               <Label htmlFor="gender">Gender</Label>
-              <Input id="gender" defaultValue="Tech" />
+              <Input id="gender" defaultValue="male" />
             </div>
             <div className="space-y-2">
               <Label>Upload Doc</Label>

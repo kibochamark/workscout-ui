@@ -18,9 +18,9 @@ export default function JobDashboard() {
   const [calendarView, setCalendarView] = useState("Jan")
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-6 min-h-screen">
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold">Hi, Jane</h1>
+        <h1 className="text-2xl font-semibold">Hi, Patrick</h1>
         <p className="text-gray-600">Welcome to your personalised metrics dashboard</p>
       </div>
 
@@ -34,10 +34,10 @@ export default function JobDashboard() {
                   No. of Jobs applied
                   <Info className="h-4 w-4 ml-1 text-gray-400" />
                 </p>
-                <h2 className="text-3xl font-bold mt-2">10,678,678</h2>
+                <h2 className="text-3xl font-bold mt-2">0</h2>
                 <p className="text-sm text-green-500 mt-1 flex items-center">
                   <ChevronRight className="h-4 w-4 rotate-90" />
-                  32%
+                  0%
                 </p>
               </div>
             </div>
@@ -52,10 +52,10 @@ export default function JobDashboard() {
                   No. of Jobs Accepted
                   <Info className="h-4 w-4 ml-1 text-gray-400" />
                 </p>
-                <h2 className="text-3xl font-bold mt-2">12,678</h2>
+                <h2 className="text-3xl font-bold mt-2">0</h2>
                 <p className="text-sm text-red-500 mt-1 flex items-center">
                   <ChevronRight className="h-4 w-4 -rotate-90" />
-                  83%
+                  0%
                 </p>
               </div>
             </div>
@@ -70,10 +70,10 @@ export default function JobDashboard() {
                   No. of Jobs Rejected
                   <Info className="h-4 w-4 ml-1 text-gray-400" />
                 </p>
-                <h2 className="text-3xl font-bold mt-2">10,000</h2>
+                <h2 className="text-3xl font-bold mt-2">0</h2>
                 <p className="text-sm text-green-500 mt-1 flex items-center">
                   <ChevronRight className="h-4 w-4 rotate-90" />
-                  32%
+                  0%
                 </p>
               </div>
             </div>
@@ -462,7 +462,7 @@ export default function JobDashboard() {
               <div className="flex">
                 <div className="w-1/4">
                   <Image
-                    src={`/placeholder.svg?height=100&width=100&text=Job+${item}`}
+                    src={`/sava.png?height=100&width=100&text=Job+${item}`}
                     alt="Job thumbnail"
                     width={100}
                     height={100}
