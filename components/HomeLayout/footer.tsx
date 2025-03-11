@@ -10,7 +10,7 @@ export function Footer() {
   }
   return (
     <Wrapcomponent>
-      <footer className="border-t py-6 backdrop-blur mt-4 fixed w-full bottom-0 px-6">
+      <footer className="border-t py-6 backdrop-blur mt-4 w-full bottom-0 px-6">
         <div className="flex justify-between items-center max-w-7xl mx-auto">
           <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} Workscout</p>
           <Link href="/privacy-policy" className="text-sm text-muted-foreground hover:underline">
