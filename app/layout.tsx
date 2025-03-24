@@ -29,19 +29,19 @@ export default function RootLayout({
         <body
           className={`${inter.className} h-screen antialiased`}
         >
-          <div className="w-full fixed top-0">
+          <div className="w-full fixed top-0 z-40">
             <Navbar />
           </div>
 
-          <main className="h-full">
+          <main className="">
             <ReduxProvider>
               {children}
             </ReduxProvider>
 
-            <Footer />
+    
           </main>
 
-
+          {/* <Footer /> */}
 
         </body>
       </html>

@@ -7,10 +7,10 @@ import { motion } from "framer-motion";
 
 export function Main() {
     return (
-        <div className="grid lg:grid-cols-3 relative gap-12 px-4 lg:px-0 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-4 relative gap-12 px-4 pt-20 lg:px-0 h-screen">
             {/* Text Section */}
             <motion.div
-                className="space-y-6 my-20 col-span-1"
+                className="space-y-6  p-10 mt-[150]   col-span-2"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
@@ -18,7 +18,7 @@ export function Main() {
                 <div className="space-y-8 lg:space-y-0">
                     {/* Title */}
                     <motion.h1
-                        className="text-displaySmall text-balance font-bold mb-6"
+                        className="text-displayMedium   text-balance font-bold mb-6"
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2, duration: 0.8 }}
@@ -28,7 +28,7 @@ export function Main() {
 
                     {/* Description */}
                     <motion.p
-                        className="text-muted-foreground leading-6 mb-4 tracking-wide xt-balance"
+                        className="text-muted-foreground text-labelLarge leading-10 mb-4 tracking-wide text-balance"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.4, duration: 0.8 }}
@@ -39,13 +39,13 @@ export function Main() {
 
                     {/* Button */}
                     <motion.div
-                        className="my-4 w-full md:w-1/2 lg:w-full"
+                        className="my-8 w-1/2 lg:w-full right-0  "
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6, duration: 0.8 }}
                     >
                         <Link href="/contact-us">
-                            <Button className="w-full mt-6 text-balance bg-primary900 text-center">
+                            <Button className="w-32  mt-6 text-balance bg-primary900 text-center">
                                 Contact Us
                             </Button>
                         </Link>
@@ -56,7 +56,7 @@ export function Main() {
 
             {/* Image Section */}
             <motion.div
-                className="col-span-2 relative mt-8 overflow-hidden h-full"
+                className="col-span-2 relative  overflow-hidden h-full"
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.8, duration: 1, ease: "easeOut" }}
@@ -65,7 +65,7 @@ export function Main() {
                     alt="main-image"
                     fill
                     src={"/main.jpg"}
-                    className="w-full rounded-md absolute hidden lg:block -z-10 inset-y-0 object-cover h-full"
+                    className="w-full rounded-none absolute hidden lg:block -z-10 inset-y-0 object-cover h-full"
                 />
             </motion.div>
         </div>

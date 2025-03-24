@@ -4,12 +4,12 @@ import React from 'react'
 
 const page = () => {
   return (
-    <Wrapcomponent>
-      <div className='my-12'>
+    // <Wrapcomponent>
+      <div className='h-full'>
         <Main />
 
       </div>
-    </Wrapcomponent>
+    // </Wrapcomponent>
   )
 }
 
