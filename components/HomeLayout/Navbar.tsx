@@ -15,7 +15,7 @@ export function Navbar() {
         return null
     }
     return (
-        <Wrapcomponent>
+        // <Wrapcomponent>
             <nav className="flex items-center bg-[#fff] backdrop-blur-sm  w-full justify-between z-50 md:px-16 px-4 py-2 gap-2">
                 <Link href="/" className="flex items-center space-x-2">
                     {/* <svg width="120" height="48" viewBox="0 0 200 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -88,7 +88,7 @@ export function Navbar() {
 
                 </div>
             </nav>
-        </Wrapcomponent>
+      
     )
 }
 

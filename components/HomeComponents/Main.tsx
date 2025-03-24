@@ -7,10 +7,10 @@ import { motion } from "framer-motion";
 
 export function Main() {
     return (
-        <div className="grid lg:grid-cols-4 relative gap-12 px-4 pt-20 lg:px-0 h-screen">
+        <div className="grid lg:grid-cols-4 relative gap-12  pt-20 lg:px-0 h-screen">
             {/* Text Section */}
             <motion.div
-                className="space-y-6  p-10 mt-[150]   col-span-2"
+                className="space-y-6 mt-10 px-2  md:p-10 md:mt-[150]   col-span-2"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
