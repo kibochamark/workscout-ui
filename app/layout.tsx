@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/HomeLayout/Navbar";
-import { Footer } from "@/components/HomeLayout/footer";
 import KindeProvider from "./KindeProvider";
 import ReduxProvider from "./ReduxProvider";
 
