@@ -19,7 +19,7 @@ import Link from "next/link"
 
 const page =() => {
   return (
-    <main className="h-screen w-screen overflow-hidden bg-white flex flex-col">
+    <main className="h-screen w-screen overflow-hidden bg-[#fff] flex flex-col">
       {/* Header */}
       {/* <header className="flex justify-between items-center py-6 px-8 border-b">
         <div className="flex items-center">

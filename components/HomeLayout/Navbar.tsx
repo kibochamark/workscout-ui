@@ -50,7 +50,7 @@ export function Navbar() {
 
 {/* <svg width="120" height="48"> */}
  
-        <Image src={"/logo (2).png"} alt="logo" width="240" height="48" />
+        <Image src={"/logo (2).png"} alt="logo" width="200" height="32" />
     {/* </svg> */}
 
 
