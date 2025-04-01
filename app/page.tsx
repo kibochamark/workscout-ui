@@ -19,7 +19,7 @@ import Link from "next/link"
 
 const page =() => {
   return (
-    <main className="h-screen w-screen overflow-hidden bg-[#fff] flex flex-col">
+    <main className="h-screen w-screen overflow-hidden bg-white flex flex-col">
       {/* Header */}
       {/* <header className="flex justify-between items-center py-6 px-8 border-b">
         <div className="flex items-center">
@@ -40,9 +40,9 @@ const page =() => {
       </header> */}
 
       {/* Main Content - takes remaining height */}
-      <div className="flex flex-1 flex-col md:flex-row">
+      <div className="flex flex-1 flex-col-reverse md:flex-row">
         {/* Left side - narrower width */}
-        <div className="w-full md:w-2/5 p-8 flex flex-col mt-16 md:mt-0 justify-center">
+        <div className="w-full md:w-2/5 p-8 flex flex-col justify-center">
           <div className="max-w-xl space-y-6">
             <h2 className="text-3xl  md:text-4xl font-bold text-gray-900 leading-tight">
               Welcome to WorkScout UK, Your Trusted Job Search Partner
