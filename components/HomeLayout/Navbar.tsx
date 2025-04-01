@@ -65,7 +65,7 @@ export function Navbar() {
                                 </Button>
                             </LoginLink>
                             <RegisterLink>
-                                <Button variant="default" className="text-base bg-black/90 hover:bg-primary900">
+                                <Button variant="default" className="text-base bg-primary900 hover:bg-black/90">
                                     SignUp
                                 </Button>
                             </RegisterLink>
@@ -78,7 +78,7 @@ export function Navbar() {
                                 </Button>
                             </LogoutLink>
                             <Link href="/workscout/dashboard">
-                                <Button variant="default" className="text-base bg-black/90 hover:bg-primary900">
+                                <Button variant="default" className="text-base bg-primary900 hover:bg-black/90">
                                     Dashboard
                                 </Button>
                             </Link>

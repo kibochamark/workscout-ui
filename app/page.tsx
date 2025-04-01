@@ -51,7 +51,7 @@ const page =() => {
               Workscout Uk simplifies job hunting by handling searches, applications and updates for you. We save you
               time and reduce stress so that you can focus on your goals while we turn opportunities into success.
             </p>
-            <Link href="/contact" className="inline-block px-8 py-4 bg-black text-white rounded-md font-medium">
+            <Link href="/contact-us" className="inline-block px-8 py-4 bg-primary900 text-white rounded-md font-medium">
               Contact Us
             </Link>
           </div>
