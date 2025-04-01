@@ -92,11 +92,11 @@ export function Navbar() {
                             <div className="rounded-md">
                                 <ul className="list-none space-y-2">
                                     <li>
-                                        <LogoutLink>
+                                        {/* <LogoutLink>
                                             <Button variant="default" className="text-base bg-primary900 hover:bg-black/90">
                                                 logout
                                             </Button>
-                                        </LogoutLink>
+                                        </LogoutLink> */}
                                     </li>
                                 </ul>
 
