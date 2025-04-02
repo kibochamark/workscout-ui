@@ -71,7 +71,7 @@ export default function ProfileForm() {
               </Badge>
               <span className="text-sm text-muted-foreground">Active until Dec 31, 2024</span>
             </div>
-            <Link href="/workscout/subscriptions" className="text-sm text-primary900 cursor-pointer hover:underline">
+            <Link href="/subscriptions" className="text-sm text-primary900 cursor-pointer hover:underline">
               Change subscription plan
             </Link>
           </div>
