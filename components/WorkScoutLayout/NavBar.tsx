@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
+// import { Button } from "@/components/ui/button"
+// import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { usePathname } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {

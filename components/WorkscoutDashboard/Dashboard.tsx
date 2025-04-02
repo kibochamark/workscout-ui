@@ -12,8 +12,8 @@ import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 
 export default function JobDashboard() {
-//   const [month, setMonth] = useState("January")
-//   const [year, setYear] = useState("2023")
+  //   const [month, setMonth] = useState("January")
+  //   const [year, setYear] = useState("2023")
   const [filter, setFilter] = useState("All")
   const [calendarView, setCalendarView] = useState("Jan")
 
@@ -85,34 +85,25 @@ export default function JobDashboard() {
         {/* Job Insights Chart */}
         <Card className="lg:col-span-2">
           <CardHeader className="pb-2">
-            <CardTitle className="text-lg">Job Insights</CardTitle>
+            <div className="flex justify-between items-center">
+              <CardTitle className="text-lg">Job Insights</CardTitle>
+              <Select defaultValue="All">
+                <SelectTrigger className="w-[80px]">
+                  <SelectValue placeholder="All" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="All">All</SelectItem>
+                  <SelectItem value="Shortlisted">Shortlisted</SelectItem>
+                  <SelectItem value="Hired">Hired</SelectItem>
+                  <SelectItem value="Rejected">Rejected</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="h-[300px] w-full relative">
-              {/* Area Chart Placeholder */}
-              <div className="absolute inset-0 bg-gradient-to-t from-red-600 to-red-200 opacity-20"></div>
-              <svg className="w-full h-full" viewBox="0 0 600 300">
-                <path
-                  d="M0,300 L0,250 C20,230 40,180 60,200 C80,220 100,260 120,240 C140,220 160,150 180,140 C200,130 220,180 240,200 C260,220 280,240 300,220 C320,200 340,150 360,140 C380,130 400,160 420,180 C440,200 460,220 480,200 C500,180 520,120 540,100 C560,80 580,100 600,120 L600,300 Z"
-                  fill="url(#redGradient)"
-                  stroke="none"
-                />
-                <defs>
-                  <linearGradient id="redGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#ef4444" stopOpacity="0.8" />
-                    <stop offset="100%" stopColor="#ef4444" stopOpacity="0.2" />
-                  </linearGradient>
-                </defs>
-                <path
-                  d="M0,250 C20,230 40,180 60,200 C80,220 100,260 120,240 C140,220 160,150 180,140 C200,130 220,180 240,200 C260,220 280,240 300,220 C320,200 340,150 360,140 C380,130 400,160 420,180 C440,200 460,220 480,200 C500,180 520,120 540,100 C560,80 580,100 600,120"
-                  fill="none"
-                  stroke="#dc2626"
-                  strokeWidth="2"
-                />
-              </svg>
-
               {/* Y-axis labels */}
-              <div className="absolute left-0 top-0 h-full flex flex-col justify-between text-xs text-gray-500 py-2">
+              <div className="absolute left-2 top-0 h-full flex flex-col justify-between text-xs text-gray-500 py-2 z-10">
                 <span>500</span>
                 <span>400</span>
                 <span>300</span>
@@ -121,8 +112,100 @@ export default function JobDashboard() {
                 <span>0</span>
               </div>
 
+              {/* Y-axis label */}
+              <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -rotate-90 text-xs text-gray-500 ml-[-15px]">
+                <span>No. of Jobs</span>
+              </div>
+
+              {/* Area Chart with sharp corners */}
+              <div className="absolute inset-0 pl-8">
+                <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1200 300">
+                  {/* Define gradient */}
+                  <defs>
+                    <linearGradient id="redGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#ef4444" stopOpacity="0.5" />
+                      <stop offset="100%" stopColor="#b91c1c" stopOpacity="1" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Area chart with sharp corners */}
+                  <polygon
+                    points="
+                      0,300 
+                      0,290 
+                      50,285 
+                      100,280 
+                      150,275 
+                      200,270 
+                      250,260 
+                      300,200 
+                      350,150 
+                      400,100 
+                      450,50 
+                      500,100 
+                      550,150 
+                      600,100 
+                      650,50 
+                      700,100 
+                      750,150 
+                      800,100 
+                      850,150 
+                      900,100 
+                      950,150 
+                      1000,200 
+                      1050,150 
+                      1100,200 
+                      1150,150 
+                      1200,180 
+                      1200,300
+                    "
+                    fill="url(#redGradient)"
+                  />
+
+                  {/* Line on top of area with sharp corners */}
+                  <polyline
+                    points="
+                      0,290 
+                      50,285 
+                      100,280 
+                      150,275 
+                      200,270 
+                      250,260 
+                      300,200 
+                      350,150 
+                      400,100 
+                      450,50 
+                      500,100 
+                      550,150 
+                      600,100 
+                      650,50 
+                      700,100 
+                      750,150 
+                      800,100 
+                      850,150 
+                      900,100 
+                      950,150 
+                      1000,200 
+                      1050,150 
+                      1100,200 
+                      1150,150 
+                      1200,180
+                    "
+                    fill="none"
+                    stroke="#b91c1c"
+                    strokeWidth="1.5"
+                  />
+
+                  {/* Vertical dotted line at May */}
+                  <line x1="450" y1="0" x2="450" y2="300" stroke="#888888" strokeWidth="1" strokeDasharray="4,4" />
+
+                  {/* Dot at peak */}
+                  <circle cx="450" cy="50" r="4" fill="#ef4444" />
+                </svg>
+              </div>
+
               {/* X-axis labels */}
-              <div className="absolute bottom-0 left-0 w-full flex justify-between text-xs text-gray-500 px-6">
+              <div className="absolute bottom-0 left-0 w-full flex justify-between text-xs text-gray-500 px-10 pb-2">
                 <span>Jan</span>
                 <span>Feb</span>
                 <span>Mar</span>
@@ -135,6 +218,11 @@ export default function JobDashboard() {
                 <span>Oct</span>
                 <span>Nov</span>
                 <span>Dec</span>
+              </div>
+
+              {/* Month label */}
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-xs text-gray-500 pb-2">
+                <span>Month</span>
               </div>
             </div>
           </CardContent>
@@ -270,88 +358,90 @@ export default function JobDashboard() {
             </div>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Job Name</TableHead>
-                  <TableHead>Work Scout</TableHead>
-                  <TableHead>Category</TableHead>
-                  <TableHead>Applied date</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <TableCell>Product manager</TableCell>
-                  <TableCell>Jewel Joe</TableCell>
-                  <TableCell>Technology</TableCell>
-                  <TableCell>18/04/2023</TableCell>
-                  <TableCell>
-                    <div className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
-                      submitted
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Button variant="ghost" size="icon">
-                      <MoreVertical className="h-4 w-4" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Product manager</TableCell>
-                  <TableCell>Jewel Joe</TableCell>
-                  <TableCell>Technology</TableCell>
-                  <TableCell>18/04/2023</TableCell>
-                  <TableCell>
-                    <div className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-amber-500 mr-2"></span>
-                      in progress
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Button variant="ghost" size="icon">
-                      <MoreVertical className="h-4 w-4" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Product manager</TableCell>
-                  <TableCell>Jewel Joe</TableCell>
-                  <TableCell>Technology</TableCell>
-                  <TableCell>18/04/2023</TableCell>
-                  <TableCell>
-                    <div className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-indigo-900 mr-2"></span>
-                      shortlisted
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Button variant="ghost" size="icon">
-                      <MoreVertical className="h-4 w-4" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell>Product manager</TableCell>
-                  <TableCell>Jewel Joe</TableCell>
-                  <TableCell>Technology</TableCell>
-                  <TableCell>18/04/2023</TableCell>
-                  <TableCell>
-                    <div className="flex items-center">
-                      <span className="w-2 h-2 rounded-full bg-red-600 mr-2"></span>
-                      Rejected
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <Button variant="ghost" size="icon">
-                      <MoreVertical className="h-4 w-4" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow className="border-b border-gray-200">
+                    <TableHead className="font-bold text-black whitespace-nowrap">Job Name</TableHead>
+                    <TableHead className="font-bold text-black whitespace-nowrap">Work Scout</TableHead>
+                    <TableHead className="font-bold text-black whitespace-nowrap">Category</TableHead>
+                    <TableHead className="font-bold text-black whitespace-nowrap">Applied date</TableHead>
+                    <TableHead className="font-bold text-black whitespace-nowrap">Status</TableHead>
+                    <TableHead className="font-bold text-black whitespace-nowrap">Action</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell>Product manager</TableCell>
+                    <TableCell>Jewel Joe</TableCell>
+                    <TableCell>Technology</TableCell>
+                    <TableCell>18/04/2023</TableCell>
+                    <TableCell>
+                      <div className="flex items-center">
+                        <span className="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                        submitted
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Button variant="ghost" size="icon">
+                        <MoreVertical className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Product manager</TableCell>
+                    <TableCell>Jewel Joe</TableCell>
+                    <TableCell>Technology</TableCell>
+                    <TableCell>18/04/2023</TableCell>
+                    <TableCell>
+                      <div className="flex items-center">
+                        <span className="w-2 h-2 rounded-full bg-amber-500 mr-2"></span>
+                        in progress
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Button variant="ghost" size="icon">
+                        <MoreVertical className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Product manager</TableCell>
+                    <TableCell>Jewel Joe</TableCell>
+                    <TableCell>Technology</TableCell>
+                    <TableCell>18/04/2023</TableCell>
+                    <TableCell>
+                      <div className="flex items-center">
+                        <span className="w-2 h-2 rounded-full bg-indigo-900 mr-2"></span>
+                        shortlisted
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Button variant="ghost" size="icon">
+                        <MoreVertical className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Product manager</TableCell>
+                    <TableCell>Jewel Joe</TableCell>
+                    <TableCell>Technology</TableCell>
+                    <TableCell>18/04/2023</TableCell>
+                    <TableCell>
+                      <div className="flex items-center">
+                        <span className="w-2 h-2 rounded-full bg-red-600 mr-2"></span>
+                        Rejected
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <Button variant="ghost" size="icon">
+                        <MoreVertical className="h-4 w-4" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </div>
             <div className="mt-4">
               <Button variant="link" className="text-sm text-blue-600 p-0">
                 View all Jobs
