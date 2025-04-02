@@ -83,150 +83,145 @@ export default function JobDashboard() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
         {/* Job Insights Chart */}
-        <Card className="lg:col-span-2">
-          <CardHeader className="pb-2">
-            <div className="flex justify-between items-center">
-              <CardTitle className="text-lg">Job Insights</CardTitle>
-              <Select defaultValue="All">
-                <SelectTrigger className="w-[80px]">
-                  <SelectValue placeholder="All" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="All">All</SelectItem>
-                  <SelectItem value="Shortlisted">Shortlisted</SelectItem>
-                  <SelectItem value="Hired">Hired</SelectItem>
-                  <SelectItem value="Rejected">Rejected</SelectItem>
-                </SelectContent>
-              </Select>
+      
+    <Card className="lg:col-span-2">
+      <CardHeader className="pb-2">
+        <div className="flex justify-between items-center">
+          <CardTitle className="text-lg">Job Insights</CardTitle>
+          <Select defaultValue="All">
+            <SelectTrigger className="w-[80px]">
+              <SelectValue placeholder="All" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="All">All</SelectItem>
+              <SelectItem value="Shortlisted">Shortlisted</SelectItem>
+              <SelectItem value="Hired">Hired</SelectItem>
+              <SelectItem value="Rejected">Rejected</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <div className="h-[300px] w-full flex">
+          {/* Y-axis labels container */}
+          <div className="flex flex-col justify-between text-xs text-gray-500 pr-2 py-4">
+            <span>500</span>
+            <span>400</span>
+            <span>300</span>
+            <span>200</span>
+            <span>100</span>
+            <span>0</span>
+          </div>
+
+          {/* Chart container */}
+          <div className="flex-1 relative">
+            {/* Y-axis label */}
+            <div className="absolute left-[-30px] top-1/2 transform -translate-y-1/2 -rotate-90 text-xs text-gray-500">
+              <span>No. of Jobs</span>
             </div>
-          </CardHeader>
-          <CardContent>
-            <div className="h-[300px] w-full relative">
-              {/* Y-axis labels */}
-              <div className="absolute left-2 top-0 h-full flex flex-col justify-between text-xs text-gray-500 py-2 z-10">
-                <span>500</span>
-                <span>400</span>
-                <span>300</span>
-                <span>200</span>
-                <span>100</span>
-                <span>0</span>
-              </div>
 
-              {/* Y-axis label */}
-              <div className="absolute left-0 top-1/2 transform -translate-y-1/2 -rotate-90 text-xs text-gray-500 ml-[-15px]">
-                <span>No. of Jobs</span>
-              </div>
+            {/* Chart SVG */}
+            <svg className="w-full h-full" viewBox="0 0 1000 300" preserveAspectRatio="none">
+              {/* Define gradient */}
+              <defs>
+                <linearGradient id="redGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#ef4444" stopOpacity="0.5" />
+                  <stop offset="100%" stopColor="#b91c1c" stopOpacity="1" />
+                </linearGradient>
+              </defs>
 
-              {/* Area Chart with sharp corners */}
-              <div className="absolute inset-0 pl-8">
-                <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1200 300">
-                  {/* Define gradient */}
-                  <defs>
-                    <linearGradient id="redGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stopColor="#ef4444" stopOpacity="0.5" />
-                      <stop offset="100%" stopColor="#b91c1c" stopOpacity="1" />
-                    </linearGradient>
-                  </defs>
+              {/* Area chart with sharp corners */}
+              <polygon
+                points="
+                  0,300 
+                  0,290 
+                  50,285 
+                  100,280 
+                  150,275 
+                  200,270 
+                  250,260 
+                  300,200 
+                  350,150 
+                  400,100 
+                  450,50 
+                  500,100 
+                  550,150 
+                  600,100 
+                  650,50 
+                  700,100 
+                  750,150 
+                  800,100 
+                  850,150 
+                  900,100 
+                  950,150 
+                  1000,300
+                "
+                fill="url(#redGradient)"
+              />
 
-                  {/* Area chart with sharp corners */}
-                  <polygon
-                    points="
-                      0,300 
-                      0,290 
-                      50,285 
-                      100,280 
-                      150,275 
-                      200,270 
-                      250,260 
-                      300,200 
-                      350,150 
-                      400,100 
-                      450,50 
-                      500,100 
-                      550,150 
-                      600,100 
-                      650,50 
-                      700,100 
-                      750,150 
-                      800,100 
-                      850,150 
-                      900,100 
-                      950,150 
-                      1000,200 
-                      1050,150 
-                      1100,200 
-                      1150,150 
-                      1200,180 
-                      1200,300
-                    "
-                    fill="url(#redGradient)"
-                  />
+              {/* Line on top of area with sharp corners */}
+              <polyline
+                points="
+                  0,290 
+                  50,285 
+                  100,280 
+                  150,275 
+                  200,270 
+                  250,260 
+                  300,200 
+                  350,150 
+                  400,100 
+                  450,50 
+                  500,100 
+                  550,150 
+                  600,100 
+                  650,50 
+                  700,100 
+                  750,150 
+                  800,100 
+                  850,150 
+                  900,100 
+                  950,150
+                "
+                fill="none"
+                stroke="#b91c1c"
+                strokeWidth="1.5"
+              />
 
-                  {/* Line on top of area with sharp corners */}
-                  <polyline
-                    points="
-                      0,290 
-                      50,285 
-                      100,280 
-                      150,275 
-                      200,270 
-                      250,260 
-                      300,200 
-                      350,150 
-                      400,100 
-                      450,50 
-                      500,100 
-                      550,150 
-                      600,100 
-                      650,50 
-                      700,100 
-                      750,150 
-                      800,100 
-                      850,150 
-                      900,100 
-                      950,150 
-                      1000,200 
-                      1050,150 
-                      1100,200 
-                      1150,150 
-                      1200,180
-                    "
-                    fill="none"
-                    stroke="#b91c1c"
-                    strokeWidth="1.5"
-                  />
+              {/* Vertical dotted line at May */}
+              <line x1="450" y1="0" x2="450" y2="300" stroke="#888888" strokeWidth="1" strokeDasharray="4,4" />
 
-                  {/* Vertical dotted line at May */}
-                  <line x1="450" y1="0" x2="450" y2="300" stroke="#888888" strokeWidth="1" strokeDasharray="4,4" />
+              {/* Dot at peak */}
+              <circle cx="450" cy="50" r="4" fill="#ef4444" />
+            </svg>
 
-                  {/* Dot at peak */}
-                  <circle cx="450" cy="50" r="4" fill="#ef4444" />
-                </svg>
-              </div>
-
-              {/* X-axis labels */}
-              <div className="absolute bottom-0 left-0 w-full flex justify-between text-xs text-gray-500 px-10 pb-2">
-                <span>Jan</span>
-                <span>Feb</span>
-                <span>Mar</span>
-                <span>Apr</span>
-                <span>May</span>
-                <span>Jun</span>
-                <span>Jul</span>
-                <span>Aug</span>
-                <span>Sep</span>
-                <span>Oct</span>
-                <span>Nov</span>
-                <span>Dec</span>
-              </div>
-
-              {/* Month label */}
-              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 text-xs text-gray-500 pb-2">
-                <span>Month</span>
-              </div>
+            {/* X-axis labels */}
+            <div className="absolute bottom-[-20px] left-0 w-full flex justify-between text-xs text-gray-500">
+              <span>Jan</span>
+              <span>Feb</span>
+              <span>Mar</span>
+              <span>Apr</span>
+              <span>May</span>
+              <span>Jun</span>
+              <span>Jul</span>
+              <span>Aug</span>
+              <span>Sep</span>
+              <span>Oct</span>
+              <span>Nov</span>
+              <span>Dec</span>
             </div>
-          </CardContent>
-        </Card>
+
+            {/* Month label */}
+            <div className="absolute bottom-[-40px] left-1/2 transform -translate-x-1/2 text-xs text-gray-500">
+              <span>Month</span>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  
+
+
 
         {/* Application Responses */}
         <Card>
