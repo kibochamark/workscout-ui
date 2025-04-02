@@ -1,7 +1,6 @@
 "use client"
-
 import { useState } from "react"
-import {  X, Send } from "lucide-react"
+import { X, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
 
@@ -57,54 +56,58 @@ export default function ChatWidget() {
                         <div className="border-b p-4 flex items-center gap-3">
                             <div className="relative">
                                 <img
-                                    src="https://github.com/shadcn.png?height=40&width=40"
-                                    alt="Anil"
+                                    src="/chat.jpg?height=40&width=40"
+                                    alt="WorkScout UK"
                                     className="w-10 h-10 rounded-full object-cover"
                                 />
                                 <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
                             </div>
                             <div>
-                                <h3 className="font-semibold text-lg">Anil</h3>
+                                <h3 className="font-semibold text-lg">WorkScout UK</h3>
                                 <p className="text-xs text-green-500">Online</p>
                             </div>
                         </div>
 
                         {/* Chat Messages */}
                         <div className="h-[300px] overflow-y-auto p-4 flex flex-col gap-4">
-                            {/* Received Message */}
+                            {/* Client Message */}
                             <div className="flex items-start gap-2">
-                                <img src="https://github.com/shadcn.png?height=32&width=32" alt="Anil" className="w-8 h-8 rounded-full mt-1" />
+                                <img src="https://github.com/shadcn.png?height=32&width=32" alt="Client" className="w-8 h-8 rounded-full mt-1" />
                                 <div className="flex flex-col gap-1 max-w-[80%]">
                                     <div className="bg-gray-800 text-white p-3 rounded-lg rounded-tl-none">
-                                        <p className="text-sm">👋 Hey, have you ever used design thinking in any of your projects?</p>
+                                        <p className="text-sm">Hello! I came across WorkScout UK and wanted to know more about how your job application service works.</p>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Sent Message */}
+                            {/* WorkScout UK Response */}
                             <div className="flex items-start gap-2 self-end">
                                 <div className="flex flex-col gap-1 max-w-[80%]">
                                     <div className="bg-gray-100 p-3 rounded-lg rounded-tr-none">
-                                        <p className="text-sm">
-                                            Yeah, Ive used it a lot! Its such a great framework for solving complex problems creatively.
-                                            What about you?
-                                        </p>
+                                        <p className="text-sm">Hi there! We apply for jobs on your behalf based on your qualifications and preferences. We also offer CV and LinkedIn profile optimization to increase your chances of landing a job.</p>
                                     </div>
                                 </div>
-                                <img src="https://github.com/shadcn.png?height=32&width=32" alt="You" className="w-8 h-8 rounded-full mt-1" />
+                                <img src="/chat.jpg?height=32&width=32" alt="WorkScout UK" className="w-8 h-8 rounded-full mt-1" />
                             </div>
 
-                            {/* Received Message */}
+                            {/* Client Message */}
                             <div className="flex items-start gap-2">
-                                <img src="https://github.com/shadcn.png?height=32&width=32" alt="Anil" className="w-8 h-8 rounded-full mt-1" />
+                                <img src="https://github.com/shadcn.png?height=32&width=32" alt="Client" className="w-8 h-8 rounded-full mt-1" />
                                 <div className="flex flex-col gap-1 max-w-[80%]">
                                     <div className="bg-gray-800 text-white p-3 rounded-lg rounded-tl-none">
-                                        <p className="text-sm">
-                                            Same here! I love how it puts the user at the center of everything. Do you follow all the steps?
-                                            You know, empathize, define, ideate, prototype, and test?
-                                        </p>
+                                        <p className="text-sm">That sounds great! What are your subscription options, and how do they differ?</p>
                                     </div>
                                 </div>
+                            </div>
+
+                            {/* WorkScout UK Response */}
+                            <div className="flex items-start gap-2 self-end">
+                                <div className="flex flex-col gap-1 max-w-[80%]">
+                                    <div className="bg-gray-100 p-3 rounded-lg rounded-tr-none">
+                                        <p className="text-sm">We have different subscription tiers, from Basic to Premium. The Basic plan includes a set number of job applications per month, while the Premium plan offers unlimited applications along with resume and LinkedIn optimization. Would you like a detailed breakdown?</p>
+                                    </div>
+                                </div>
+                                <img src="/chat.jpg?height=32&width=32" alt="WorkScout UK" className="w-8 h-8 rounded-full mt-1" />
                             </div>
                         </div>
 
@@ -116,7 +119,7 @@ export default function ChatWidget() {
                                 className="flex-1 py-2 px-3 text-sm bg-white rounded-full focus:outline-none"
                             />
                             <button className="text-gray-400 hover:text-gray-600">
-                                <Send    size={20} />
+                                <Send size={20} />
                             </button>
                         </div>
                     </motion.div>
@@ -127,46 +130,36 @@ export default function ChatWidget() {
             <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.05 }} className="relative">
                 <Button
                     onClick={toggleChat}
-                    className="h-10 w-10 rounded-full shadow-lg relative bg-primary900 hover:bg-primary900  p-0"
+                    className="h-16 w-16 rounded-full shadow-lg relative bg-primary900 hover:bg-primary900  p-0"
                 >
-                    <div className="relative h-6 w-6">
+                    <div className="relative h-12 w-12">
                         <motion.div
-                            // initial={isOpen ? "visible" : "hidden"}
-                            // animate={isOpen ? "hidden" : "visible"}
-                            // variants={messageIconVariants}
                             transition={{ duration: 0.3, ease: "easeInOut" }}
                             className="absolute inset-0"
                         >
-                            {/* User Avatar on Button when closed */}
                             {!isOpen ? (
                                 <motion.div
-                                    className="w-6 h-6 rounded-full border-2 animate-pulse   border-white overflow-hidden"
+                                    className="w-12 h-12 rounded-full shadow-lg animate-pulse overflow-hidden"
                                     initial={{ scale: 0, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
                                     transition={{ delay: 0.2 }}
                                 >
-                                    <img src="https://github.com/shadcn.png?height=24&width=24" alt="User" className="w-full h-full object-cover" />
+                                    <img src="/chat.jpg" alt="User" className="w-full h-full object-cover" />
                                 </motion.div>
                             ) : (
-
                                 <motion.div
                                     initial={isOpen ? "hidden" : "visible"}
                                     animate={isOpen ? "visible" : "hidden"}
                                     variants={closeIconVariants}
                                     transition={{ duration: 0.3, ease: "easeInOut" }}
-                                    className=""
                                 >
                                     <X size={24} className="text-white" />
                                 </motion.div>
                             )}
                         </motion.div>
-
                     </div>
                 </Button>
-
-
             </motion.div>
         </>
     )
 }
-
