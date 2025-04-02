@@ -145,7 +145,7 @@ export default function ChatWidget() {
                                     animate={{ scale: 1, opacity: 1 }}
                                     transition={{ delay: 0.2 }}
                                 >
-                                    <img src="/profile.PNG?height=24&width=24" alt="User" className="w-full h-full object-cover" />
+                                    <img src="https://github.com/shadcn.png?height=24&width=24" alt="User" className="w-full h-full object-cover" />
                                 </motion.div>
                             ) : (
 
