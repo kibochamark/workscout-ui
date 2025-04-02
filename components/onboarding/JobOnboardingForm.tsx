@@ -65,7 +65,7 @@ export function JobApplicationForm() {
             ) : step != 4 && (
                 <>
                     <div
-                        className="hidden lg:block bg-cover bg-fixed bg-center"
+                        className="block bg-cover col-span-1 bg-fixed bg-center"
                         style={{
                             backgroundImage:
                                 "url('/onboarding.jpg')",
@@ -106,7 +106,7 @@ export function JobApplicationForm() {
 
                             </Link>        </div>
 
-                        <div className="flex-1 md:px-8   w-full">
+                        <div className="w-full">
                             {step == 1 ? (
                                 <div className="space-y-6">
                                     <div>
