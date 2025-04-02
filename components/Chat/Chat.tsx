@@ -130,16 +130,16 @@ export default function ChatWidget() {
             <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.05 }} className="relative">
                 <Button
                     onClick={toggleChat}
-                    className="h-16 w-16 rounded-full shadow-lg relative bg-primary900 hover:bg-primary900  p-0"
+                    className="h-10 w-10 rounded-full shadow-lg relative bg-primary900 animate-pulse  hover:bg-primary900  p-0"
                 >
-                    <div className="relative h-12 w-12">
+                    <div className="relative h-8 w-8">
                         <motion.div
                             transition={{ duration: 0.3, ease: "easeInOut" }}
                             className="absolute inset-0"
                         >
                             {!isOpen ? (
                                 <motion.div
-                                    className="w-12 h-12 rounded-full shadow-lg animate-pulse overflow-hidden"
+                                    className="w-8 h-8 rounded-full shadow-lg  overflow-hidden"
                                     initial={{ scale: 0, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
                                     transition={{ delay: 0.2 }}
@@ -152,8 +152,9 @@ export default function ChatWidget() {
                                     animate={isOpen ? "visible" : "hidden"}
                                     variants={closeIconVariants}
                                     transition={{ duration: 0.3, ease: "easeInOut" }}
+                                    className="w-8 h-8 flex justify-center items-center"
                                 >
-                                    <X size={24} className="text-white" />
+                                    <X  className="text-white" />
                                 </motion.div>
                             )}
                         </motion.div>
