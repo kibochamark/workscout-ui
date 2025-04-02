@@ -75,9 +75,9 @@ export const Menus: Menu[] = [
         link: "/workscout/bookmarks",
         svg: <BookmarkIcon />,
     },
-    // {
-    //     label: "Subscriptions",
-    //     link: "/workscout/subscriptions",
-    //     svg: <BookmarkIcon />,
-    // }
+    {
+        label: "Subscriptions",
+        link: "/subscriptions",
+        svg: <BookmarkIcon />,
+    }
 ];
