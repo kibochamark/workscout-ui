@@ -36,12 +36,6 @@ export default function ChatWidget() {
         },
     }
 
-    // Icon animation variants
-    const messageIconVariants = {
-        hidden: { opacity: 0, rotate: 90, scale: 0 },
-        visible: { opacity: 1, rotate: 0, scale: 1 },
-    }
-
     const closeIconVariants = {
         hidden: { opacity: 0, rotate: 90, scale: 0 },
         visible: { opacity: 1, rotate: 0, scale: 1 },
