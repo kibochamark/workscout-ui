@@ -10,7 +10,7 @@ import { Search } from "lucide-react"
 import Link from "next/link"
 
 import DashBoardLoader from "../DashBoardLoader"
-import SubscriptionPage from "../subscription/SubscriptionCards"
+import { SubscriptionPlans } from "../subscriptionplans"
 
 const LOCATIONS = [
     "London",
@@ -60,7 +60,7 @@ export function JobApplicationForm() {
         <div className="grid lg:grid-cols-2 min-h-screen relative">
             {step == 3 ? (
                 <div className="col-span-2">
-                    <SubscriptionPage/>
+                    <SubscriptionPlans/>
                 </div>
             ) : step != 4 && (
                 <>
