@@ -314,43 +314,41 @@ export default function JobDashboard() {
         {/* Recent Activities */}
         <Card className="lg:col-span-2">
           <CardHeader className="pb-2">
-            <div className="flex justify-between items-center">
-              <CardTitle className="text-lg">Recent Activities</CardTitle>
-              <div className="flex items-center space-x-2">
-                <div className="relative">
-                  <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                  <Input placeholder="Search Jobs..." className="pl-8 h-9 w-[200px]" />
-                </div>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button variant="outline" size="sm" className="h-9">
-                      <span className="text-xs">6 Jan 2023 - 13 Jan 2023</span>
-                      <Calendar className="ml-2 h-4 w-4" />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="end">
-                    {/* Date picker would go here */}
-                    <div className="p-4">
-                      <div className="space-y-2">
-                        <div className="grid grid-cols-2 gap-2">
-                          <div>
-                            <label className="text-xs">Start Date</label>
-                            <Input type="date" className="h-8" defaultValue="2023-01-06" />
-                          </div>
-                          <div>
-                            <label className="text-xs">End Date</label>
-                            <Input type="date" className="h-8" defaultValue="2023-01-13" />
-                          </div>
-                        </div>
-                        <Button size="sm" className="w-full">
-                          Apply
-                        </Button>
-                      </div>
-                    </div>
-                  </PopoverContent>
-                </Popover>
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
+  <CardTitle className="text-lg">Recent Activities</CardTitle>
+  <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-2 space-y-2 sm:space-y-0">
+    <div className="relative w-full sm:w-auto">
+      <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+      <Input placeholder="Search Jobs..." className="pl-8 h-9 w-full sm:w-[200px]" />
+    </div>
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button variant="outline" size="sm" className="h-9 w-full sm:w-auto">
+          <span className="text-xs">6 Jan 2023 - 13 Jan 2023</span>
+          <Calendar className="ml-2 h-4 w-4" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0" align="end">
+        <div className="p-4">
+          <div className="space-y-2">
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <label className="text-xs">Start Date</label>
+                <Input type="date" className="h-8" defaultValue="2023-01-06" />
+              </div>
+              <div>
+                <label className="text-xs">End Date</label>
+                <Input type="date" className="h-8" defaultValue="2023-01-13" />
               </div>
             </div>
+            <Button size="sm" className="w-full">Apply</Button>
+          </div>
+        </div>
+      </PopoverContent>
+    </Popover>
+  </div>
+</div>
+
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
