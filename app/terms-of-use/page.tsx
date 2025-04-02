@@ -14,9 +14,9 @@ export default function TermsOfUse() {
             <section className="space-y-4">
               <h2 className="text-2xl font-semibold">1. Definitions</h2>
               <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                <li>"WorkScout UK," "we," "us," or "our" refers to WorkScout UK, the provider of job application and career support services.</li>
-                <li>"User," "you," or "your" refers to any individual who accesses or uses our services.</li>
-                <li>"WorkScout" refers to individuals providing services under our freelancer-based model.</li>
+                <li>&quot;WorkScout UK,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot; refers to WorkScout UK, the provider of job application and career support services.</li>
+                <li>&quot;User,&quot; &quot;you,&quot; or &quot;your&quot; refers to any individual who accesses or uses our services.</li>
+                <li>&quot;WorkScout&quot; refers to individuals providing services under our freelancer-based model.</li>
               </ul>
             </section>
 
