@@ -90,7 +90,9 @@ export function SubscriptionPlans() {
   ]
 
   return (
-    <div className="w-full bg-background py-12 md:py-24">
+    <div className="w-full bg-background pt-16 md:pt-0 lg:pt-20 py-12 md:py-24">
+
+
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
