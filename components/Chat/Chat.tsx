@@ -86,7 +86,7 @@ export default function ChatWidget() {
                                 <div className="flex flex-col gap-1 max-w-[80%]">
                                     <div className="bg-gray-100 p-3 rounded-lg rounded-tr-none">
                                         <p className="text-sm">
-                                            Yeah, I've used it a lot! It's such a great framework for solving complex problems creatively.
+                                            Yeah, Ive used it a lot! Its such a great framework for solving complex problems creatively.
                                             What about you?
                                         </p>
                                     </div>
