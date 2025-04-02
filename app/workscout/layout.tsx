@@ -2,6 +2,7 @@ import { Navbar } from "@/components/WorkScoutLayout/NavBar";
 import type { Metadata } from "next";
 import MobileSideBar from "@/components/WorkScoutLayout/MobileSideBar";
 import SideBar from "@/components/WorkScoutLayout/SideBar";
+import Chat from "@/components/Chat/Chat";
 
 
 
@@ -22,14 +23,18 @@ export default function RootLayout({
       <Navbar />
       <MobileSideBar />
 
-      
+
 
 
       <section className="bg-[#FFFF0] flex justify-start relative">
-      <SideBar />
+        <SideBar />
         {children}
 
       </section>
+
+      <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end ">
+        <Chat />
+      </div>
     </main>
 
 
