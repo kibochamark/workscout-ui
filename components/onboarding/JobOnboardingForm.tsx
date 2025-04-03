@@ -10,7 +10,7 @@ import { Search } from "lucide-react"
 import Link from "next/link"
 
 import DashBoardLoader from "../DashBoardLoader"
-import SubscriptionPage from "../subscription/SubscriptionCards"
+import { SubscriptionPlans } from "../subscriptionplans"
 
 const LOCATIONS = [
     "London",
@@ -60,12 +60,12 @@ export function JobApplicationForm() {
         <div className="grid lg:grid-cols-2 min-h-screen relative">
             {step == 3 ? (
                 <div className="col-span-2">
-                    <SubscriptionPage/>
+                    <SubscriptionPlans/>
                 </div>
             ) : step != 4 && (
                 <>
                     <div
-                        className="hidden lg:block bg-cover bg-fixed bg-center"
+                        className="block bg-cover col-span-1 bg-fixed bg-center"
                         style={{
                             backgroundImage:
                                 "url('/onboarding.jpg')",
@@ -106,7 +106,7 @@ export function JobApplicationForm() {
 
                             </Link>        </div>
 
-                        <div className="flex-1 md:px-8   w-full">
+                        <div className="w-full">
                             {step == 1 ? (
                                 <div className="space-y-6">
                                     <div>

@@ -10,7 +10,7 @@ import Image from "next/image";
 export function Navbar() {
     const { isAuthenticated } = useKindeBrowserClient();
     const pathname = usePathname()
-    if (pathname.includes("/workscout")) {
+    if (pathname.includes("/workscout") || pathname.includes("/onboarding")) {
         return null
     }
     return (
