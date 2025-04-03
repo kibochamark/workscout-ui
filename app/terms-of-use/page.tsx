@@ -89,8 +89,7 @@ export default function TermsOfUse() {
                 WorkScout UK<br />
                 124 Clarence Road<br />
                 Manchester, U.K. M13 0ZJ<br />
-                Email: info@workscoutuk.co.uk<br />
-                Phone: 0161 706 0549
+                Email: info@workscoutuk.co.uk<br
               </address>
             </section>
           </div>
