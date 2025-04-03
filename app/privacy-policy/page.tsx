@@ -152,7 +152,7 @@ export default function PrivacyPolicy() {
                 <br />
                 Email: info@workscoutuk.co.uk
                 <br />
-                Phone: 0161 706 0549
+              
               </address>
             </section>
           </div>

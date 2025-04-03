@@ -57,7 +57,7 @@ export function ContactForm() {
               <a href="mailto:info@workscoutuk.co.uk" className="text-primary900 hover:underline block">
                 info@workscoutuk.co.uk
               </a>
-              <p className="text-muted-foreground">0161 706 0549</p>
+              <p className="text-muted-foreground"></p>
               <address className="not-italic text-muted-foreground">
                 124 Clarence road
                 <br />
