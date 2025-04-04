@@ -88,7 +88,7 @@ export function JobApplicationForm() {
                                 <div className="space-y-6">
                                     <div>
                                         <p className="text-sm text-muted-foreground">Lets get started</p>
-                                        <h1 className="text-2xl font-semibold mt-1">What is your job description</h1>
+                                        <h1 className="text-2xl font-semibold mt-1">What is your job description ?</h1>
                                     </div>
 
                                     <div className="relative">
