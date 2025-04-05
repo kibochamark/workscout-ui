@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import MobileSideBar from "@/components/WorkScoutLayout/MobileSideBar";
 import SideBar from "@/components/WorkScoutLayout/SideBar";
 import Chat from "@/components/Chat/Chat";
+import WorkscoutLayout from "./WorkscoutLayout";
+import { redirect } from "next/navigation";
 
 
 
@@ -17,6 +19,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
+  
+
   return (
 
     <main className="h-full relative p-0 w-full">
@@ -26,11 +32,11 @@ export default function RootLayout({
 
 
 
-      <section className="bg-[#FFFF0] flex justify-start relative">
+      <WorkscoutLayout>
         <SideBar />
         {children}
+      </WorkscoutLayout>
 
-      </section>
 
       <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end ">
         <Chat />

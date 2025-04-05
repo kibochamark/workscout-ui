@@ -3,9 +3,14 @@ import { useState } from "react"
 import { X, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
+import { usePathname } from "next/navigation"
 
 export default function ChatWidget() {
     const [isOpen, setIsOpen] = useState(false)
+
+    const pathname= usePathname()
+
+    if(pathname.includes("/workscout/onboarding")) return null;
 
     const toggleChat = () => {
         setIsOpen(!isOpen)
