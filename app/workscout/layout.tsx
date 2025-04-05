@@ -4,7 +4,6 @@ import MobileSideBar from "@/components/WorkScoutLayout/MobileSideBar";
 import SideBar from "@/components/WorkScoutLayout/SideBar";
 import Chat from "@/components/Chat/Chat";
 import WorkscoutLayout from "./WorkscoutLayout";
-import { redirect } from "next/navigation";
 
 
 

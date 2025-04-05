@@ -1,6 +1,5 @@
 import JobDashboard from '@/components/WorkscoutDashboard/Dashboard'
 import ChildrenWrapper from '@/components/WorkScoutLayout/ChildrenWrapper'
-import { redirect } from 'next/navigation'
 import React from 'react'
 
 const page = () => {

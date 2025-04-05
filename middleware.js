@@ -2,7 +2,6 @@
 
 
 const publicRoutes = ["/", "/privacy-policy", "/contact-us", "/not-found"]
-const authroutes = ["/api/auth/login", "/api/auth/signup", "/api/auth/kinde_callback"]
 const DEFAULT_LOGIN_REDIRECT = "/workscout/dashboard"
 
 
@@ -57,19 +56,18 @@ async function middleware(req) {
 
   const isPublic = publicRoutes.includes(nextUrl.pathname)
   const isAuthRoute = nextUrl.pathname.startsWith("/api");
-  const isOnboardingRoute = nextUrl.pathname.includes("/workscout/onboarding")
 
 
-  console.log("look at me", nextUrl, isPublic, isAuthRoute, isOnboardingRoute);
+  // console.log("look at me", nextUrl, isPublic, isAuthRoute, isOnboardingRoute);
 
 
 
-  // if (isAuthRoute) {
-  //   if (authenticated) {
-  //     return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-  //   }
-  //   return null;
-  // }
+  if (isAuthRoute) {
+    if (authenticated) {
+      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+    }
+    return null;
+  }
 
   if (isPublic) {
     return null
