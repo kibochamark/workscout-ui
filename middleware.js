@@ -1,7 +1,7 @@
 import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
 import { NextResponse } from "next/server";
 
-const publicRoutes = ["/", "/privacy-policy", "/contact-us", "/not-found"];
+const publicRoutes = ["/", "/privacy-policy", "/contact-us", "/terms-of-use", "/not-found"];
 const DEFAULT_LOGIN_REDIRECT = "/workscout/dashboard";
 const ONBOARDING_ROUTE = "/workscout/onboarding";
 
@@ -57,6 +57,7 @@ export const config = {
     "/(api|trpc)(.*)",
     "/",
     "/privacy-policy",
+    "/terms-of-use",
     "/contact-us",
     "/workscout/:path*"
   ],
