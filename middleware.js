@@ -1,113 +1,56 @@
-// import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
-
-
-const publicRoutes = ["/", "/privacy-policy", "/contact-us", "/not-found"]
-const DEFAULT_LOGIN_REDIRECT = "/workscout/dashboard"
-
-
-
-
-// export default function middleware(req) {
-
-//     const authenticated = !!req.auth
-//     const { nextUrl } = req;
-
-//     const isPublic = publicRoutes.includes(nextUrl.pathname)
-//     const isAuthRoute = authroutes.includes(nextUrl.pathname);
-
-//     if (isAuthRoute) {
-//         return
-//     }
-
-
-//     if (isAuthRoute) {
-//         if (authenticated) {
-//             return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-//         }
-//         return null;
-//     }
-
-//     if (!authenticated && !isPublic) {
-//         return withAuth(req, {
-//             isReturnToCurrentPage: true
-//         });
-//     }
-// }
-
-
-// export const config = {
-//     matcher: [
-//         "/(api|trpc)(.*)",
-//         "/",
-//         "/privacy-policy",
-//         "/contact-us",
-//         "/workscout/:path*"
-//     ],
-// };
-
 import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
+import { NextResponse } from "next/server";
 
-async function middleware(req) {
+const publicRoutes = ["/", "/privacy-policy", "/contact-us", "/not-found"];
+const DEFAULT_LOGIN_REDIRECT = "/workscout/dashboard";
+const ONBOARDING_ROUTE = "/workscout/onboarding";
 
-  const authenticated = !!req.auth
-  const { nextUrl } = req;
+// Simulated DB call for onboarding status
+async function getUserOnboardingStatus(email) {
+  // Replace this with your actual DB check
+  // e.g., const user = await db.user.findUnique({ where: { email } });
+  return false; // For testing purposes, assume not onboarded
+}
 
-  
+export async function middleware(req) {
+  const { nextUrl, auth } = req;
+  const authenticated = !!req.auth;
 
-  const isPublic = publicRoutes.includes(nextUrl.pathname)
-  const isAuthRoute = nextUrl.pathname.startsWith("/api");
+  const isPublic = publicRoutes.includes(nextUrl.pathname);
+  const isAPI = nextUrl.pathname.startsWith("/api");
+  const isOnboardingRoute = nextUrl.pathname.startsWith(ONBOARDING_ROUTE);
 
-
-  // console.log("look at me", nextUrl, isPublic, isAuthRoute, isOnboardingRoute);
-
-
-
-  if (isAuthRoute) {
-    if (authenticated) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-    }
-    return null;
-  }
-
-  if (isPublic) {
-    return null
-  }
-
-  // user is already authenticated
-
-  if (authenticated) {
-    const isonboarded=false
-    console.log(isonboarded, "me")
-    if (!isonboarded) {
-      return Response.redirect(new URL("/workscout/onboarding", nextUrl))
-    }
-
-    if (nextUrl.pathname.includes("/workscout/onboarding") && isonboarded) {
-      return null
-    }
+  if (isPublic || isAPI) {
+    return null; // Allow access
   }
 
 
-  if (!authenticated && !isPublic) {
+
+  // Authenticated
+  const email = req.auth?.user?.email;
+  const isOnboarded = await getUserOnboardingStatus(email);
+
+  // console.log(isOnboarded)
+  // Not onboarded → redirect to onboarding
+  if (!isOnboarded && !isOnboardingRoute) {
+    return NextResponse.redirect(new URL(ONBOARDING_ROUTE, req.url));
+  }
+
+  // Already onboarded but trying to access onboarding
+  if (isOnboarded && isOnboardingRoute) {
+    return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, req.url));
+  }
+
+  // Not authenticated and not a public route
+  if (!authenticated) {
     return withAuth(req, {
       isReturnToCurrentPage: true
     });
   }
 
 
-
-  return null
+  // return null; // Allow access
 }
-// {
-//   isReturnToCurrentPage: true,
-//   // loginPage: "/login",
-//   publicPaths: ["/", "/privacy-policy", "/terms-of-use", "/contact-us", "/not-found"],
-//   // isAuthorized: ({token}) => {
-//   //   // The user will be considered authorized if they have the permission 'eat:chips'
-//   //   return token.permissions.includes("eat:chips");
-//   // }
-// }
-
 
 export const config = {
   matcher: [
@@ -118,6 +61,3 @@ export const config = {
     "/workscout/:path*"
   ],
 };
-
-
-export default middleware
