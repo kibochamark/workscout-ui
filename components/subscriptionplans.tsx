@@ -48,6 +48,7 @@ export function SubscriptionPlans() {
       color: "bg-gradient-to-br from-teal-400 to-teal-500",
       icon: Shield,
       features: [
+        "Everything in the Basic Plan",
         "10 tailored job applications per month",
         "Basic resume review",
         "Access to a limited selection of career tips & resources",
