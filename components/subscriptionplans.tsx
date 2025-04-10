@@ -210,6 +210,24 @@ export function SubscriptionPlans() {
                         </>
                       )}
                     </div>
+                    {plan.isFree && (
+                        <div className="flex justify-center mt-3">
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div className="flex items-center text-xs text-muted-foreground cursor-help">
+                                <Info className="h-3.5 w-3.5 mr-1" />
+                                <span>Upgrade anytime</span>
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p className="w-[200px] text-xs">
+                                Start with our Free Plan and upgrade to a paid subscription whenever you're ready for expert help in 
+                                applying for jobs.
+                              </p>
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+                      )}
 
                     <div className="mt-6">
                       <Button
@@ -230,24 +248,7 @@ export function SubscriptionPlans() {
                         {buttonText}
                       </Button>
 
-                      {plan.isFree && (
-                        <div className="flex justify-center mt-3">
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <div className="flex items-center text-xs text-muted-foreground cursor-help">
-                                <Info className="h-3.5 w-3.5 mr-1" />
-                                <span>Upgrade anytime</span>
-                              </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p className="w-[200px] text-xs">
-                                Start with our Free Plan and upgrade to a paid subscription whenever you're ready to
-                                apply for jobs.
-                              </p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </div>
-                      )}
+                     
                     </div>
                   </div>
                 </div>
