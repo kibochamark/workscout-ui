@@ -10,6 +10,7 @@ type Plan = {
 const Plans = ({ plans }: { plans: Plan[] }) => {
     return (
         <div className='flex justify-evenly gap-2'>
+            <a href="https://billing.stripe.com/p/login/test_fZe7vBeq6bTg6fm4gg" target='_blank'>My Billing</a>
             {plans.map((plan, idx: number) => (
                 <div className='bg-primary900/70 flex flex-col gap-4 h-44 w-40 p-4 text-white rounded-md' key={idx}>
 
