@@ -67,14 +67,14 @@ export function JobApplicationForm() {
             ) : step != 4 && (
                 <>
                     <div
-                        className="block bg-cover col-span-1 bg-fixed bg-center"
+                        className="block bg-cover bg-transparent col-span-1 bg-fixed bg-center"
                         style={{
                             backgroundImage:
                                 "url('/onboarding.jpg')",
                         }}
                     />
 
-                    <div className="p-8 flex flex-col">
+                    <div className="p-8 flex flex-col bg-transparent">
                         <div className="mb-8">
                             <Link href="/" className="flex items-center space-x-2">
                               
