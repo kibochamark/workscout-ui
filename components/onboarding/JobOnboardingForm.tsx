@@ -15,7 +15,7 @@ import Image from "next/image"
 import DashBoardLoader from "../DashBoardLoader"
 import { SubscriptionPlans } from "../subscriptionplans"
 import { baseUrl } from "@/app/utils/constants"
-
+import React, { InputHTMLAttributes } from "react" 
 const LOCATIONS = [
   "London", "Manchester", "Birmingham", "Leeds", "Glasgow",
   "Edinburgh", "Liverpool", "Bristol", "Remote"
@@ -24,7 +24,10 @@ const LOCATIONS = [
 const JOB_SUGGESTIONS = [
   "Product Manager", "Web Design", "Software Engineer", "UX Designer", "Data Analyst"
 ]
-
+interface InputGroupProps extends InputHTMLAttributes<HTMLInputElement> {
+    label: string
+    id: string
+  } 
 export function JobApplicationForm() {
   const [step, setStep] = useState(1)
   const [jobSearch, setJobSearch] = useState("")
@@ -223,9 +226,9 @@ export function JobApplicationForm() {
   )
 }
 
-const InputGroup = ({ label, id, type = "text", ...props }: any) => (
-  <div className="space-y-2">
-    <Label htmlFor={id}>{label}</Label>
-    <Input id={id} type={type} {...props} />
-  </div>
-)
+const InputGroup: React.FC<InputGroupProps> = ({ label, id, type = "text", ...props }) => (
+    <div className="space-y-2">
+      <Label htmlFor={id}>{label}</Label>
+      <Input id={id} type={type} {...props} />
+    </div>
+  )
