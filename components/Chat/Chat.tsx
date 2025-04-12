@@ -1,22 +1,20 @@
 "use client"
+
 import { useState } from "react"
 import { X, Send } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
 import { usePathname } from "next/navigation"
+import Image from "next/image"
 
 export default function ChatWidget() {
     const [isOpen, setIsOpen] = useState(false)
+    const pathname = usePathname()
 
-    const pathname= usePathname()
+    if (pathname.includes("/workscout/onboarding")) return null
 
-    if(pathname.includes("/workscout/onboarding")) return null;
+    const toggleChat = () => setIsOpen(!isOpen)
 
-    const toggleChat = () => {
-        setIsOpen(!isOpen)
-    }
-
-    // Chat box animation variants
     const chatVariants = {
         hidden: {
             opacity: 0,
@@ -60,9 +58,11 @@ export default function ChatWidget() {
                         {/* Header */}
                         <div className="border-b p-4 flex items-center gap-3">
                             <div className="relative">
-                                <img
-                                    src="/chat.jpg?height=40&width=40"
+                                <Image
+                                    src="/chat.jpg"
                                     alt="WorkScout UK"
+                                    width={40}
+                                    height={40}
                                     className="w-10 h-10 rounded-full object-cover"
                                 />
                                 <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
@@ -77,10 +77,18 @@ export default function ChatWidget() {
                         <div className="h-[300px] overflow-y-auto p-4 flex flex-col gap-4">
                             {/* Client Message */}
                             <div className="flex items-start gap-2">
-                                <img src="https://github.com/shadcn.png?height=32&width=32" alt="Client" className="w-8 h-8 rounded-full mt-1" />
+                                <Image
+                                    src="https://github.com/shadcn.png"
+                                    alt="Client"
+                                    width={32}
+                                    height={32}
+                                    className="w-8 h-8 rounded-full mt-1"
+                                />
                                 <div className="flex flex-col gap-1 max-w-[80%]">
                                     <div className="bg-gray-800 text-white p-3 rounded-lg rounded-tl-none">
-                                        <p className="text-sm">Hello! I came across WorkScout UK and wanted to know more about how your job application service works.</p>
+                                        <p className="text-sm">
+                                            Hello! I came across WorkScout UK and wanted to know more about how your job application service works.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -89,18 +97,34 @@ export default function ChatWidget() {
                             <div className="flex items-start gap-2 self-end">
                                 <div className="flex flex-col gap-1 max-w-[80%]">
                                     <div className="bg-gray-100 p-3 rounded-lg rounded-tr-none">
-                                        <p className="text-sm">Hi there! We apply for jobs on your behalf based on your qualifications and preferences. We also offer CV and LinkedIn profile optimization to increase your chances of landing a job.</p>
+                                        <p className="text-sm">
+                                            Hi there! We apply for jobs on your behalf based on your qualifications and preferences. We also offer CV and LinkedIn profile optimization to increase your chances of landing a job.
+                                        </p>
                                     </div>
                                 </div>
-                                <img src="/chat.jpg?height=32&width=32" alt="WorkScout UK" className="w-8 h-8 rounded-full mt-1" />
+                                <Image
+                                    src="/chat.jpg"
+                                    alt="WorkScout UK"
+                                    width={32}
+                                    height={32}
+                                    className="w-8 h-8 rounded-full mt-1"
+                                />
                             </div>
 
                             {/* Client Message */}
                             <div className="flex items-start gap-2">
-                                <img src="https://github.com/shadcn.png?height=32&width=32" alt="Client" className="w-8 h-8 rounded-full mt-1" />
+                                <Image
+                                    src="https://github.com/shadcn.png"
+                                    alt="Client"
+                                    width={32}
+                                    height={32}
+                                    className="w-8 h-8 rounded-full mt-1"
+                                />
                                 <div className="flex flex-col gap-1 max-w-[80%]">
                                     <div className="bg-gray-800 text-white p-3 rounded-lg rounded-tl-none">
-                                        <p className="text-sm">That sounds great! What are your subscription options, and how do they differ?</p>
+                                        <p className="text-sm">
+                                            That sounds great! What are your subscription options, and how do they differ?
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -109,10 +133,18 @@ export default function ChatWidget() {
                             <div className="flex items-start gap-2 self-end">
                                 <div className="flex flex-col gap-1 max-w-[80%]">
                                     <div className="bg-gray-100 p-3 rounded-lg rounded-tr-none">
-                                        <p className="text-sm">We have different subscription tiers, from Basic to Premium. The Basic plan includes a set number of job applications per month, while the Premium plan offers unlimited applications along with resume and LinkedIn optimization. Would you like a detailed breakdown?</p>
+                                        <p className="text-sm">
+                                            We have different subscription tiers, from Basic to Premium. The Basic plan includes a set number of job applications per month, while the Premium plan offers unlimited applications along with resume and LinkedIn optimization. Would you like a detailed breakdown?
+                                        </p>
                                     </div>
                                 </div>
-                                <img src="/chat.jpg?height=32&width=32" alt="WorkScout UK" className="w-8 h-8 rounded-full mt-1" />
+                                <Image
+                                    src="/chat.jpg"
+                                    alt="WorkScout UK"
+                                    width={32}
+                                    height={32}
+                                    className="w-8 h-8 rounded-full mt-1"
+                                />
                             </div>
                         </div>
 
@@ -135,21 +167,24 @@ export default function ChatWidget() {
             <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.05 }} className="relative">
                 <Button
                     onClick={toggleChat}
-                    className="h-10 w-10 rounded-full shadow-lg relative bg-primary900 animate-pulse  hover:bg-primary900  p-0"
+                    className="h-10 w-10 rounded-full shadow-lg relative bg-primary900 animate-pulse hover:bg-primary900 p-0"
                 >
                     <div className="relative h-8 w-8">
-                        <motion.div
-                            transition={{ duration: 0.3, ease: "easeInOut" }}
-                            className="absolute inset-0"
-                        >
+                        <motion.div transition={{ duration: 0.3, ease: "easeInOut" }} className="absolute inset-0">
                             {!isOpen ? (
                                 <motion.div
-                                    className="w-8 h-8 rounded-full shadow-lg  overflow-hidden"
+                                    className="w-8 h-8 rounded-full shadow-lg overflow-hidden"
                                     initial={{ scale: 0, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
                                     transition={{ delay: 0.2 }}
                                 >
-                                    <img src="/chat.jpg" alt="User" className="w-full h-full object-cover" />
+                                    <Image
+                                        src="/chat.jpg"
+                                        alt="User"
+                                        width={32}
+                                        height={32}
+                                        className="w-full h-full object-cover"
+                                    />
                                 </motion.div>
                             ) : (
                                 <motion.div
@@ -159,7 +194,7 @@ export default function ChatWidget() {
                                     transition={{ duration: 0.3, ease: "easeInOut" }}
                                     className="w-8 h-8 flex justify-center items-center"
                                 >
-                                    <X  className="text-white" />
+                                    <X className="text-white" />
                                 </motion.div>
                             )}
                         </motion.div>

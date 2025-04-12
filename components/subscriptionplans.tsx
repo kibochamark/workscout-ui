@@ -222,7 +222,7 @@ export function SubscriptionPlans() {
                             </TooltipTrigger>
                             <TooltipContent>
                               <p className="w-[200px] text-xs">
-                                Start with our Free Plan and upgrade to a paid subscription whenever you're ready for expert help in 
+                                Start with our Free Plan and upgrade to a paid subscription whenever you are ready for expert help in 
                                 applying for jobs.
                               </p>
                             </TooltipContent>
