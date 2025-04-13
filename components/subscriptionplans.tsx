@@ -19,6 +19,8 @@ interface Plan {
   popular: boolean
   isFree?: boolean
   note?: string
+  priceId: string
+
 }
 
 export function SubscriptionPlans() {
@@ -40,7 +42,9 @@ export function SubscriptionPlans() {
       note: "Job applications will only be submitted after a subscription is activated",
       popular: false,
       isFree: true,
+      priceId: 'https://buy.stripe.com/test_cN2aIcaWgcoc6TC8wC'
     },
+
     {
       name: "Basic Plan",
       subtitle: "Bronze",
@@ -54,6 +58,7 @@ export function SubscriptionPlans() {
         "Access to a limited selection of career tips & resources",
       ],
       popular: false,
+      priceId: "price_1RDPZICNuHYjRQzHxQssOkdG"
     },
     {
       name: "Standard Plan",
@@ -69,6 +74,7 @@ export function SubscriptionPlans() {
         "Priority email support",
       ],
       popular: true,
+      priceId: "price_1RDPckCNuHYjRQzHOQ3Ta0v3"
     },
     {
       name: "Pro Plan",
@@ -86,6 +92,7 @@ export function SubscriptionPlans() {
         "1-on-1 career consultation (quarterly)",
       ],
       popular: false,
+      priceId: "price_1RDPd1CNuHYjRQzHHTGDYAOH"
     },
     {
       name: "Premium Plan",
@@ -106,8 +113,28 @@ export function SubscriptionPlans() {
         "Work-related support (e.g., workplace conflict, career progression advice)",
       ],
       popular: false,
+      priceId: "price_1RDPdDCNuHYjRQzH7BS0EL8f"
     },
   ]
+
+
+  function SubscribeButton(priceId: string) {
+    const handleClick = async () => {
+      const res = await fetch("/api/checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ priceId }),
+      });
+
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    };
+
+    handleClick()
+  }
+
 
   return (
     <TooltipProvider>
@@ -212,44 +239,48 @@ export function SubscriptionPlans() {
                       )}
                     </div>
                     {plan.isFree && (
-                        <div className="flex justify-center mt-3">
-                          <Tooltip>
-                            <TooltipTrigger asChild>
-                              <div className="flex items-center text-xs text-muted-foreground cursor-help">
-                                <Info className="h-3.5 w-3.5 mr-1" />
-                                <span>Upgrade anytime</span>
-                              </div>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                              <p className="w-[200px] text-xs">
-                                Start with our Free Plan and upgrade to a paid subscription whenever you are ready for expert help in 
-                                applying for jobs.
-                              </p>
-                            </TooltipContent>
-                          </Tooltip>
-                        </div>
-                      )}
+                      <div className="flex justify-center mt-3">
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="flex items-center text-xs text-muted-foreground cursor-help">
+                              <Info className="h-3.5 w-3.5 mr-1" />
+                              <span>Upgrade anytime</span>
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p className="w-[200px] text-xs">
+                              Start with our Free Plan and upgrade to a paid subscription whenever you are ready for expert help in
+                              applying for jobs.
+                            </p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </div>
+                    )}
 
                     <div className="mt-6">
+
                       <Button
+                        onClick={() => {
+                          SubscribeButton(plan.priceId)
+                        }}
                         className={cn(
                           "w-full text-white",
                           plan.name === "Free Plan" &&
-                            "bg-gradient-to-br from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600",
+                          "bg-gradient-to-br from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600",
                           plan.name === "Basic Plan" &&
-                            "bg-gradient-to-br from-teal-400 to-teal-500 hover:from-teal-500 hover:to-teal-600",
+                          "bg-gradient-to-br from-teal-400 to-teal-500 hover:from-teal-500 hover:to-teal-600",
                           plan.name === "Standard Plan" &&
-                            "bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700",
+                          "bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700",
                           plan.name === "Pro Plan" &&
-                            "bg-gradient-to-br from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600",
+                          "bg-gradient-to-br from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600",
                           plan.name === "Premium Plan" &&
-                            "bg-gradient-to-br from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700",
+                          "bg-gradient-to-br from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700",
                         )}
                       >
                         {buttonText}
                       </Button>
 
-                     
+
                     </div>
                   </div>
                 </div>
@@ -261,3 +292,4 @@ export function SubscriptionPlans() {
     </TooltipProvider>
   )
 }
+

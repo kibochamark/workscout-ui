@@ -40,9 +40,9 @@ export async function POST(req) {
                     }
                 );
                 console.log(session, "session")
-                // const customerId = session?.customer;
-                // const customer = await stripe.customers.retrieve(customerId);
-                // const priceId = session?.line_items?.data[0]?.price.id;
+                const customerId = session?.customer;
+                const customer = await stripe.customers.retrieve(customerId);
+                const priceId = session?.line_items?.data[0]?.price.id;
 
                 // if (customer.email) {
                 //     user = await User.findOne({ email: customer.email });

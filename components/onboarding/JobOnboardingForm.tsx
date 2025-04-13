@@ -29,7 +29,7 @@ interface InputGroupProps extends InputHTMLAttributes<HTMLInputElement> {
     id: string
   } 
 export function JobApplicationForm() {
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(3)
   const [jobSearch, setJobSearch] = useState("")
   const [resumeFile, setResumeFile] = useState<File | null>(null)
 
@@ -67,8 +67,8 @@ export function JobApplicationForm() {
       const form = new FormData()
       form.append("name", values.fullName)
       form.append("bio", jobSearch)
-      form.append("document", resumeFile)
-      form.append("kindeId", "test-kinde-id") // Replace with actual value
+      form.append("file", resumeFile)
+      form.append("kindeId", "kp_857f70fd1e47410ba4a12e8c1d5090f6") // Replace with actual value
 
       try {
         const response = await axios.post(`${baseUrl}create`, form, {
@@ -76,7 +76,7 @@ export function JobApplicationForm() {
         })
 
         console.log("Submitted:", response.data)
-        setStep(4)
+        setStep(3)
       } catch (err) {
         const error = err as AxiosError
         console.error(error.response?.data || error.message)
