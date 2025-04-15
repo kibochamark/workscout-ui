@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 import Stripe from 'stripe';
+import { baseUrl } from '@/app/utils/constants';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -41,25 +42,34 @@ export async function POST(req) {
                 );
                 console.log(session, "session")
                 const customerId = session?.customer;
-                // const customer = await stripe.customers.retrieve(customerId);
+                const customer = await stripe.customers.retrieve(customerId);
                 // const priceId = session?.line_items?.data[0]?.price.id;
 
-                // if (customer.email) {
-                //     user = await User.findOne({ email: customer.email });
+                if (customer.email) {
+                    const res= await axios.get(`${baseUrl}account/`, {
+                        params:{
+                            email:customer.email
+                        }
+                    })
 
-                //     if (!user) {
-                //         user = await User.create({
-                //             email: customer.email,
-                //             name: customer.name,
-                //             customerId
-                //         });
+                    if(res.status !== 200) {
+                        throw new Error("user not found")
+                    }
+                    
 
-                //         await user.save();
-                //     }
-                // } else {
-                //     console.error('No user found');
-                //     throw new Error('No user found');
-                // }
+                    // update user subscription status
+                    const updateusersubscription = await axios.put(`${baseUrl}subscription/`, {
+                        email:customer.email,
+                    })
+
+
+                    console.log(updateusersubscription, "sub from stripe")
+
+                    if(updateusersubscription.status !== 200) {
+                        throw new Error("subscription failed")
+                    }
+
+                }
 
                 // Update user data + Grant user access to your product. It's a boolean in the database, but could be a number of credits, etc...
                 // user.priceId = priceId;

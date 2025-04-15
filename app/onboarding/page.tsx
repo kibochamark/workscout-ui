@@ -1,12 +1,17 @@
 import { JobApplicationForm } from '@/components/onboarding/JobOnboardingForm'
 import React from 'react'
-import {getKindeServerSession} from "@kinde-oss/kinde-auth-nextjs/server";
+import { getUserSubscriptionStatus } from '../data-access/actions/subscription.service';
+import { redirect } from 'next/navigation';
 
 const page = async () => {
-  const { getAccessToken } = getKindeServerSession();
-  const accessToken = await getAccessToken();
+  // subscription status
+  const isSubscribed = await getUserSubscriptionStatus()
 
-  console.log(accessToken, "access token");
+  if(isSubscribed.status == 200 && isSubscribed.data === true){
+    return redirect("/workscout/redirected-route")
+  }
+
+  // console.log(accessToken, "access token");
   return (
     <div>
       <JobApplicationForm />

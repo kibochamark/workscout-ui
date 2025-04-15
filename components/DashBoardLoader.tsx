@@ -15,7 +15,7 @@ const DashBoardLoader = () => {
             }, 2000)
 
         } else {
-            redirect("/")
+            redirect("/workscout/dashboard")
         }
 
 

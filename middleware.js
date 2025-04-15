@@ -1,16 +1,12 @@
 import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
 import { NextResponse } from "next/server";
+import { getUserOnboardingStatus } from "./app/data-access/actions/onboardingstatus.service"
 
 const publicRoutes = ["/", "/privacy-policy", "/contact-us", "/terms-of-use", "/not-found"];
 const DEFAULT_LOGIN_REDIRECT = "/workscout/dashboard";
 const ONBOARDING_ROUTE = "/workscout/onboarding";
 
 // Simulated DB call for onboarding status
-async function getUserOnboardingStatus(email) {
-  // Replace this with your actual DB check
-  // e.g., const user = await db.user.findUnique({ where: { email } });
-  return false; // For testing purposes, assume not onboarded
-}
 
 export async function middleware(req) {
   const { nextUrl, auth } = req;
@@ -26,9 +22,8 @@ export async function middleware(req) {
 
 
 
-  // Authenticated
-  const email = req.auth?.user?.email;
-  const isOnboarded = await getUserOnboardingStatus(email);
+  const Onboarded = await getUserOnboardingStatus();
+  const isOnboarded = Onboarded.status == 500 ? false : Onboarded.data.data ? true :false
 
   // console.log(isOnboarded)
   // Not onboarded → redirect to onboarding
