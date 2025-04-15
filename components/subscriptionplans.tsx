@@ -9,113 +9,134 @@ import { Switch } from "@/components/ui/switch"
 import { cn } from "@/lib/utils"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
-interface Plan {
-  name: string
-  subtitle: string
-  monthlyPrice: number | "Free"
-  color: string
-  icon: React.ElementType
-  features: string[]
+type Plan = {
+  name: string;
+  subtitle: string;
+  monthlyPrice: string | number
+  color: string,
+  icon: React.ElementType;
+  features: string[];
+  annualPriceId: string;
+  annualPrice: number;
+  note: string
   popular: boolean
-  isFree?: boolean
-  note?: string
-  priceId: string
+  isFree: boolean
+  priceId: string;
+};
 
-}
+export const plans: Plan[] = [
+  {
+    name: "Free Plan",
+    subtitle: "Basic Access",
+    monthlyPrice: "Free",
+    color: "bg-gradient-to-br from-gray-400 to-gray-500",
+    icon: User,
+    features: [
+      "Manage your personal profile",
+      "Upload and manage CVs/resumes",
+      "View your dashboard and track your activity",
+      "Secure messaging with WorkScout admin",
+    ],
+    note: "Job applications will only be submitted after a subscription is activated",
+    popular: false,
+    isFree: true,
+    priceId: "https://buy.stripe.com/test_cN2aIcaWgcoc6TC8wC",
+    annualPriceId: "",
+    annualPrice: 0
+  },
+  {
+    name: "Basic Plan",
+    subtitle: "Bronze",
+    monthlyPrice: 5,
+    annualPrice: 48,
+    color: "bg-gradient-to-br from-teal-400 to-teal-500",
+    icon: Shield,
+    features: [
+      "Everything in the Basic Plan",
+      "10 tailored job applications per month",
+      "Basic resume review",
+      "Access to a limited selection of career tips & resources",
+    ],
+    popular: false,
+    priceId: "price_1RDPZICNuHYjRQzHxQssOkdG", // monthly
+    annualPriceId: "price_1RE9LKCNuHYjRQzHv9yrfXi1",
+    note: "",
+    isFree: false
+  },
+  {
+    name: "Standard Plan",
+    subtitle: "Silver",
+    monthlyPrice: 10,
+    annualPrice: 96,
+    color: "bg-gradient-to-br from-blue-500 to-blue-600",
+    icon: Zap,
+    features: [
+      "Everything in the Basic Plan",
+      "20 tailored job applications per month",
+      "AI-assisted CV optimization",
+      "LinkedIn profile optimization tips",
+      "Priority email support",
+    ],
+    popular: true,
+    priceId: "price_1RDPckCNuHYjRQzHOQ3Ta0v3",
+    annualPriceId: "price_1RE9KyCNuHYjRQzH6mwQaYIV",
+    note: "",
+    isFree: false
+  },
+  {
+    name: "Pro Plan",
+    subtitle: "Gold",
+    monthlyPrice: 25,
+    annualPrice: 240,
+    color: "bg-gradient-to-br from-amber-400 to-amber-500",
+    icon: Star,
+    features: [
+      "Everything in the Standard Plan",
+      "30 tailored job applications per month",
+      "Personalized job-matching service",
+      "Access to exclusive job opportunities",
+      "Interview preparation guides & resources",
+      "Networking strategies & tips",
+      "1-on-1 career consultation (quarterly)",
+    ],
+    popular: false,
+    priceId: "price_1RDPd1CNuHYjRQzHHTGDYAOH",
+    annualPriceId: "price_1RE9LZCNuHYjRQzHs7s9nVZp",
+    note: "",
+    isFree: false
+  },
+  {
+    name: "Premium Plan",
+    subtitle: "Platinum",
+    monthlyPrice: 50,
+    annualPrice: 480,
+    color: "bg-gradient-to-br from-purple-500 to-purple-600",
+    icon: Crown,
+    features: [
+      "Everything in the Pro Plan",
+      "Unlimited tailored job applications (subject to job availability)",
+      "1-on-1 job search strategy call (once per month)",
+      "Personalized cover letter writing",
+      "Direct employer outreach assistance",
+      "Exclusive career development webinars",
+      "Career Assistant for ongoing support after securing a job",
+      "Monthly career coaching sessions",
+      "Salary negotiation assistance",
+      "Work-related support (e.g., workplace conflict, career progression advice)",
+    ],
+    popular: false,
+    priceId: "price_1RDPdDCNuHYjRQzH7BS0EL8f",
+    annualPriceId: "price_1RE9KJCNuHYjRQzHp7K3IEnT",
+    note: "",
+    isFree: false
+  },
+];
 
 export function SubscriptionPlans() {
   const [isAnnual, setIsAnnual] = useState(false)
 
-  const plans: Plan[] = [
-    {
-      name: "Free Plan",
-      subtitle: "Basic Access",
-      monthlyPrice: "Free",
-      color: "bg-gradient-to-br from-gray-400 to-gray-500",
-      icon: User,
-      features: [
-        "Manage your personal profile",
-        "Upload and manage CVs/resumes",
-        "View your dashboard and track your activity",
-        "Secure messaging with WorkScout admin",
-      ],
-      note: "Job applications will only be submitted after a subscription is activated",
-      popular: false,
-      isFree: true,
-      priceId: 'https://buy.stripe.com/test_cN2aIcaWgcoc6TC8wC'
-    },
 
-    {
-      name: "Basic Plan",
-      subtitle: "Bronze",
-      monthlyPrice: 5,
-      color: "bg-gradient-to-br from-teal-400 to-teal-500",
-      icon: Shield,
-      features: [
-        "Everything in the Basic Plan",
-        "10 tailored job applications per month",
-        "Basic resume review",
-        "Access to a limited selection of career tips & resources",
-      ],
-      popular: false,
-      priceId: "price_1RDPZICNuHYjRQzHxQssOkdG"
-    },
-    {
-      name: "Standard Plan",
-      subtitle: "Silver",
-      monthlyPrice: 10,
-      color: "bg-gradient-to-br from-blue-500 to-blue-600",
-      icon: Zap,
-      features: [
-        "Everything in the Basic Plan",
-        "20 tailored job applications per month",
-        "AI-assisted CV optimization",
-        "LinkedIn profile optimization tips",
-        "Priority email support",
-      ],
-      popular: true,
-      priceId: "price_1RDPckCNuHYjRQzHOQ3Ta0v3"
-    },
-    {
-      name: "Pro Plan",
-      subtitle: "Gold",
-      monthlyPrice: 25,
-      color: "bg-gradient-to-br from-amber-400 to-amber-500",
-      icon: Star,
-      features: [
-        "Everything in the Standard Plan",
-        "30 tailored job applications per month",
-        "Personalized job-matching service",
-        "Access to exclusive job opportunities",
-        "Interview preparation guides & resources",
-        "Networking strategies & tips",
-        "1-on-1 career consultation (quarterly)",
-      ],
-      popular: false,
-      priceId: "price_1RDPd1CNuHYjRQzHHTGDYAOH"
-    },
-    {
-      name: "Premium Plan",
-      subtitle: "Platinum",
-      monthlyPrice: 50,
-      color: "bg-gradient-to-br from-purple-500 to-purple-600",
-      icon: Crown,
-      features: [
-        "Everything in the Pro Plan",
-        "Unlimited tailored job applications (subject to job availability)",
-        "1-on-1 job search strategy call (once per month)",
-        "Personalized cover letter writing",
-        "Direct employer outreach assistance",
-        "Exclusive career development webinars",
-        "Career Assistant for ongoing support after securing a job",
-        "Monthly career coaching sessions",
-        "Salary negotiation assistance",
-        "Work-related support (e.g., workplace conflict, career progression advice)",
-      ],
-      popular: false,
-      priceId: "price_1RDPdDCNuHYjRQzH7BS0EL8f"
-    },
-  ]
+
 
 
   function SubscribeButton(priceId: string) {
@@ -159,11 +180,17 @@ export function SubscriptionPlans() {
 
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {plans.map((plan) => {
-              const Icon = plan.icon
-              const monthlyPrice = plan.monthlyPrice
-              const annualPrice = typeof monthlyPrice === "number" ? Math.round(monthlyPrice * 12 * 0.8) : "Free" // 20% discount
-              const displayPrice = isAnnual && typeof monthlyPrice === "number" ? annualPrice : monthlyPrice
-              const buttonText = plan.isFree ? "Get Started" : `Choose ${plan.name.split(" ")[0]}`
+              const Icon = plan.icon;
+
+              const displayPrice =
+                isAnnual && typeof plan.annualPrice === "number"
+                  ? plan.annualPrice
+                  : plan.monthlyPrice;
+
+              const selectedPriceId =
+                isAnnual && plan.annualPriceId ? plan.annualPriceId : plan.priceId;
+
+              const buttonText = plan.isFree ? "Get Started" : `Choose ${plan.name.split(" ")[0]}`;
 
               return (
                 <div
@@ -204,11 +231,7 @@ export function SubscriptionPlans() {
                           <span className="text-3xl font-bold text-emerald-500">{displayPrice}</span>
                         )}
                       </div>
-                      {typeof monthlyPrice === "number" && (
-                        <p className="mt-1 text-xs text-muted-foreground">
-                          {isAnnual ? "Billed annually" : "Billed monthly"}
-                        </p>
-                      )}
+
                     </div>
 
                     <div className="space-y-3 flex-grow">
@@ -261,7 +284,10 @@ export function SubscriptionPlans() {
 
                       <Button
                         onClick={() => {
-                          SubscribeButton(plan.priceId)
+                          if (!plan.name.includes("Free")) {
+                            SubscribeButton(selectedPriceId)
+                          }
+
                         }}
                         className={cn(
                           "w-full text-white",
@@ -284,8 +310,9 @@ export function SubscriptionPlans() {
                     </div>
                   </div>
                 </div>
-              )
+              );
             })}
+
           </div>
         </div>
       </div>

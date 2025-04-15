@@ -3,15 +3,45 @@ import { headers } from 'next/headers';
 import Stripe from 'stripe';
 import { baseUrl } from '@/app/utils/constants';
 
+import axios from 'axios';
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+
+
+export const plans = [
+    {
+        name: "Free Plan",
+
+    },
+    {
+        name: "Basic Plan",
+
+    },
+    {
+        name: "Standard Plan",
+
+    },
+    {
+        name: "Pro Plan",
+
+    },
+    {
+        name: "Premium Plan",
+
+    },
+];
 
 export async function POST(req) {
     // await connectMongo();
 
     const body = await req.text();
 
-    const signature = headers().get('stripe-signature');
+    const reqHeaders = await headers();
+    const signature = reqHeaders.get('stripe-signature');
+
+
 
     let data;
     let eventType;
@@ -33,7 +63,7 @@ export async function POST(req) {
             case 'checkout.session.completed': {
                 // First payment is successful and a subscription is created (if mode was set to "subscription" in ButtonCheckout)
                 // ✅ Grant access to the product
-        
+
                 const session = await stripe.checkout.sessions.retrieve(
                     data.object.id,
                     {
@@ -43,40 +73,41 @@ export async function POST(req) {
                 console.log(session, "session")
                 const customerId = session?.customer;
                 const customer = await stripe.customers.retrieve(customerId);
-                // const priceId = session?.line_items?.data[0]?.price.id;
+                const priceId = session?.line_items?.data[0]?.price.id;
+
+                const plan = plans.filter((p) => p.annualPriceId == priceId || p.priceId == priceId)
+
+                if (!plan) {
+                    throw new Error("plan does not exist")
+                }
 
                 if (customer.email) {
-                    const res= await axios.get(`${baseUrl}account/`, {
-                        params:{
-                            email:customer.email
-                        }
-                    })
+                    const res = await axios.get(`${baseUrl}account/${customer.email}`)
 
-                    if(res.status !== 200) {
+                    console.log(res, "res")
+
+                    if (res.status !== 200) {
                         throw new Error("user not found")
                     }
-                    
+
 
                     // update user subscription status
                     const updateusersubscription = await axios.put(`${baseUrl}subscription/`, {
-                        email:customer.email,
+                        email: customer.email,
+                        plan: plan[0].name.split(" ")[0].toUpperCase(),
+                        stripeCustomerId: customer.customer
                     })
 
 
                     console.log(updateusersubscription, "sub from stripe")
 
-                    if(updateusersubscription.status !== 200) {
+                    if (updateusersubscription.status !== 200) {
                         throw new Error("subscription failed")
                     }
 
                 }
 
-                // Update user data + Grant user access to your product. It's a boolean in the database, but could be a number of credits, etc...
-                // user.priceId = priceId;
-                // user.hasAccess = true;
-                // await user.save();
 
-                // Extra: >>>>> send email to dashboard <<<<
 
                 break;
             }
@@ -89,13 +120,27 @@ export async function POST(req) {
                 );
 
                 console.log(subscription)
-                // const user = await User.findOne({
-                //     customerId: subscription.customer
-                // });
 
-                // // Revoke access to your product
-                // user.hasAccess = false;
-                // await user.save();
+                const res = await axios.get(`${baseUrl}customer/${customer.customer}`)
+
+                if (res.status !== 200) {
+                    throw new Error("user not found")
+                }
+
+
+                // update user subscription status
+                const updateusersubscription = await axios.put(`${baseUrl}subscription/`, {
+                    email: res.data.data.email,
+                    active: false
+                })
+
+
+                console.log(updateusersubscription, "sub from stripe")
+
+                if (updateusersubscription.status !== 200) {
+                    throw new Error("subscription failed")
+                }
+
 
                 break;
             }
