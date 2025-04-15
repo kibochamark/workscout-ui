@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { getUserOnboardingStatus } from "./app/data-access/actions/onboardingstatus.service"
 
 const publicRoutes = ["/", "/privacy-policy", "/contact-us", "/terms-of-use", "/not-found"];
-const DEFAULT_LOGIN_REDIRECT = "/workscout/redirect-route";
+const DEFAULT_LOGIN_REDIRECT = "/workscout/redirected-route";
 const ONBOARDING_ROUTE = "/workscout/onboarding";
 
 // Simulated DB call for onboarding status
