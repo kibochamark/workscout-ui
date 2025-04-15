@@ -10,7 +10,7 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 
 
-export const plans = [
+const plans = [
    {
      name: "Free Plan",
     
@@ -106,10 +106,10 @@ export async function POST(req) {
                         stripeCustomerId: customer.customer
                     })
 
-                    console.log(updateusersubscription, "res")
+                    // console.log(updateusersubscription, "res")
 
 
-                    console.log(updateusersubscription, "sub from stripe")
+                    // console.log(updateusersubscription, "sub from stripe")
 
                     if (updateusersubscription.status !== 200) {
                         throw new Error("subscription failed")
@@ -145,7 +145,7 @@ export async function POST(req) {
                 })
 
 
-                console.log(updateusersubscription, "sub from stripe")
+                // console.log(updateusersubscription, "sub from stripe")
 
                 if (updateusersubscription.status !== 200) {
                     throw new Error("subscription failed")
