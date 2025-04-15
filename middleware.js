@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { getUserOnboardingStatus } from "./app/data-access/actions/onboardingstatus.service"
 
 const publicRoutes = ["/", "/privacy-policy", "/contact-us", "/terms-of-use", "/not-found"];
-const DEFAULT_LOGIN_REDIRECT = "/workscout/dashboard";
+const DEFAULT_LOGIN_REDIRECT = "/workscout/redirect-route";
 const ONBOARDING_ROUTE = "/workscout/onboarding";
 
 // Simulated DB call for onboarding status
@@ -25,7 +25,7 @@ export async function middleware(req) {
   const Onboarded = await getUserOnboardingStatus();
   const isOnboarded = Onboarded.status == 500 ? false : Onboarded.data.data ? true :false
 
-  // console.log(isOnboarded)
+  console.log(Onboarded)
   // Not onboarded → redirect to onboarding
   if (!isOnboarded && !isOnboardingRoute) {
     return NextResponse.redirect(new URL(ONBOARDING_ROUTE, req.url));

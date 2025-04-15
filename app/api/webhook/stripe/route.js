@@ -11,27 +11,34 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 
 export const plans = [
-    {
-        name: "Free Plan",
-
-    },
-    {
-        name: "Basic Plan",
-
-    },
-    {
-        name: "Standard Plan",
-
-    },
-    {
-        name: "Pro Plan",
-
-    },
-    {
-        name: "Premium Plan",
-
-    },
-];
+   {
+     name: "Free Plan",
+    
+     priceId: "",
+     annualPriceId: "",
+   },
+   {
+     name: "Basic Plan",
+    
+     priceId: "price_1RDPZICNuHYjRQzHxQssOkdG", // monthly
+     annualPriceId: "price_1RE9LKCNuHYjRQzHv9yrfXi1",
+   
+   },
+   {
+     name: "Standard Plan",
+    
+     priceId: "price_1RDPd1CNuHYjRQzHHTGDYAOH",
+     annualPriceId: "price_1RE9LZCNuHYjRQzHs7s9nVZp",
+    
+   },
+   {
+     name: "Premium Plan",
+     
+     priceId: "price_1RDPdDCNuHYjRQzH7BS0EL8f",
+     annualPriceId: "price_1RE9KJCNuHYjRQzHp7K3IEnT",
+   
+   },
+ ];
 
 export async function POST(req) {
     // await connectMongo();
@@ -84,19 +91,22 @@ export async function POST(req) {
                 if (customer.email) {
                     const res = await axios.get(`${baseUrl}account/${customer.email}`)
 
-                    console.log(res, "res")
+                   
 
                     if (res.status !== 200) {
                         throw new Error("user not found")
                     }
 
+                    console.log(plan[0].name.split(" ")[0].toUpperCase())
 
                     // update user subscription status
-                    const updateusersubscription = await axios.put(`${baseUrl}subscription/`, {
-                        email: customer.email,
+                    const updateusersubscription = await axios.put(`${baseUrl}subscription`, {
+                        email: res.data.data.email,
                         plan: plan[0].name.split(" ")[0].toUpperCase(),
                         stripeCustomerId: customer.customer
                     })
+
+                    console.log(updateusersubscription, "res")
 
 
                     console.log(updateusersubscription, "sub from stripe")
