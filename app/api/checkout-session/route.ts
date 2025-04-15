@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
                 },
             ],
             customer_email:user.email as string,  
-            success_url: `${process.env.AUTH_URL!}/workscout/success?session_id={CHECKOUT_SESSION_ID}`,
+            success_url: `${process.env.AUTH_URL!}/workscout/redirected-route?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${process.env.AUTH_URL!}/workscout/onboarding`,
         });
 
