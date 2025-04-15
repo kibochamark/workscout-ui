@@ -139,9 +139,12 @@ export async function POST(req) {
 
 
                 // update user subscription status
-                const updateusersubscription = await axios.put(`${baseUrl}subscription/`, {
+                // update user subscription status
+                const updateusersubscription = await axios.put(`${baseUrl}subscription`, {
                     email: res.data.data.email,
-                    active: false
+                    plan: plan[0].name.split(" ")[0].toUpperCase(),
+                    stripeCustomerId: customer.customer,
+                    active:false
                 })
 
 
