@@ -11,9 +11,10 @@ const page = async () => {
   // subscription status
   const isSubscribed = await getUserSubscriptionStatus()
 
-  console.log(isSubscribed, "s")
+  // console.log(isSubscribed, "s")
 
-  console.log(isSubscribed, "s")
+  // console.log(isSubscribed, "s")
+  
 
   // if (isSubscribed.status == 200 && isSubscribed.data.data === true) {
   //   return redirect("/workscout/redirected-route")
