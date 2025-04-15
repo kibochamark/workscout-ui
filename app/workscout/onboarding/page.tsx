@@ -1,8 +1,8 @@
 import { JobApplicationForm } from '@/components/onboarding/JobOnboardingForm'
 import React from 'react'
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+
 import { getUserSubscriptionStatus } from '@/app/data-access/actions/subscription.service';
-import { redirect } from 'next/navigation';
+
 
 const page = async () => {
 
