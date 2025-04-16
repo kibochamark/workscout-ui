@@ -78,7 +78,7 @@ export const plans: Plan[] = [
       "Priority email support",
     ],
     popular: true,
-    priceId: "price_1RDPckCNuHYjRQzHOQ3Ta0v3",
+    priceId: "price_1RE9IRCNuHYjRQzH5bqGdT1W",
     annualPriceId: "price_1RE9KyCNuHYjRQzH6mwQaYIV",
     note: "",
     isFree: false
@@ -100,7 +100,7 @@ export const plans: Plan[] = [
       "1-on-1 career consultation (quarterly)",
     ],
     popular: false,
-    priceId: "price_1RDPd1CNuHYjRQzHHTGDYAOH",
+    priceId: "price_1RE9HmCNuHYjRQzHmJMR6KJD",
     annualPriceId: "price_1RE9LZCNuHYjRQzHs7s9nVZp",
     note: "",
     isFree: false
@@ -125,7 +125,7 @@ export const plans: Plan[] = [
       "Work-related support (e.g., workplace conflict, career progression advice)",
     ],
     popular: false,
-    priceId: "price_1RDPdDCNuHYjRQzH7BS0EL8f",
+    priceId: "price_1RE9JMCNuHYjRQzHocRSMssk",
     annualPriceId: "price_1RE9KJCNuHYjRQzHp7K3IEnT",
     note: "",
     isFree: false

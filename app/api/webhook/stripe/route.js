@@ -13,30 +13,30 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const plans = [
    {
      name: "Free Plan",
-    
      priceId: "",
      annualPriceId: "",
    },
    {
      name: "Basic Plan",
-    
      priceId: "price_1RDPZICNuHYjRQzHxQssOkdG", // monthly
      annualPriceId: "price_1RE9LKCNuHYjRQzHv9yrfXi1",
    
    },
    {
      name: "Standard Plan",
-    
-     priceId: "price_1RDPd1CNuHYjRQzHHTGDYAOH",
-     annualPriceId: "price_1RE9LZCNuHYjRQzHs7s9nVZp",
+     priceId: "price_1RE9IRCNuHYjRQzH5bqGdT1W",
+     annualPriceId: "price_1RE9KyCNuHYjRQzH6mwQaYIV",
     
    },
    {
      name: "Premium Plan",
-     
-     priceId: "price_1RDPdDCNuHYjRQzH7BS0EL8f",
+     priceId: "price_1RE9JMCNuHYjRQzHocRSMssk",
      annualPriceId: "price_1RE9KJCNuHYjRQzHp7K3IEnT",
-   
+   },
+   {
+     name: "Pro Plan",
+     priceId: "price_1RE9HmCNuHYjRQzHmJMR6KJD",
+     annualPriceId: "price_1RE9LZCNuHYjRQzHs7s9nVZp",
    },
  ];
 
