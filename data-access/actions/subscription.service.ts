@@ -49,3 +49,50 @@ export async function getUserSubscriptionStatus() {
     }
 
 }
+
+
+
+// Simulated DB call for onboarding status
+export async function createFreeSubscription() {
+    const { isAuthenticated, getUser } = getKindeServerSession();
+    const isUserAuthenticated = await isAuthenticated();
+    
+
+    const user = await getUser();
+
+    try {
+        if (!isUserAuthenticated) {
+            throw new Error("user is not authenticated")
+        }
+
+   
+console.log(user.email)
+
+        const res = await axios.post(`${baseUrl}subscription`,  {
+            email:user.email,
+            plan:"FREE",
+            
+        },{
+          
+        })
+
+        if (res.status !== 201) {
+            throw new Error(JSON.stringify(res.data))
+        }
+
+
+        return {
+            status: res.status,
+            data: res.data,
+            error: ""
+        }
+
+    } catch (error) {
+        return {
+            status: 500,
+            error: error,
+            data: ""
+        }
+    }
+
+}

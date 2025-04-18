@@ -34,7 +34,7 @@ interface InputGroupProps extends InputHTMLAttributes<HTMLInputElement> {
   id: string
 }
 export function JobApplicationForm({ subscribed }: { subscribed: boolean }) {
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(3)
   const [jobSearch, setJobSearch] = useState("")
   const [resumeFile, setResumeFile] = useState<File | null>(null)
 

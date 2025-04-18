@@ -3,11 +3,14 @@
 import type React from "react"
 
 import { useState } from "react"
-import { Check, Shield, Zap, Star, Crown, User, Info, AlertCircle } from "lucide-react"
+import { Check, Shield, Zap, Star, Crown, User, Info, AlertCircle, Loader } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { cn } from "@/lib/utils"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { useMutation } from "@tanstack/react-query"
+import { createFreeSubscription } from "@/data-access/actions/subscription.service"
+import { redirect } from "next/navigation"
 
 type Plan = {
   name: string;
@@ -157,6 +160,19 @@ export function SubscriptionPlans() {
   }
 
 
+  const freeplanmutation=useMutation({
+    mutationFn:async()=>{
+      const res = await createFreeSubscription()
+      return res
+    },
+    onSuccess(data) {
+      if(data.status == 201){
+        redirect("/workscout/redirected-route")
+      }
+    },
+  })
+
+
   return (
     <TooltipProvider>
       <div className="w-full bg-background pt-16 md:pt-0 lg:pt-20 py-12 md:py-24">
@@ -286,6 +302,8 @@ export function SubscriptionPlans() {
                         onClick={() => {
                           if (!plan.name.includes("Free")) {
                             SubscribeButton(selectedPriceId)
+                          }else{
+                            freeplanmutation.mutateAsync()
                           }
 
                         }}
@@ -303,7 +321,7 @@ export function SubscriptionPlans() {
                           "bg-gradient-to-br from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700",
                         )}
                       >
-                        {buttonText}
+                        {plan.isFree && freeplanmutation.isPending ? <Loader className="animate animate-spin"/> : buttonText}
                       </Button>
 
 
