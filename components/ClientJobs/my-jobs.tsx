@@ -134,7 +134,7 @@ export default function MyJobs({ jobs }: { jobs: Job[] }) {
         </div>
 
         {/* Pagination */}
-        <div className="p-4 border-t flex items-center justify-between">
+        <div className="p-4 border-t md:hidden flex items-center justify-between">
           <div className="text-sm text-gray-500">
             {startIndex + 1} - {Math.min(endIndex, jobs.length)} of {jobs.length} entries
           </div>

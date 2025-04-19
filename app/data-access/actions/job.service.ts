@@ -2,6 +2,7 @@
 
 import { baseUrl } from "@/app/utils/constants";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import axios from "axios";
 
 
 
@@ -39,6 +40,55 @@ export async function getJobs() {
         return {
             status: response.status,
             data: data.data,
+            error: ""
+        }
+
+    } catch (error) {
+        return {
+            status: 500,
+            error: error,
+            data: ""
+        }
+    }
+
+}
+
+
+
+export async function bookmarkJob(bookmark:boolean) {
+    const { isAuthenticated, getAccessTokenRaw } = getKindeServerSession();
+    const isUserAuthenticated = await isAuthenticated();
+    const accessToken = await getAccessTokenRaw();
+
+
+
+    try {
+        if (!isUserAuthenticated) {
+            throw new Error("user is not authenticated")
+        }
+  
+
+        const response= await axios.put(`${baseUrl}job`,{
+            bookmarked:bookmark
+        },{
+           
+            headers:{
+                Authorization: "Bearer " + accessToken
+            },
+          
+        })
+        
+
+       
+
+        if (response.status !== 200) {
+            throw new Error(JSON.stringify(response.data))
+        }
+
+
+        return {
+            status: response.status,
+            data: response.data.data,
             error: ""
         }
 

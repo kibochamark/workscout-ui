@@ -1,16 +1,19 @@
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef, RowExpanding } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../globalcomponents/ColumnHeader";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
+import { Check, X } from "lucide-react";
+
 
 export type Job = {
     id: string;
     title: string;
     workscoutId: string;
-    company:string;
+    company: string;
     category: string;
-    dateApplied:string; // or Date, depending on your data
+    dateApplied: string; // or Date, depending on your data
     status: string;
+    bookmarked:boolean
 };
 
 
@@ -57,11 +60,11 @@ export const columns: ColumnDef<Job>[] = [
         ),
         cell: ({ row }) => {
             const status = row.original.status;
-            const classname={
-                "bg-orange-400" : status.toLocaleLowerCase() === "in progress",
-                "bg-red-600" : status.toLocaleLowerCase() === "rejected",
-                "bg-green-400" : status.toLocaleLowerCase() === "submitted",
-                "bg-primary900" : status.toLocaleLowerCase() === "applied",
+            const classname = {
+                "bg-orange-400": status.toLocaleLowerCase() === "in progress",
+                "bg-red-600": status.toLocaleLowerCase() === "rejected",
+                "bg-green-400": status.toLocaleLowerCase() === "submitted",
+                "bg-primary900": status.toLocaleLowerCase() === "applied",
 
             }
             return (
@@ -70,18 +73,43 @@ export const columns: ColumnDef<Job>[] = [
         },
     },
     {
+        accessorKey: "bookmarked",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Bookmarked?" />
+        ),
+        cell: ({ row }) => {
+            const bookmark = row.original.bookmarked;
+       
+            return (
+               <div>{bookmark ? <Check/> : <X/>}</div>
+            );
+        },
+    },
+    {
         id: "actions",
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Action" className="w-[80px]" />
         ),
-        cell: () => {
-          
+        cell: ({row}) => {
+                const joob = row.original
             return (
-                <div className="flex items-center gap-2">
-                    {/* Add your action buttons here */}
-                    <button className="text-blue-500">Bookmark</button>
-                </div>
+                <HandleBookMark bookmark={row.original.bookmarked}/>
             );
         },
     },
 ];
+
+
+
+const HandleBookMark = ({ bookmark }: { bookmark: boolean }) => {
+    // const bookmarkmutation = useMutation({
+
+    // })
+    return (
+        <div className="flex items-center gap-2">
+            {/* Add your action buttons here */}
+            <button className="text-blue-500">{bookmark ? "un-bookmark": "Bookmark"}</button>
+        </div>
+    )
+
+}
