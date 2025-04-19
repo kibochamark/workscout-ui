@@ -10,71 +10,81 @@ import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { DataTable } from "../globalcomponents/DataTable"
+import { columns } from "./columns"
 
 // Sample data for jobs
 const jobs = [
+  
   {
     id: 1,
-    name: "Product manager",
+    title: "Product manager",
     company: "Jewel Joe",
     category: "Technology",
     appliedDate: "18/04/2023",
+    workscoutId:"test",
     status: "submitted",
   },
   {
     id: 2,
-    name: "Product manager",
+    title: "Product manager",
     company: "Jewel Joe",
     category: "Technology",
     appliedDate: "18/04/2023",
+    workscoutId:"test",
     status: "submitted",
   },
   {
     id: 3,
-    name: "Product manager",
+    title: "Product manager",
     company: "Jewel Joe",
     category: "Technology",
     appliedDate: "18/04/2023",
+    workscoutId:"test",
     status: "submitted",
   },
   {
     id: 4,
-    name: "Product manager",
+    title: "Product manager",
     company: "Jewel Joe",
     category: "Technology",
     appliedDate: "18/04/2023",
+    workscoutId:"test",
     status: "rejected",
   },
   {
     id: 5,
-    name: "Product manager",
+    title: "Product manager",
     company: "Jewel Joe",
     category: "Technology",
     appliedDate: "18/04/2023",
+    workscoutId:"test",
     status: "in progress",
   },
   {
     id: 6,
-    name: "Product manager",
+    title: "Product manager",
     company: "Jewel Joe",
     category: "Technology",
     appliedDate: "18/04/2023",
+    workscoutId:"test",
     status: "rejected",
   },
   {
     id: 7,
-    name: "Product manager",
+    title: "Product manager",
     company: "Jewel Joe",
     category: "Technology",
     appliedDate: "18/04/2023",
+    workscoutId:"test",
     status: "in progress",
   },
 ]
 
 export default function MyJobs() {
   const [selectedJobs, setSelectedJobs] = useState<number[]>([])
-  const [dateRange, ] = useState("6 Jan 2023 - 13 Jan 2023")
-//   const [activeActionRow, setActiveActionRow] = useState<number | null>(null)
+  const [dateRange,] = useState("6 Jan 2023 - 13 Jan 2023")
+  //   const [activeActionRow, setActiveActionRow] = useState<number | null>(null)
 
   // Handle checkbox selection
   const handleSelectAll = () => {
@@ -148,65 +158,8 @@ export default function MyJobs() {
         </div>
 
         {/* Desktop Table View */}
-        <div className="hidden md:block overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[50px]">
-                  <Checkbox
-                    checked={selectedJobs.length === jobs.length && jobs.length > 0}
-                    onCheckedChange={handleSelectAll}
-                  />
-                </TableHead>
-                <TableHead>Job Name</TableHead>
-                <TableHead>Work Scout</TableHead>
-                <TableHead>Category</TableHead>
-                <TableHead>Applied date</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="w-[80px]">Action</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {jobs.map((job) => (
-                <TableRow key={job.id} className="relative">
-                  <TableCell>
-                    <Checkbox checked={selectedJobs.includes(job.id)} onCheckedChange={() => handleSelectJob(job.id)} />
-                  </TableCell>
-                  <TableCell>{job.name}</TableCell>
-                  <TableCell>{job.company}</TableCell>
-                  <TableCell>{job.category}</TableCell>
-                  <TableCell>{job.appliedDate}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center">
-                      <span className={`w-2 h-2 rounded-full ${getStatusColor(job.status)} mr-2`}></span>
-                      {job.status}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon">
-                          <MoreVertical className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>Bookmark</DropdownMenuItem>
-                        <DropdownMenuItem>Version History</DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-
-                    {/* Expanded action menu for the third row as shown in the screenshot */}
-                    {/* {job.id === 3 && (
-                      <div className="absolute right-16 top-1/2 -translate-y-1/2 bg-white border rounded-md shadow-md p-2 z-10">
-                        <div className="py-1 px-3 hover:bg-gray-100 cursor-pointer">Bookmark</div>
-                        <div className="py-1 px-3 hover:bg-gray-100 cursor-pointer">Version History</div>
-                      </div>
-                    )} */}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+        <div className="hidden md:block overflow-x-auto p-4">
+          <DataTable columns={columns} data={jobs} />
         </div>
 
         {/* Mobile Card View */}
@@ -221,7 +174,7 @@ export default function MyJobs() {
                     className="mr-3"
                   />
                   <div>
-                    <h3 className="font-medium">{job.name}</h3>
+                    <h3 className="font-medium">{job.title}</h3>
                     <p className="text-sm text-gray-500">{job.company}</p>
                   </div>
                 </div>
