@@ -91,7 +91,7 @@ export const columns: ColumnDef<Job>[] = [
             <DataTableColumnHeader column={column} title="Action" className="w-[80px]" />
         ),
         cell: ({row}) => {
-                const joob = row.original
+               
             return (
                 <HandleBookMark bookmark={row.original.bookmarked}/>
             );
