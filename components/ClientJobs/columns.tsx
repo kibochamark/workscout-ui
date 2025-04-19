@@ -1,4 +1,4 @@
-import { ColumnDef, RowExpanding } from "@tanstack/react-table";
+import { ColumnDef} from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../globalcomponents/ColumnHeader";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
