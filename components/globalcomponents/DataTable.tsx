@@ -61,6 +61,7 @@ export function DataTable<TData, TValue>({
         getPaginationRowModel: getPaginationRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
+        onSortingChange:setSorting,
         state: {
             sorting,
             columnFilters,

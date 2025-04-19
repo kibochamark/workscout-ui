@@ -4,19 +4,28 @@ import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
 
 export type Job = {
-    id: number;
+    id: string;
     title: string;
     workscoutId: string;
+    company:string;
     category: string;
-    appliedDate: string; // or Date, depending on your data
+    dateApplied:string; // or Date, depending on your data
     status: string;
 };
+
+
 
 export const columns: ColumnDef<Job>[] = [
     {
         accessorKey: "title",
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Job Name" />
+        ),
+    },
+    {
+        accessorKey: "company",
+        header: ({ column }) => (
+            <DataTableColumnHeader column={column} title="Company" />
         ),
     },
     {
@@ -32,12 +41,12 @@ export const columns: ColumnDef<Job>[] = [
         ),
     },
     {
-        accessorKey: "appliedDate",
+        accessorKey: "dateApplied",
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Applied Date" />
         ),
         cell: ({ row }) => {
-            const date = new Date(row.getValue("appliedDate"));
+            const date = new Date(row.getValue("dateApplied"));
             return date.toLocaleDateString(); // Optional: format date
         },
     },
@@ -49,9 +58,10 @@ export const columns: ColumnDef<Job>[] = [
         cell: ({ row }) => {
             const status = row.original.status;
             const classname={
-                "bg-orange-400" : status === "in progress",
-                "bg-red-600" : status === "rejected",
-                "bg-green-400" : status === "submitted",
+                "bg-orange-400" : status.toLocaleLowerCase() === "in progress",
+                "bg-red-600" : status.toLocaleLowerCase() === "rejected",
+                "bg-green-400" : status.toLocaleLowerCase() === "submitted",
+                "bg-primary900" : status.toLocaleLowerCase() === "applied",
 
             }
             return (
@@ -64,13 +74,12 @@ export const columns: ColumnDef<Job>[] = [
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Action" className="w-[80px]" />
         ),
-        cell: ({ row }) => {
-            const job = row.original;
+        cell: () => {
+          
             return (
                 <div className="flex items-center gap-2">
                     {/* Add your action buttons here */}
-                    <button className="text-blue-500">Edit</button>
-                    <button className="text-red-500">Delete</button>
+                    <button className="text-blue-500">Bookmark</button>
                 </div>
             );
         },

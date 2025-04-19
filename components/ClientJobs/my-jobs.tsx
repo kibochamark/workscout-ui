@@ -1,129 +1,62 @@
 "use client"
 
 import { useState } from "react"
-import { Calendar, MoreVertical, Search } from "lucide-react"
+import { Calendar, MoreVertical, Search, ChevronLeft, ChevronRight } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Badge } from "@/components/ui/badge"
 import { DataTable } from "../globalcomponents/DataTable"
-import { columns } from "./columns"
+import { columns, type Job } from "./columns"
 
-// Sample data for jobs
-const jobs = [
-  
-  {
-    id: 1,
-    title: "Product manager",
-    company: "Jewel Joe",
-    category: "Technology",
-    appliedDate: "18/04/2023",
-    workscoutId:"test",
-    status: "submitted",
-  },
-  {
-    id: 2,
-    title: "Product manager",
-    company: "Jewel Joe",
-    category: "Technology",
-    appliedDate: "18/04/2023",
-    workscoutId:"test",
-    status: "submitted",
-  },
-  {
-    id: 3,
-    title: "Product manager",
-    company: "Jewel Joe",
-    category: "Technology",
-    appliedDate: "18/04/2023",
-    workscoutId:"test",
-    status: "submitted",
-  },
-  {
-    id: 4,
-    title: "Product manager",
-    company: "Jewel Joe",
-    category: "Technology",
-    appliedDate: "18/04/2023",
-    workscoutId:"test",
-    status: "rejected",
-  },
-  {
-    id: 5,
-    title: "Product manager",
-    company: "Jewel Joe",
-    category: "Technology",
-    appliedDate: "18/04/2023",
-    workscoutId:"test",
-    status: "in progress",
-  },
-  {
-    id: 6,
-    title: "Product manager",
-    company: "Jewel Joe",
-    category: "Technology",
-    appliedDate: "18/04/2023",
-    workscoutId:"test",
-    status: "rejected",
-  },
-  {
-    id: 7,
-    title: "Product manager",
-    company: "Jewel Joe",
-    category: "Technology",
-    appliedDate: "18/04/2023",
-    workscoutId:"test",
-    status: "in progress",
-  },
-]
+export default function MyJobs({ jobs }: { jobs: Job[] }) {
+  const [dateRange] = useState("6 Jan 2023 - 13 Jan 2023")
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 5
 
-export default function MyJobs() {
-  const [selectedJobs, setSelectedJobs] = useState<number[]>([])
-  const [dateRange,] = useState("6 Jan 2023 - 13 Jan 2023")
-  //   const [activeActionRow, setActiveActionRow] = useState<number | null>(null)
+  // Calculate pagination
+  const totalPages = Math.ceil(jobs.length / itemsPerPage)
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const endIndex = startIndex + itemsPerPage
+  const currentJobs = jobs.slice(startIndex, endIndex)
 
-  // Handle checkbox selection
-  const handleSelectAll = () => {
-    if (selectedJobs.length === jobs.length) {
-      setSelectedJobs([])
-    } else {
-      setSelectedJobs(jobs.map((job) => job.id))
+  // Handle pagination
+  const goToNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1)
     }
   }
 
-  const handleSelectJob = (jobId: number) => {
-    if (selectedJobs.includes(jobId)) {
-      setSelectedJobs(selectedJobs.filter((id) => id !== jobId))
-    } else {
-      setSelectedJobs([...selectedJobs, jobId])
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1)
     }
   }
 
   // Get status color
   const getStatusColor = (status: string) => {
-    switch (status) {
+    switch (status.toLowerCase()) {
       case "submitted":
-        return "bg-green-500"
+        return "bg-blue-500 text-white"
       case "rejected":
-        return "bg-red-500"
+        return "bg-red-500 text-white"
       case "in progress":
-        return "bg-amber-500"
+        return "bg-amber-500 text-white"
       default:
-        return "bg-gray-500"
+        return "bg-gray-500 text-white"
     }
   }
 
   return (
-    <div className="p-6 min-h-screen">
+    <div className="p-2 min-h-screen">
       <h1 className="text-2xl font-semibold mb-6">My Jobs</h1>
 
       <Card className="overflow-hidden">
         <div className="p-4 flex flex-col md:flex-row justify-between gap-4">
-          <div className="relative w-full md:w-auto md:min-w-[300px]">
+          <div className="relative w-full md:w-auto md:min-w-[300px] md:hidden">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
             <Input placeholder="Search Anything..." className="pl-9 w-full" />
           </div>
@@ -159,24 +92,17 @@ export default function MyJobs() {
 
         {/* Desktop Table View */}
         <div className="hidden md:block overflow-x-auto p-4">
-          <DataTable columns={columns} data={jobs} />
+          <DataTable columns={columns} data={currentJobs} />
         </div>
 
         {/* Mobile Card View */}
-        <div className="md:hidden">
-          {jobs.map((job) => (
-            <div key={job.id} className="border-b p-4">
-              <div className="flex justify-between items-start mb-2">
-                <div className="flex items-center">
-                  <Checkbox
-                    checked={selectedJobs.includes(job.id)}
-                    onCheckedChange={() => handleSelectJob(job.id)}
-                    className="mr-3"
-                  />
-                  <div>
-                    <h3 className="font-medium">{job.title}</h3>
-                    <p className="text-sm text-gray-500">{job.company}</p>
-                  </div>
+        <div className="md:hidden space-y-4 p-4">
+          {currentJobs.map((job) => (
+            <Card key={job.id} className="p-4 shadow-sm">
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <h3 className="font-medium text-base">{job.title}</h3>
+                  <p className="text-sm text-gray-500">{job.company}</p>
                 </div>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -191,28 +117,40 @@ export default function MyJobs() {
                 </DropdownMenu>
               </div>
 
-              <div className="grid grid-cols-2 gap-y-2 text-sm">
+              <div className="grid grid-cols-2 gap-y-2 text-sm mb-3">
                 <div>
                   <span className="text-gray-500">Category:</span> {job.category}
                 </div>
                 <div>
-                  <span className="text-gray-500">Applied:</span> {job.appliedDate}
+                  <span className="text-gray-500">Applied:</span> 
+                  {new Date(job.dateApplied).toLocaleDateString()}
                 </div>
-                <div className="col-span-2">
-                  <span className="text-gray-500">Status:</span>
-                  <span className="flex items-center">
-                    <span className={`w-2 h-2 rounded-full ${getStatusColor(job.status)} mx-2`}></span>
-                    {job.status}
-                  </span>
+                <div className="col-span-2 mt-2">
+                  <Badge className={getStatusColor(job.status)}>{job.status}</Badge>
                 </div>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
 
-        <div className="p-4 text-sm text-gray-500">Showing 1 - 50 of 1000 entries</div>
+        {/* Pagination */}
+        <div className="p-4 border-t flex items-center justify-between">
+          <div className="text-sm text-gray-500">
+            {startIndex + 1} - {Math.min(endIndex, jobs.length)} of {jobs.length} entries
+          </div>
+          <div className="flex items-center space-x-2">
+            <Button variant="outline" size="sm" onClick={goToPreviousPage} disabled={currentPage === 1}>
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <span className="text-sm">
+              Page {currentPage} of {totalPages}
+            </span>
+            <Button variant="outline" size="sm" onClick={goToNextPage} disabled={currentPage === totalPages}>
+              <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
       </Card>
     </div>
   )
 }
-
