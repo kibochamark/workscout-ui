@@ -13,7 +13,6 @@ export async function getUserOnboardingStatus() {
 
 
     const user = await getUser();
-    user.given_name
 
     try {
         if (!isUserAuthenticated) {
