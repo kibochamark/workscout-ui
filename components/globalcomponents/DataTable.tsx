@@ -12,6 +12,8 @@ import {
     useReactTable,
     getPaginationRowModel,
     SortingState,
+    GlobalFilterTableState,
+    FilterFn,
 } from "@tanstack/react-table"
 
 import {
@@ -31,8 +33,44 @@ import { DataTablePagination } from "./Pagination"
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
-    filters?:React.ReactNode
+    filters?: React.ReactNode
 }
+
+// interface JobApplication {
+//     clientAccountId: string;
+//     workscoutAccountId: string;
+//     jobName: string;
+//     company: string;
+//     category: string;
+//     status: string;
+//     bookmarked: boolean;
+//     appliedDate: string; // Assuming appliedDate is a string in ISO format
+//     deadlineDate: string;
+// }
+
+// // 1. Create a custom filter function for date range
+// const dateRangeFilterFn: FilterFn<JobApplication> = (row, columnId, value: [Date | null, Date | null]) => {
+//     const dateApplied = new Date(row.getValue(columnId));
+//     const [startDateString, endDateString] = value;
+
+//     const startDate = startDateString ? new Date(startDateString) : null;
+//     const endDate = endDateString ? new Date(endDateString) : null;
+
+
+//     if (!startDate && !endDate) {
+//         return true; // No filter applied
+//     }
+
+//     if (startDate && !endDate) {
+//         return dateApplied >= startDate;
+//     }
+
+//     if (!startDate && endDate) {
+//         return dateApplied <= endDate;
+//     }
+
+//     return dateApplied >= startDate && dateApplied <= endDate;
+// };
 
 export function DataTable<TData, TValue>({
     columns,
@@ -44,6 +82,9 @@ export function DataTable<TData, TValue>({
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
+    )
+    const [globalFilterState, setGlobalFilter] = React.useState<GlobalFilterTableState>(
+
     )
 
     const [columnVisibility, setColumnVisibility] =
@@ -63,12 +104,15 @@ export function DataTable<TData, TValue>({
         getPaginationRowModel: getPaginationRowModel(),
         onColumnVisibilityChange: setColumnVisibility,
         onRowSelectionChange: setRowSelection,
-        onSortingChange:setSorting,
+        onSortingChange: setSorting,
+        onGlobalFilterChange: setGlobalFilter,
+        enableGlobalFilter: true,
         state: {
             sorting,
             columnFilters,
             columnVisibility,
             rowSelection,
+            globalFilter: globalFilterState
         },
 
     })
@@ -78,10 +122,8 @@ export function DataTable<TData, TValue>({
             <div className="grid grid-cols-2 gap-2  py-4">
                 <Input
                     placeholder="Filter data by column"
-                    value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-                    onChange={(event) =>
-                        table.getColumn("title")?.setFilterValue(event.target.value)
-                    }
+                    value={table.getState().globalFilter ?? ''}
+                    onChange={(e) => table.setGlobalFilter(e.target.value)}
                     className="max-w-sm"
                 />
                 <DataTableViewOptions table={table} />

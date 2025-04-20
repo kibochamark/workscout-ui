@@ -1,4 +1,4 @@
-import { ColumnDef} from "@tanstack/react-table";
+import { ColumnDef, FilterFn} from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../globalcomponents/ColumnHeader";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
@@ -15,6 +15,22 @@ export type Job = {
     status: string;
     bookmarked:boolean
 };
+
+// 1. Create a custom filter function for date range
+const dateRangeFilterFn: FilterFn<Job> = (row, columnId, value: string | null) => {
+
+    console.log(columnId, value)
+    const dateApplied = new Date(row.getValue(columnId));
+    const filterdDate = new Date(value!!);
+  
+    if (!filterdDate) {
+      return true; // No filter applied
+    }
+  
+    
+  
+    return dateApplied >= filterdDate || dateApplied <= filterdDate;
+  };
 
 
 
@@ -52,6 +68,7 @@ export const columns: ColumnDef<Job>[] = [
             const date = new Date(row.getValue("appliedDate"));
             return date.toLocaleDateString(); // Optional: format date
         },
+        filterFn:dateRangeFilterFn
     },
     {
         accessorKey: "status",

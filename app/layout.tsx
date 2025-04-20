@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/HomeLayout/Navbar";
 import KindeProvider from "./KindeProvider";
 import ReduxProvider from "./ReduxProvider";
+import TanstackProvider from "./TanstackProvider";
 
 
 const inter = Inter({
@@ -33,11 +34,12 @@ export default function RootLayout({
           </div>
 
           <main className="">
-            <ReduxProvider>
-              {children}
-            </ReduxProvider>
+            <TanstackProvider>
+              <ReduxProvider>
+                {children}
+              </ReduxProvider>
+            </TanstackProvider>
 
-    
           </main>
 
           {/* <Footer />   */}
