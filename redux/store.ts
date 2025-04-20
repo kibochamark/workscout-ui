@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { useDispatch, useSelector } from 'react-redux'
 import { menuReducer } from './Slices/MenuSlice'
+import { dataTableReducer } from './Slices/DataTableFilter'
 
 export const store = configureStore({
     reducer: {
-        menu: menuReducer
+        menu: menuReducer,
+        datatable:dataTableReducer
     }
 })
 

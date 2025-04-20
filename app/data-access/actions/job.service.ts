@@ -3,6 +3,7 @@
 import { baseUrl } from "@/app/utils/constants";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import axios from "axios";
+import { revalidateTag } from "next/cache";
 
 
 
@@ -55,12 +56,13 @@ export async function getJobs() {
 
 
 
-export async function bookmarkJob(bookmark:boolean) {
+export async function bookmarkJob(bookmark:boolean, jobId:string) {
     const { isAuthenticated, getAccessTokenRaw } = getKindeServerSession();
     const isUserAuthenticated = await isAuthenticated();
     const accessToken = await getAccessTokenRaw();
 
 
+    console.log(bookmark, jobId)
 
     try {
         if (!isUserAuthenticated) {
@@ -69,7 +71,8 @@ export async function bookmarkJob(bookmark:boolean) {
   
 
         const response= await axios.put(`${baseUrl}job`,{
-            bookmarked:bookmark
+            bookmarked:bookmark,
+            jobId:jobId
         },{
            
             headers:{
@@ -79,11 +82,14 @@ export async function bookmarkJob(bookmark:boolean) {
         })
         
 
+
        
 
         if (response.status !== 200) {
             throw new Error(JSON.stringify(response.data))
         }
+
+        revalidateTag("getjobs")
 
 
         return {

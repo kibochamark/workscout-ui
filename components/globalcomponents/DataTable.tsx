@@ -29,6 +29,10 @@ import React from "react"
 import { Input } from "../ui/input"
 import { DataTableViewOptions } from "./VisibleToggle"
 import { DataTablePagination } from "./Pagination"
+// import { FilterX, X } from "lucide-react"
+// import { cn } from "@/lib/utils"
+// import { useAppDispatch, useAppSelector } from "@/redux/store"
+// import { toggleFilter } from "@/redux/Slices/DataTableFilter"
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -94,6 +98,15 @@ export function DataTable<TData, TValue>({
     const [rowSelection, setRowSelection] = React.useState({})
 
 
+    // custom states to handle custom filters
+    // const isopen = useAppSelector((state) => state.datatable.filterOn)
+    // const dispatch = useAppDispatch()
+    // const className = {
+    //     "hidden": isopen == false,
+    //     "flex" :isopen == true
+    // }
+
+
     const table = useReactTable({
         data,
         columns,
@@ -120,18 +133,34 @@ export function DataTable<TData, TValue>({
     return (
         <>
             <div className="grid grid-cols-2 gap-2  py-4">
-                <Input
-                    placeholder="Filter data by column"
-                    value={table.getState().globalFilter ?? ''}
-                    onChange={(e) => table.setGlobalFilter(e.target.value)}
-                    className="max-w-sm"
-                />
+                <div className="flex gap-2 flex-col">
+                    <Input
+                        placeholder="Filter data by column"
+                        value={table.getState().globalFilter ?? ''}
+                        onChange={(e) => table.setGlobalFilter(e.target.value)}
+                        className="max-w-sm"
+                    />
+
+                    {/* <div className="flex justify-start items-start gap-2">
+                        {isopen ? (
+                            <X className="w-6 h-6 cursor-pointer text-primary900 font-semibold" onClick={() => {
+                                dispatch(toggleFilter())
+                            }} />
+                        ) : (
+                            <FilterX className="w-6 h-6 cursor-pointer text-primary900 font-semibold" onClick={() => {
+                                dispatch(toggleFilter())
+                            }} />
+                        )}
+
+                        <div className={cn("transition-all duration-100", className )}>
+                            {filters}
+                        </div>
+                    </div> */}
+                </div>
+
                 <DataTableViewOptions table={table} />
 
-                <div className="space-y-2 my-4">
-                    {/* <p className="text-muted-foreground">Other filters</p> */}
-                    {filters}
-                </div>
+
             </div>
             <div className="rounded-md border">
 

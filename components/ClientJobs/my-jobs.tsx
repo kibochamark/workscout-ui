@@ -8,7 +8,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Badge } from "@/components/ui/badge"
 import { DataTable } from "../globalcomponents/DataTable"
-import { columns, type Job } from "./columns"
+import { columns, useBookmarkMutation, type Job } from "./columns"
 
 import { useDebounce } from 'use-debounce'
 import { useState, useMemo } from 'react'
@@ -30,7 +30,7 @@ export default function MyJobs({ jobs }: { jobs: Job[] }) {
       job.category.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
       job.status.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
     )
-  }, [jobs, debouncedSearchTerm,dateRange])
+  }, [jobs, debouncedSearchTerm, dateRange])
 
   // Pagination
   const totalPages = Math.ceil(filteredJobs.length / itemsPerPage)
@@ -92,7 +92,7 @@ export default function MyJobs({ jobs }: { jobs: Job[] }) {
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button variant="outline" className="w-full md:w-auto">
-                      <span className="text-sm text-muted-foreground">{dateRange.length > 0  ? dateRange  :   "filter by date applied"}</span>
+                      <span className="text-sm text-muted-foreground">{dateRange.length > 0 ? dateRange : "filter by date applied"}</span>
                       <Calendar className="ml-2 h-4 w-4" />
                     </Button>
                   </PopoverTrigger>
@@ -135,8 +135,11 @@ export default function MyJobs({ jobs }: { jobs: Job[] }) {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem>Bookmark</DropdownMenuItem>
-                    <DropdownMenuItem>Version History</DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => {
+                      const { mutate} = useBookmarkMutation(job.id, !job.bookmarked);
+                      return mutate()
+                    }}>Bookmark</DropdownMenuItem>
+                    {/* <DropdownMenuItem>Version History</DropdownMenuItem> */}
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>

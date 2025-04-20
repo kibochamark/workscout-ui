@@ -5,6 +5,9 @@ import { Navbar } from "@/components/HomeLayout/Navbar";
 import KindeProvider from "./KindeProvider";
 import ReduxProvider from "./ReduxProvider";
 import TanstackProvider from "./TanstackProvider";
+import { Toaster } from "@/components/ui/sonner";
+
+
 
 
 const inter = Inter({
@@ -39,7 +42,7 @@ export default function RootLayout({
                 {children}
               </ReduxProvider>
             </TanstackProvider>
-
+            <Toaster position="top-right" />
           </main>
 
           {/* <Footer />   */}

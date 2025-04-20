@@ -3,6 +3,9 @@ import { DataTableColumnHeader } from "../globalcomponents/ColumnHeader";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
 import { Check, X } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { bookmarkJob } from "@/app/data-access/actions/job.service";
+import { toast } from "sonner";
 
 
 export type Job = {
@@ -29,7 +32,7 @@ const dateRangeFilterFn: FilterFn<Job> = (row, columnId, value: string | null) =
   
     
   
-    return dateApplied >= filterdDate || dateApplied <= filterdDate;
+    return dateApplied >= filterdDate;
   };
 
 
@@ -62,7 +65,22 @@ export const columns: ColumnDef<Job>[] = [
     {
         accessorKey: "appliedDate",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Applied Date" />
+            <div>
+              Applied Date
+              <div>
+                <input
+                  type="date"
+                  placeholder="Applied Date"
+                  value={(column.getFilterValue() as [string | null, string | null])?.[0] ?? ''}
+                  onChange={(e) =>
+                    column.setFilterValue((old: [string | null, string | null]) => [
+                      e.target.value || null,
+                      old?.[1] || null,
+                    ])
+                  }
+                />
+                </div>
+            </div>
         ),
         cell: ({ row }) => {
             const date = new Date(row.getValue("appliedDate"));
@@ -78,14 +96,18 @@ export const columns: ColumnDef<Job>[] = [
         cell: ({ row }) => {
             const status = row.original.status;
             const classname = {
-                "bg-orange-400": status.toLocaleLowerCase() === "in progress",
+                "bg-orange-400": status.toLocaleLowerCase() === "in_progress",
                 "bg-red-600": status.toLocaleLowerCase() === "rejected",
                 "bg-green-400": status.toLocaleLowerCase() === "submitted",
                 "bg-primary900": status.toLocaleLowerCase() === "applied",
 
             }
             return (
-                <Badge className={cn(classname)}>{status}</Badge>
+                <div className="flex items-center justify-center gap-2">
+                    <div className={cn("rounded-full w-2 h-2", classname)}></div>
+                    <div className="text-sm">{status.toLocaleLowerCase().split("_").join(' ')}</div>
+                </div>
+               
             );
         },
     },
@@ -98,7 +120,7 @@ export const columns: ColumnDef<Job>[] = [
             const bookmark = row.original.bookmarked;
        
             return (
-               <div className="flex items-center justify-center ">{bookmark ? <Check className="text-green-400 font-bold"/> : <X/>}</div>
+               <div className="flex items-center justify-center ">{bookmark ? <Check className="text-green-400 font-bold w-4 h-4"/> : <X className="text-orange-400 w-4 h-4"/>}</div>
             );
         },
     },
@@ -110,22 +132,44 @@ export const columns: ColumnDef<Job>[] = [
         cell: ({row}) => {
                
             return (
-                <HandleBookMark bookmark={row.original.bookmarked}/>
+                <HandleBookMark bookmark={row.original.bookmarked} id={row.original.id}/>
             );
         },
     },
 ];
 
+export function useBookmarkMutation(id: string, book:boolean) {
+    return useMutation({
+      mutationFn: async () => {
+        const res = await bookmarkJob(book, id);
+        return res;
+      },
+      onSuccess(data) {
+        if (data.status === 200) {
+          toast.success("Job bookmarked successfully!");
+        } else {
+          toast.warning("Something went wrong. Try again later!");
+        }
+      },
+      onError() {
+        toast.error("Service is down, please refresh your page or try again later");
+      },
+    });
+  }
+
+  
 
 
-const HandleBookMark = ({ bookmark }: { bookmark: boolean }) => {
-    // const bookmarkmutation = useMutation({
 
-    // })
+const HandleBookMark = ({ bookmark, id }: { bookmark: boolean; id:string }) => {
+    const { mutate, isPending} = useBookmarkMutation(id, !bookmark);
+
     return (
         <div className="flex items-center gap-2">
             {/* Add your action buttons here */}
-            <button className="text-blue-500">{bookmark ? "un-bookmark": "Bookmark"}</button>
+            <button className="text-blue-500 hover:cursor-pointer disabled:text-muted-foreground" disabled={isPending} onClick={()=>{
+                return mutate()
+            }}>{bookmark ? "un-bookmark": "Bookmark"}</button>
         </div>
     )
 
