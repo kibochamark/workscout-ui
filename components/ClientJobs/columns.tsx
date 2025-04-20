@@ -7,11 +7,11 @@ import { Check, X } from "lucide-react";
 
 export type Job = {
     id: string;
-    title: string;
+    jobName: string;
     workscoutId: string;
     company: string;
     category: string;
-    dateApplied: string; // or Date, depending on your data
+    appliedDate: string; // or Date, depending on your data
     status: string;
     bookmarked:boolean
 };
@@ -20,7 +20,7 @@ export type Job = {
 
 export const columns: ColumnDef<Job>[] = [
     {
-        accessorKey: "title",
+        accessorKey: "jobName",
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Job Name" />
         ),
@@ -44,12 +44,12 @@ export const columns: ColumnDef<Job>[] = [
         ),
     },
     {
-        accessorKey: "dateApplied",
+        accessorKey: "appliedDate",
         header: ({ column }) => (
             <DataTableColumnHeader column={column} title="Applied Date" />
         ),
         cell: ({ row }) => {
-            const date = new Date(row.getValue("dateApplied"));
+            const date = new Date(row.getValue("appliedDate"));
             return date.toLocaleDateString(); // Optional: format date
         },
     },
@@ -81,7 +81,7 @@ export const columns: ColumnDef<Job>[] = [
             const bookmark = row.original.bookmarked;
        
             return (
-               <div>{bookmark ? <Check/> : <X/>}</div>
+               <div className="flex items-center justify-center ">{bookmark ? <Check className="text-green-400 font-bold"/> : <X/>}</div>
             );
         },
     },

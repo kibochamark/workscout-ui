@@ -26,7 +26,7 @@ export default function RootLayout({
     <KindeProvider>
       <html lang="en">
         <body
-          className={`${inter.className} h-screen antialiased`}
+          className={`${inter.className} h-screen bg-gray-100 overflow-y-scroll antialiased`}
         >
           <div className="w-full fixed top-0 z-40">
             <Navbar />

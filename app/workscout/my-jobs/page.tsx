@@ -7,6 +7,7 @@ const page = async() => {
   const jobs = (await getJobs()).data ?? []
   console.log(jobs, "jobs")
 
+
   return (
     <ChildrenWrapper>
         <div><MyJobs jobs={jobs}/></div>

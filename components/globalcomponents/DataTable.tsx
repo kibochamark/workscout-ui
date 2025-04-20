@@ -31,11 +31,13 @@ import { DataTablePagination } from "./Pagination"
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    filters?:React.ReactNode
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    filters
 }: DataTableProps<TData, TValue>) {
 
 
@@ -73,7 +75,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <>
-            <div className="flex items-center py-4">
+            <div className="grid grid-cols-2 gap-2  py-4">
                 <Input
                     placeholder="Filter data by column"
                     value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
@@ -83,6 +85,11 @@ export function DataTable<TData, TValue>({
                     className="max-w-sm"
                 />
                 <DataTableViewOptions table={table} />
+
+                <div className="space-y-2 my-4">
+                    {/* <p className="text-muted-foreground">Other filters</p> */}
+                    {filters}
+                </div>
             </div>
             <div className="rounded-md border">
 

@@ -8,7 +8,7 @@ const WorkscoutLayout = ({ children }: { children: ReactNode }) => {
     return (
         <>
             {!pathname.includes("/workscout/onboarding") ? (
-                <section className="bg-[#FFFF0] flex justify-start relative">
+                <section className="flex justify-start relative">
                     {children}
                 </section>
             ) : children}
