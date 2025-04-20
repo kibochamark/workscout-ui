@@ -4,7 +4,10 @@ import "./globals.css";
 import { Navbar } from "@/components/HomeLayout/Navbar";
 import KindeProvider from "./KindeProvider";
 import ReduxProvider from "./ReduxProvider";
-import { TanstackProvider } from "./TanstackProvider";
+import TanstackProvider from "./TanstackProvider";
+import { Toaster } from "@/components/ui/sonner";
+
+
 
 
 const inter = Inter({
@@ -27,20 +30,19 @@ export default function RootLayout({
     <KindeProvider>
       <html lang="en">
         <body
-          className={`${inter.className} h-screen antialiased`}
+          className={`${inter.className} h-screen bg-gray-100 overflow-y-scroll antialiased`}
         >
           <div className="w-full fixed top-0 z-40">
             <Navbar />
           </div>
 
           <main className="">
-            <ReduxProvider>
-              <TanstackProvider>
+            <TanstackProvider>
+              <ReduxProvider>
                 {children}
-              </TanstackProvider>
-            </ReduxProvider>
-
-
+              </ReduxProvider>
+            </TanstackProvider>
+            <Toaster position="top-right" />
           </main>
 
           {/* <Footer />   */}

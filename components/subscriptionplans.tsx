@@ -9,7 +9,7 @@ import { Switch } from "@/components/ui/switch"
 import { cn } from "@/lib/utils"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { useMutation } from "@tanstack/react-query"
-import { createFreeSubscription } from "@/data-access/actions/subscription.service"
+import { createFreeSubscription } from "@/app/data-access/actions/subscription.service"
 import { redirect } from "next/navigation"
 
 type Plan = {

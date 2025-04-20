@@ -1,41 +1,46 @@
 "use server"
+
 import { baseUrl } from "@/app/utils/constants";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import axios from "axios";
+import { revalidateTag } from "next/cache";
 
 
 
-// Simulated DB call for onboarding status
-export async function getUserOnboardingStatus() {
-    const { isAuthenticated, getUser, getAccessTokenRaw } = getKindeServerSession();
+
+
+export async function getJobs() {
+    const { isAuthenticated, getAccessTokenRaw } = getKindeServerSession();
     const isUserAuthenticated = await isAuthenticated();
     const accessToken = await getAccessTokenRaw();
 
 
-    const user = await getUser();
 
     try {
         if (!isUserAuthenticated) {
             throw new Error("user is not authenticated")
         }
+  
 
-   
-
-
-        const res = await axios.post(`${baseUrl}onboardingstatus`,  {kindeId: user.id},{
-            headers: {
+        const response= await fetch(`${baseUrl}jobs`,{
+            method:"GET",
+            headers:{
                 Authorization: "Bearer " + accessToken
-            }
+            },
+            next:{tags:["getjobs"]}
         })
+        
 
-        if (res.status !== 200) {
-            throw new Error(JSON.stringify(res.data))
+        const data= await response.json()
+
+        if (response.status !== 200) {
+            throw new Error(JSON.stringify(data))
         }
 
 
         return {
-            status: res.status,
-            data: res.data,
+            status: response.status,
+            data: data.data,
             error: ""
         }
 
@@ -51,40 +56,45 @@ export async function getUserOnboardingStatus() {
 
 
 
-// Simulated DB call for onboarding status
-export async function updateUserOnboardingStatus(data:{
-    isOnboarded:boolean;
-    onboardingstep:"ONE" |"TWO" |"THREE" |"COMPLETED"
-}) {
-    const { isAuthenticated, getUser, getAccessTokenRaw } = getKindeServerSession();
+export async function bookmarkJob(bookmark:boolean, jobId:string) {
+    const { isAuthenticated, getAccessTokenRaw } = getKindeServerSession();
     const isUserAuthenticated = await isAuthenticated();
     const accessToken = await getAccessTokenRaw();
 
 
-    const user = await getUser();
+    console.log(bookmark, jobId)
 
     try {
         if (!isUserAuthenticated) {
             throw new Error("user is not authenticated")
         }
+  
 
-   
-
-
-        const res = await axios.put(`${baseUrl}updateonboardingstatus`,  {kindeId: user.id, ...data},{
-            headers: {
+        const response= await axios.put(`${baseUrl}job`,{
+            bookmarked:bookmark,
+            jobId:jobId
+        },{
+           
+            headers:{
                 Authorization: "Bearer " + accessToken
-            }
+            },
+          
         })
+        
 
-        if (res.status !== 200) {
-            throw new Error(JSON.stringify(res.data))
+
+       
+
+        if (response.status !== 200) {
+            throw new Error(JSON.stringify(response.data))
         }
+
+        revalidateTag("getjobs")
 
 
         return {
-            status: res.status,
-            data: res.data,
+            status: response.status,
+            data: response.data.data,
             error: ""
         }
 

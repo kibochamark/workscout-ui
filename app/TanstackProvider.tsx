@@ -1,4 +1,5 @@
 "use client"
+import React, { ReactNode } from 'react'
 import {
     QueryClient,
     QueryClientProvider,
@@ -8,11 +9,18 @@ import {
 // Create a client
 const queryClient = new QueryClient()
 
-export const TanstackProvider= ({children}:{children:React.ReactNode})=> {
+
+const TanstackProvider = ({ children }: { children: ReactNode }) => {
     return (
-        // Provide the client to your App
+
+
+
+
         <QueryClientProvider client={queryClient}>
             {children}
         </QueryClientProvider>
+
     )
 }
+
+export default TanstackProvider
