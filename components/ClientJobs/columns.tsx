@@ -21,9 +21,9 @@ export type Job = {
 // 1. Create a custom filter function for date range
 const dateRangeFilterFn: FilterFn<Job> = (row, columnId, value: string | null) => {
 
-    console.log(columnId, value)
+
     const dateApplied = new Date(row.getValue(columnId));
-    const filterdDate = new Date(value!!);
+    const filterdDate = new Date(value as string);
   
     if (!filterdDate) {
       return true; // No filter applied
