@@ -60,6 +60,11 @@ export default function MyJobs({ jobs }: { jobs: Job[] }) {
     }
   }
 
+  const [jobId, setJobId] = useState("")
+  const [bookmarked, setBookmarked] = useState(false)
+
+  const { mutate } = useBookmarkMutation(jobId, !bookmarked);
+
   return (
     <div className="p-2 min-h-screen">
       <h1 className="text-2xl font-semibold mb-6">My Jobs</h1>
@@ -121,8 +126,10 @@ export default function MyJobs({ jobs }: { jobs: Job[] }) {
 
         {/* Mobile Card View */}
         <div className="md:hidden space-y-4 p-4">
-          {currentJobs.map((job) => (
-            <Card key={job.id} className="p-4 shadow-sm">
+          {currentJobs.map((job) => {
+            setBookmarked(job.bookmarked)
+            setJobId(job.id)
+            return (<Card key={job.id} className="p-4 shadow-sm">
               <div className="flex justify-between items-start mb-3">
                 <div>
                   <h3 className="font-medium text-base">{job.jobName}</h3>
@@ -136,7 +143,7 @@ export default function MyJobs({ jobs }: { jobs: Job[] }) {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem onClick={() => {
-                      const { mutate} = useBookmarkMutation(job.id, !job.bookmarked);
+
                       return mutate()
                     }}>Bookmark</DropdownMenuItem>
                     {/* <DropdownMenuItem>Version History</DropdownMenuItem> */}
@@ -156,7 +163,9 @@ export default function MyJobs({ jobs }: { jobs: Job[] }) {
                 </div>
               </div>
             </Card>
-          ))}
+            )
+
+          })}
         </div>
 
         {/* Pagination (Mobile View) */}

@@ -1,6 +1,5 @@
 import { ColumnDef, FilterFn} from "@tanstack/react-table";
 import { DataTableColumnHeader } from "../globalcomponents/ColumnHeader";
-import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
 import { Check, X } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
