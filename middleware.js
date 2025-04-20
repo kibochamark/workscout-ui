@@ -1,6 +1,6 @@
 import { withAuth } from "@kinde-oss/kinde-auth-nextjs/middleware";
 import { NextResponse } from "next/server";
-import { getUserOnboardingStatus } from "./app/data-access/actions/onboardingstatus.service"
+import { getUserOnboardingStatus } from "./data-access/actions/onboardingstatus.service"
 
 const publicRoutes = ["/", "/privacy-policy", "/contact-us", "/terms-of-use", "/not-found"];
 const DEFAULT_LOGIN_REDIRECT = "/workscout/redirected-route";
