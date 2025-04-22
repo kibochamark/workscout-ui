@@ -8,6 +8,10 @@ import { Button } from "@/components/ui/button"
 import { Switch } from "@/components/ui/switch"
 import { cn } from "@/lib/utils"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { useMutation } from "@tanstack/react-query"
+import { createFreeSubscription } from "@/app/data-access/actions/subscription.service"
+import { redirect } from "next/navigation"
+import { toast } from "sonner"
 
 type Plan = {
   name: string;
@@ -157,6 +161,24 @@ export function SubscriptionPlans() {
   }
 
 
+  const freesubscriptionmutation = useMutation({
+    mutationFn: async () => {
+      const res = await createFreeSubscription()
+      return res
+    },
+    onSuccess(data) {
+      if (data.status == 201) {
+        return redirect(
+          "/workscout/redirected-route"
+        )
+      } else {
+        toast.warning("Something went wrong!, please try again later")
+      }
+
+    },
+  })
+
+
   return (
     <TooltipProvider>
       <div className="w-full bg-background pt-16 md:pt-0 lg:pt-20 py-12 md:py-24">
@@ -286,6 +308,8 @@ export function SubscriptionPlans() {
                         onClick={() => {
                           if (!plan.name.includes("Free")) {
                             SubscribeButton(selectedPriceId)
+                          } else {
+                            freesubscriptionmutation.mutateAsync()
                           }
 
                         }}

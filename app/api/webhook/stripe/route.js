@@ -97,7 +97,7 @@ export async function POST(req) {
                         throw new Error("user not found")
                     }
 
-                    console.log(plan[0].name.split(" ")[0].toUpperCase())
+                    // console.log(plan[0].name.split(" ")[0].toUpperCase())
 
                     // update user subscription status
                     const updateusersubscription = await axios.put(`${baseUrl}subscription`, {
@@ -129,7 +129,7 @@ export async function POST(req) {
                     data.object.id
                 );
 
-                console.log(subscription)
+                // console.log(subscription)
 
                 const res = await axios.get(`${baseUrl}customer/${customer.customer}`)
 
