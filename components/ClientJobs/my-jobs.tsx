@@ -24,12 +24,12 @@ export default function MyJobs({ jobs }: { jobs: Job[] }) {
 
   // Filter jobs based on the debounced search term
   const filteredJobs = useMemo(() => {
-    return jobs.filter((job) =>
+    return jobs?.filter((job) =>
       job.jobName.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
       job.company.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
       job.category.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
       job.status.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
-    )
+    ) ?? []
   }, [jobs, debouncedSearchTerm, dateRange])
 
   // Pagination
@@ -127,8 +127,7 @@ export default function MyJobs({ jobs }: { jobs: Job[] }) {
         {/* Mobile Card View */}
         <div className="md:hidden space-y-4 p-4">
           {currentJobs.map((job) => {
-            setBookmarked(job.bookmarked)
-            setJobId(job.id)
+
             return (<Card key={job.id} className="p-4 shadow-sm">
               <div className="flex justify-between items-start mb-3">
                 <div>
@@ -143,7 +142,8 @@ export default function MyJobs({ jobs }: { jobs: Job[] }) {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem onClick={() => {
-
+                      setBookmarked(job.bookmarked)
+                      setJobId(job.id)
                       return mutate()
                     }}>Bookmark</DropdownMenuItem>
                     {/* <DropdownMenuItem>Version History</DropdownMenuItem> */}

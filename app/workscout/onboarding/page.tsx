@@ -21,7 +21,7 @@ const page = async () => {
   // }
 
   return (
-    <div>
+    <div className='bg-[#fff]'>
       <JobApplicationForm subscribed = {isSubscribed.status == 200 && isSubscribed.data.data === true}/>
     </div>
   )
