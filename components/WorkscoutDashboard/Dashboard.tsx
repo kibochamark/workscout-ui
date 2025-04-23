@@ -19,7 +19,7 @@ export default function JobDashboard() {
   const [calendarView, setCalendarView] = useState("Jan")
 
   const {user} = useKindeBrowserClient();
-  user?.picture
+
 
   return (
     <div className="p-6 min-h-screen">
