@@ -82,6 +82,11 @@ console.log(user, "user");
       form.append("bio", jobSearch)
       form.append("file", resumeFile)
       form.append("kindeId", user?.id as string)
+      form.append("gender", values.gender);
+      form.append("location", values.location);
+      form.append("salary", values.salaryMin.toString());
+      form.append("jobtitle", jobSearch)
+      
 
       try {
         const response = await axios.post(`${baseUrl}create`, form, {
