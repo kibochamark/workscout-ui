@@ -20,7 +20,6 @@ export default function JobDashboard() {
 
   const {user} = useKindeBrowserClient();
 
-  user?.given_name
 
   return (
     <div className="p-6 min-h-screen">
