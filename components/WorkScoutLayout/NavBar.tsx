@@ -13,6 +13,7 @@ import { Bell, ChartNoAxesColumnIncreasing, MessageSquare } from "lucide-react";
 import { useAppDispatch } from "@/redux/store";
 import { setIsOpen } from "@/redux/Slices/MenuSlice";
 import Image from "next/image"
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 
 
@@ -21,7 +22,8 @@ export function Navbar() {
 
 
     const dispatch = useAppDispatch()
-
+    
+    const { user } = useKindeBrowserClient();
 
     if (pathname === "/workscout/onboarding") {
         return null
@@ -83,10 +85,14 @@ export function Navbar() {
 
                     <Popover>
                         <PopoverTrigger>
-                            <Avatar className="bg-primary900 text-white" >
-                                <AvatarImage src="https://github.com/shadcn.png" />
-                                <AvatarFallback className="bg-primary900 text-white">CN</AvatarFallback>
-                            </Avatar></PopoverTrigger>
+                            <PopoverTrigger>
+                            <Avatar className="bg-primary900 text-white">
+                                <AvatarImage src={user?.picture || "https://github.com/shadcn.png"} />
+                                <AvatarFallback className="bg-primary900 text-white">
+                                    {user?.given_name?.[0] || "U"}
+                                </AvatarFallback>
+                            </Avatar>
+                        </PopoverTrigger></PopoverTrigger>
                         <PopoverContent className="w-30 flex items-start justify-start p-0">
 
                             <div className="rounded-md">
