@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
 
+import axios from "axios"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card } from "@/components/ui/card"
@@ -13,47 +14,50 @@ import { Badge } from "@/components/ui/badge"
 import { baseUrl } from "@/app/utils/constants"
 
 interface ProfileData {
-  name: string;
-  email: string;
-  gender: string;
-  location: string;
-  salary: string;
-  jobtitle: string;
-  bio: string;
+  name: string
+  email: string
+  gender: string
+  location: string
+  salary: string
+  jobtitle: string
+  bio: string
   document: {
-    name: string;
-  };
+    name: string
+  }
   account: {
     subscription: {
-      plan: string;
-    };
-  };
+      plan: string
+    }
+  }
 }
 
 export default function ProfileForm() {
   const { user } = useKindeBrowserClient()
   const [profile, setProfile] = useState<ProfileData | null>(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchProfile = async () => {
-      if (user?.id) {
-        try {
-          const res = await fetch(`${baseUrl}profile/${user.id}`)
-          const data = await res.json()
-
-          console.log(data, "response")
-          setProfile(data)
-        } catch (error) {
-          console.error("Error fetching profile:", error)
-        }
+      if (!user?.id) return
+      try {
+        const response = await axios.get(`${baseUrl}profile/${user.id}`)
+        setProfile(response.data)
+      } catch (err) {
+        console.error("Failed to fetch profile", err)
+      } finally {
+        setLoading(false)
       }
     }
 
     fetchProfile()
   }, [user?.id])
 
-  if (!profile) {
+  if (loading) {
     return <div className="p-6">Loading profile...</div>
+  }
+
+  if (!profile) {
+    return <div className="p-6 text-red-500">Failed to load profile.</div>
   }
 
   return (
