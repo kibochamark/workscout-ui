@@ -129,9 +129,10 @@ export async function POST(req) {
                     data.object.id
                 );
 
+
                 // console.log(subscription)
 
-                const res = await axios.get(`${baseUrl}customer/${customer.customer}`)
+                const res = await axios.get(`${baseUrl}customer/${subscription.customer}`)
 
                 if (res.status !== 200) {
                     throw new Error("user not found")
@@ -143,7 +144,7 @@ export async function POST(req) {
                 const updateusersubscription = await axios.put(`${baseUrl}subscription`, {
                     email: res.data.data.email,
                     plan: plan[0].name.split(" ")[0].toUpperCase(),
-                    stripeCustomerId: customer.customer,
+                    stripeCustomerId: subscription.customer,
                     active:false
                 })
 
