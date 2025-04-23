@@ -19,7 +19,7 @@ import React, { InputHTMLAttributes } from "react"
 import { CheckCircle } from "lucide-react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-
+import {useKindeBrowserClient} from "@kinde-oss/kinde-auth-nextjs";
 
 const LOCATIONS = [
   "London", "Manchester", "Birmingham", "Leeds", "Glasgow",
@@ -43,6 +43,14 @@ export function JobApplicationForm({ subscribed }: { subscribed: boolean }) {
       setResumeFile(e.target.files[0])
     }
   }
+
+
+
+
+const {user} = useKindeBrowserClient();
+// const alsoUser = getUser();
+
+console.log(user, "user");
 
   const formik = useFormik({
     initialValues: {
@@ -73,7 +81,7 @@ export function JobApplicationForm({ subscribed }: { subscribed: boolean }) {
       form.append("name", values.fullName)
       form.append("bio", jobSearch)
       form.append("file", resumeFile)
-      form.append("kindeId", "kp_857f70fd1e47410ba4a12e8c1d5090f6") // Replace with actual value
+      form.append("kindeId", user?.id as string)
 
       try {
         const response = await axios.post(`${baseUrl}create`, form, {
