@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Input } from "@/components/ui/input"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
 
 export default function JobDashboard() {
   //   const [month, setMonth] = useState("January")
@@ -17,10 +18,14 @@ export default function JobDashboard() {
   const [filter, setFilter] = useState("All")
   const [calendarView, setCalendarView] = useState("Jan")
 
+  const {user} = useKindeBrowserClient();
+
+  user?.given_name
+
   return (
     <div className="p-6 min-h-screen">
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold">Hi, Patrick</h1>
+        <h1 className="text-2xl font-semibold">Hi, {user?.given_name || "there"}</h1>
         <p className="text-gray-600">Welcome to your personalised metrics dashboard</p>
       </div>
 
