@@ -86,6 +86,8 @@ console.log(user, "user");
       form.append("location", values.location);
       form.append("salary", values.salaryMin.toString());
       form.append("jobtitle", jobSearch)
+
+      console.log(values.gender, "data to send")
       
 
       try {
