@@ -62,7 +62,7 @@ export default function ProfileForm({customerid}:{customerid:string}) {
 
   function CustomerPortal() {
     const handleClick = async () => {
-      const res = await fetch("/api/stripe/customer-portal?redirect=http://localhost:3000/workscout/profile", {
+      const res = await fetch("/api/stripe/customer-portal?redirect=https://workscout-ui.vercel.app/workscout/profile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body:JSON.stringify({
