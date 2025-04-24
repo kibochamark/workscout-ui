@@ -31,7 +31,7 @@ interface ProfileData {
   }
 }
 
-export default function ProfileForm() {
+export default function ProfileForm({customerid}:{customerid:string}) {
   const { user } = useKindeBrowserClient()
   const [profile, setProfile] = useState<ProfileData | null>(null)
   const [loading, setLoading] = useState(true)
@@ -58,6 +58,29 @@ export default function ProfileForm() {
 
   if (!profile) {
     return <div className="p-6 text-red-500">Failed to load profile.</div>
+  }
+
+
+  function CustomerPortal() {
+    const handleClick = async () => {
+      const res = await fetch("/api/stripe/customer-portal?redirect=http://localhost:3000/workscout/profile", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body:JSON.stringify({
+          customerid:customerid
+        })
+      });
+
+
+
+      const data = await res.json();
+      console.log(data, "data")
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    };
+
+    handleClick()
   }
 
   return (
@@ -113,14 +136,14 @@ export default function ProfileForm() {
               </Badge>
               <span className="text-sm text-muted-foreground">Subscription Active</span>
             </div>
-            <Link href="/subscriptions" className="text-sm text-primary900 cursor-pointer hover:underline">
+            <button onClick={CustomerPortal} type="button" className="text-sm text-primary900 cursor-pointer hover:underline">
               Change subscription plan
-            </Link>
+            </button>
           </div>
 
           <div className="flex justify-start gap-4">
-            <Button variant="outline">Cancel</Button>
-            <Button className="bg-primary900 hover:bg-[#14012C]/90">Save</Button>
+            <Button type="button" variant="outline">Cancel</Button>
+            <Button type="submit" className="bg-primary900 hover:bg-[#14012C]/90">Save</Button>
           </div>
         </form>
       </Card>

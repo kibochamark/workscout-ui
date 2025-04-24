@@ -3,7 +3,12 @@ import React from 'react'
 
 const page = () => {
   return (
-    <DashBoardLoader/>
+    <div className='bg-[#fff] w-full'>
+
+      <DashBoardLoader />
+
+    </div>
+
   )
 }
 

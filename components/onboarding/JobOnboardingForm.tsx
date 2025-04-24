@@ -33,8 +33,9 @@ interface InputGroupProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
   id: string
 }
-export function JobApplicationForm({ subscribed }: { subscribed: boolean }) {
-  const [step, setStep] = useState(1)
+export function JobApplicationForm({ subscribed, onboardingstep }: { subscribed: boolean; onboardingstep:string | number }) {
+  let formattedstep = onboardingstep === "ONE" ? 1 : onboardingstep === "TWO"  ? 2 : onboardingstep === "THREE"  ? 3 : 1
+  const [step, setStep] = useState(formattedstep)
   const [jobSearch, setJobSearch] = useState("")
   const [resumeFile, setResumeFile] = useState<File | null>(null)
 

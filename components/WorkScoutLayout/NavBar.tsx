@@ -25,7 +25,7 @@ export function Navbar() {
     
     const { user } = useKindeBrowserClient();
 
-    if (pathname === "/workscout/onboarding") {
+    if (pathname === "/workscout/onboarding" || pathname === "/workscout/redirected-route") {
         return null
     }
 
