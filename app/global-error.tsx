@@ -20,7 +20,7 @@ export default function GlobalError({
             </div>
             <h1 className="text-3xl font-bold tracking-tight">Application Error</h1>
             <p className="text-muted-foreground">
-              We're sorry, but a critical error has occurred in the application.
+              We re sorry, but a critical error has occurred in the application.
               {error.digest && (
                 <span className="block mt-2 text-sm">
                   Error ID: <code className="rounded bg-muted px-1 py-0.5">{error.digest}</code>
