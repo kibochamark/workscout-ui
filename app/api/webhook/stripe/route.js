@@ -11,34 +11,34 @@ const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 
 const plans = [
-   {
-     name: "Free Plan",
-     priceId: "",
-     annualPriceId: "",
-   },
-   {
-     name: "Basic Plan",
-     priceId: "price_1RDPZICNuHYjRQzHxQssOkdG", // monthly
-     annualPriceId: "price_1RE9LKCNuHYjRQzHv9yrfXi1",
-   
-   },
-   {
-     name: "Standard Plan",
-     priceId: "price_1RE9IRCNuHYjRQzH5bqGdT1W",
-     annualPriceId: "price_1RE9KyCNuHYjRQzH6mwQaYIV",
-    
-   },
-   {
-     name: "Premium Plan",
-     priceId: "price_1RE9JMCNuHYjRQzHocRSMssk",
-     annualPriceId: "price_1RE9KJCNuHYjRQzHp7K3IEnT",
-   },
-   {
-     name: "Pro Plan",
-     priceId: "price_1RE9HmCNuHYjRQzHmJMR6KJD",
-     annualPriceId: "price_1RE9LZCNuHYjRQzHs7s9nVZp",
-   },
- ];
+    {
+        name: "Free Plan",
+        priceId: "",
+        annualPriceId: "",
+    },
+    {
+        name: "Basic Plan",
+        priceId: "price_1RDPZICNuHYjRQzHxQssOkdG", // monthly
+        annualPriceId: "price_1RE9LKCNuHYjRQzHv9yrfXi1",
+
+    },
+    {
+        name: "Standard Plan",
+        priceId: "price_1RE9IRCNuHYjRQzH5bqGdT1W",
+        annualPriceId: "price_1RE9KyCNuHYjRQzH6mwQaYIV",
+
+    },
+    {
+        name: "Premium Plan",
+        priceId: "price_1RE9JMCNuHYjRQzHocRSMssk",
+        annualPriceId: "price_1RE9KJCNuHYjRQzHp7K3IEnT",
+    },
+    {
+        name: "Pro Plan",
+        priceId: "price_1RE9HmCNuHYjRQzHmJMR6KJD",
+        annualPriceId: "price_1RE9LZCNuHYjRQzHs7s9nVZp",
+    },
+];
 
 export async function POST(req) {
     // await connectMongo();
@@ -91,7 +91,7 @@ export async function POST(req) {
                 if (customer.email) {
                     const res = await axios.get(`${baseUrl}account/${customer.email}`)
 
-                   
+
 
                     if (res.status !== 200) {
                         throw new Error("user not found")
@@ -100,10 +100,10 @@ export async function POST(req) {
                     // console.log(plan[0].name.split(" ")[0].toUpperCase())
 
                     // update user subscription status
-                    const updateusersubscription = await axios.put(`${baseUrl}subscription`, {
+                    const updateusersubscription = await axios.post(`${baseUrl}subscription`, {
                         email: res.data.data.email,
                         plan: plan[0].name.split(" ")[0].toUpperCase(),
-                        stripeCustomerId: customer.customer
+                        stripecustomerId: customerId
                     })
 
                     // console.log(updateusersubscription, "res")
@@ -111,7 +111,7 @@ export async function POST(req) {
 
                     // console.log(updateusersubscription, "sub from stripe")
 
-                    if (updateusersubscription.status !== 200) {
+                    if (updateusersubscription.status !== 201) {
                         throw new Error("subscription failed")
                     }
 
@@ -130,7 +130,7 @@ export async function POST(req) {
                 );
 
 
-                // console.log(subscription)
+                console.log(subscription, "event deleted")
 
                 const res = await axios.get(`${baseUrl}customer/${subscription.customer}`)
 
@@ -141,15 +141,48 @@ export async function POST(req) {
 
                 // update user subscription status
                 // update user subscription status
+                const deleteusersubscription = await axios.delete(`${baseUrl}subscription/${res.data.data.email}`)
+
+
+                // console.log(deleteusersubscription, "sub from stripe")
+
+                if (deleteusersubscription.status !== 200) {
+                    throw new Error("subscription failed")
+                }
+
+
+                break;
+            }
+            case 'customer.subscription.updated': {
+                // The customer might have changed the plan (higher or lower plan, cancel soon etc...)
+                const subscription = await stripe.subscriptions.retrieve(
+                    data.object.id
+                );
+
+                // console.log(subscription, "event updated")
+
+                const plan = plans.filter((p) => p.annualPriceId == subscription.plan.id || p.priceId == subscription.plan.id)
+
+
+
+                // check if client has a subcription and update
+                const res = await axios.get(`${baseUrl}customer/${subscription.customer}`)
+
+                if (res.status !== 200) {
+                    throw new Error("user not found")
+                }
+
+                 // update user subscription status
+                // update user subscription status
                 const updateusersubscription = await axios.put(`${baseUrl}subscription`, {
                     email: res.data.data.email,
                     plan: plan[0].name.split(" ")[0].toUpperCase(),
-                    stripeCustomerId: subscription.customer,
-                    active:false
+                    stripecustomerId: subscription.customer,
+                    active: true
                 })
 
+                // console.log(updateusersubscription, 'sub')
 
-                // console.log(updateusersubscription, "sub from stripe")
 
                 if (updateusersubscription.status !== 200) {
                     throw new Error("subscription failed")
@@ -157,6 +190,7 @@ export async function POST(req) {
 
 
                 break;
+            
             }
 
             default:

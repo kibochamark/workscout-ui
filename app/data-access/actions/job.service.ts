@@ -32,6 +32,7 @@ export async function getJobs() {
         
 
         const data= await response.json()
+        console.log(data, "data")
 
         if (response.status !== 200) {
             throw new Error(JSON.stringify(data))

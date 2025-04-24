@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 const SideBar = () => {
     const pathname = usePathname()
-    if (pathname === "/workscout/onboarding") {
+    if (pathname === "/workscout/onboarding" || pathname === "/workscout/redirected-route") {
         return null
     }
     return (
