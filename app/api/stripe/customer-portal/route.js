@@ -67,7 +67,7 @@ export async function POST(request) {
 
     const session = await stripe.billingPortal.sessions.create({
       customer: customerid,
-      return_url: query || 'http://localhost:3000/workscout/profile',
+      return_url: query || 'https://workscout-ui.vercel.app/workscout/profile',
       configuration: configuration.id  //'{{CONFIGURATION_ID}}'
     });
 
