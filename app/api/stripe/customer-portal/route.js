@@ -1,10 +1,9 @@
-import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
 
 
 export async function POST(request) {
@@ -68,7 +67,7 @@ export async function POST(request) {
 
     const session = await stripe.billingPortal.sessions.create({
       customer: customerid,
-      return_url: query || 'http://localhost:3000/workscout/profile',
+      return_url: query || 'https://workscout-ui.vercel.app/workscout/profile',
       configuration: configuration.id  //'{{CONFIGURATION_ID}}'
     });
 

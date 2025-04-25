@@ -10,7 +10,7 @@ export default function NotFound() {
                     <FileQuestion className="h-10 w-10 text-blue-600" />
                 </div>
                 <h1 className="text-3xl font-bold tracking-tight">Page not found</h1>
-                <p className="text-muted-foreground">Sorry, we couldn't find the page you're looking for.</p>
+                <p className="text-muted-foreground">Sorry, we couldnt find the page you re looking for.</p>
                 <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
                     <Link href="/">
                         <Button className="flex items-center gap-2">
