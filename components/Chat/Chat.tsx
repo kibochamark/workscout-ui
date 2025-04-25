@@ -16,13 +16,14 @@ import { baseUrl } from "@/app/utils/constants";
 export default function ChatWidget() {
     const [isOpen, setIsOpen] = useState(false);
     const [message, setMessage] = useState("");
-    const [messages, setMessages] = useState<{ sender: string, text: string }[]>([]);
+    const [messages, setMessages] = useState<{ sender: string, text: string, createdAt?: string }[]>([]);
     const [roomId, setRoomId] = useState<string | null>(null);
+    const [typingUser, setTypingUser] = useState<string | null>(null);
     const pathname = usePathname();
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const { user } = useKindeBrowserClient();
 
-    const otherUserId = "kp_52dcffa803f1421a8dc3e016b55a668c"; // Dynamic later
+    const otherUserId = "kp_62bf3eeeb84a4802b12b67aa73a601d9";
 
     if (pathname.includes("/workscout/onboarding")) return null;
 
@@ -33,7 +34,6 @@ export default function ChatWidget() {
 
         const fetchOrCreateRoom = async () => {
             try {
-                console.log("Creating or joining room with:", user.id, otherUserId);
                 const res = await axios.post(`${baseUrl}create-room`, {
                     participantAId: user.id,
                     participantBId: otherUserId,
@@ -41,8 +41,6 @@ export default function ChatWidget() {
 
                 const data = res.data;
                 setRoomId(data.roomId);
-
-                console.log("Joined room:", data.roomId);
                 socket.emit("joinRoom", data.roomId);
                 socket.emit("join", user.id);
             } catch (error) {
@@ -52,21 +50,35 @@ export default function ChatWidget() {
 
         fetchOrCreateRoom();
 
+        socket.on("chatHistory", (history) => {
+            console.log("Loaded chat history:", history);
+            setMessages(history.map((msg: any) => ({
+                sender: msg.senderId === user.id ? "user" : "server",
+                text: msg.content,
+                createdAt: msg.createdAt
+            })));
+        });
+
         socket.on("receiveMessage", (data) => {
-            console.log("Received message from server:", data);
+            console.log("Received message:", data);
             setMessages((prev) => [...prev, {
                 sender: data.senderId === user.id ? "user" : "server",
                 text: data.content,
+                createdAt: data.createdAt
             }]);
         });
 
         socket.on("userTyping", (senderId) => {
-            console.log(`${senderId} is typing...`);
+            if (senderId !== user?.id) {
+                setTypingUser(senderId);
+                setTimeout(() => setTypingUser(null), 2000);
+            }
         });
 
         return () => {
             socket.off("receiveMessage");
             socket.off("userTyping");
+            socket.off("chatHistory");
         };
     }, [user]);
 
@@ -75,19 +87,10 @@ export default function ChatWidget() {
     }, [messages]);
 
     const sendMessage = () => {
-        if (!message.trim() || !roomId) {
-            console.warn("Message empty or roomId missing", { message, roomId });
-            return;
-        }
+        if (!message.trim() || !roomId) return;
 
         const newMessage = { sender: "user", text: message };
         setMessages((prev) => [...prev, newMessage]);
-
-        console.log("Sending message:", {
-            content: message,
-            roomId,
-            senderId: user?.id,
-        });
 
         socket.emit("sendMessage", {
             content: message,
@@ -96,6 +99,12 @@ export default function ChatWidget() {
         });
 
         setMessage("");
+    };
+
+    const handleTyping = () => {
+        if (roomId && user?.id) {
+            socket.emit("typing", { roomId, senderId: user.id });
+        }
     };
 
     const chatVariants = {
@@ -134,7 +143,7 @@ export default function ChatWidget() {
                             {messages.map((msg, idx) => (
                                 <div
                                     key={idx}
-                                    className={`flex items-start gap-2 ${msg.sender === "user" ? "" : "self-end"}`}
+                                    className={`flex items-start gap-2 ${msg.sender === "user" ? "justify-start" : "justify-end self-end"}`}
                                 >
                                     {msg.sender === "user" && (
                                         <Avatar className="w-8 h-8 mt-1">
@@ -143,7 +152,7 @@ export default function ChatWidget() {
                                         </Avatar>
                                     )}
                                     <div className="flex flex-col gap-1 max-w-[80%]">
-                                        <div className={`${msg.sender === "user" ? "bg-gray-800 text-white rounded-tl-none" : "bg-gray-100 rounded-tr-none"} p-3 rounded-lg`}>
+                                        <div className={`${msg.sender === "user" ? "bg-gray-800 text-white rounded-tl-none" : "bg-gray-100 rounded-tr-none text-black"} p-3 rounded-lg`}>
                                             <p className="text-sm">{msg.text}</p>
                                         </div>
                                     </div>
@@ -152,6 +161,9 @@ export default function ChatWidget() {
                                     )}
                                 </div>
                             ))}
+                            {typingUser && (
+                                <p className="text-xs text-gray-400 italic mt-1">{typingUser} is typing...</p>
+                            )}
                             <div ref={messagesEndRef} />
                         </div>
 
@@ -160,8 +172,11 @@ export default function ChatWidget() {
                                 type="text"
                                 value={message}
                                 onChange={(e) => setMessage(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") sendMessage();
+                                    else handleTyping();
+                                }}
                                 placeholder="Type your message..."
-                                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
                                 className="flex-1 py-2 px-3 text-sm bg-white rounded-full focus:outline-none"
                             />
                             <button className="text-gray-400 hover:text-gray-600" onClick={sendMessage}>
