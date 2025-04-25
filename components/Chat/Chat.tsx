@@ -1,70 +1,127 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { X, Send } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { motion, AnimatePresence } from "framer-motion"
-import { usePathname } from "next/navigation"
-import Image from "next/image"
+import { useEffect, useState, useRef } from "react";
+import { X, Send } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
+import { usePathname } from "next/navigation";
+import socket from "@/lib/socket";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Image from "next/image";
+import axios from "axios";
+import { baseUrl } from "@/app/utils/constants";
+
 
 export default function ChatWidget() {
-    const [isOpen, setIsOpen] = useState(false)
-    const pathname = usePathname()
+    const [isOpen, setIsOpen] = useState(false);
+    const [message, setMessage] = useState("");
+    const [messages, setMessages] = useState<{ sender: string, text: string }[]>([]);
+    const [roomId, setRoomId] = useState<string | null>(null);
+    const pathname = usePathname();
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+    const { user } = useKindeBrowserClient();
 
-    if (pathname.includes("/workscout/onboarding")) return null
+    const otherUserId = "kp_52dcffa803f1421a8dc3e016b55a668c"; // Dynamic later
 
-    const toggleChat = () => setIsOpen(!isOpen)
+    if (pathname.includes("/workscout/onboarding")) return null;
+
+    const toggleChat = () => setIsOpen(!isOpen);
+
+    useEffect(() => {
+        if (!user?.id) return;
+
+        const fetchOrCreateRoom = async () => {
+            try {
+                console.log("Creating or joining room with:", user.id, otherUserId);
+                const res = await axios.post(`${baseUrl}create-room`, {
+                    participantAId: user.id,
+                    participantBId: otherUserId,
+                });
+
+                const data = res.data;
+                setRoomId(data.roomId);
+
+                console.log("Joined room:", data.roomId);
+                socket.emit("joinRoom", data.roomId);
+                socket.emit("join", user.id);
+            } catch (error) {
+                console.error("Room creation error:", error);
+            }
+        };
+
+        fetchOrCreateRoom();
+
+        socket.on("receiveMessage", (data) => {
+            console.log("Received message from server:", data);
+            setMessages((prev) => [...prev, {
+                sender: data.senderId === user.id ? "user" : "server",
+                text: data.content,
+            }]);
+        });
+
+        socket.on("userTyping", (senderId) => {
+            console.log(`${senderId} is typing...`);
+        });
+
+        return () => {
+            socket.off("receiveMessage");
+            socket.off("userTyping");
+        };
+    }, [user]);
+
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
+
+    const sendMessage = () => {
+        if (!message.trim() || !roomId) {
+            console.warn("Message empty or roomId missing", { message, roomId });
+            return;
+        }
+
+        const newMessage = { sender: "user", text: message };
+        setMessages((prev) => [...prev, newMessage]);
+
+        console.log("Sending message:", {
+            content: message,
+            roomId,
+            senderId: user?.id,
+        });
+
+        socket.emit("sendMessage", {
+            content: message,
+            roomId,
+            senderId: user?.id,
+        });
+
+        setMessage("");
+    };
 
     const chatVariants = {
-        hidden: {
-            opacity: 0,
-            scale: 0.8,
-            y: 20,
-            transition: {
-                duration: 0.3,
-                ease: "easeInOut",
-            },
-        },
-        visible: {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-            transition: {
-                duration: 0.5,
-                type: "spring",
-                stiffness: 300,
-                damping: 15,
-            },
-        },
-    }
+        hidden: { opacity: 0, scale: 0.8, y: 20 },
+        visible: { opacity: 1, scale: 1, y: 0 },
+    };
 
     const closeIconVariants = {
         hidden: { opacity: 0, rotate: 90, scale: 0 },
         visible: { opacity: 1, rotate: 0, scale: 1 },
-    }
+    };
 
     return (
         <>
-            {/* Chat Box */}
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        className="mb-4 w-[380px] rounded-lg bg-[#fff] p-0 shadow-lg overflow-hidden"
+                        className="mb-4 w-[380px] rounded-lg bg-white p-0 shadow-lg overflow-hidden"
                         initial="hidden"
                         animate="visible"
                         exit="hidden"
                         variants={chatVariants}
                     >
-                        {/* Header */}
                         <div className="border-b p-4 flex items-center gap-3">
                             <div className="relative">
-                                <Image
-                                    src="/chat.jpg"
-                                    alt="WorkScout UK"
-                                    width={40}
-                                    height={40}
-                                    className="w-10 h-10 rounded-full object-cover"
-                                />
+                                <Image src="/chat.jpg" alt="WorkScout UK" width={40} height={40} className="w-10 h-10 rounded-full" />
                                 <span className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></span>
                             </div>
                             <div>
@@ -73,89 +130,41 @@ export default function ChatWidget() {
                             </div>
                         </div>
 
-                        {/* Chat Messages */}
                         <div className="h-[300px] overflow-y-auto p-4 flex flex-col gap-4">
-                            {/* Client Message */}
-                            <div className="flex items-start gap-2">
-                                <Image
-                                    src="https://github.com/shadcn.png"
-                                    alt="Client"
-                                    width={32}
-                                    height={32}
-                                    className="w-8 h-8 rounded-full mt-1"
-                                />
-                                <div className="flex flex-col gap-1 max-w-[80%]">
-                                    <div className="bg-gray-800 text-white p-3 rounded-lg rounded-tl-none">
-                                        <p className="text-sm">
-                                            Hello! I came across WorkScout UK and wanted to know more about how your job application service works.
-                                        </p>
+                            {messages.map((msg, idx) => (
+                                <div
+                                    key={idx}
+                                    className={`flex items-start gap-2 ${msg.sender === "user" ? "" : "self-end"}`}
+                                >
+                                    {msg.sender === "user" && (
+                                        <Avatar className="w-8 h-8 mt-1">
+                                            <AvatarImage src={user?.picture || "https://github.com/shadcn.png"} />
+                                            <AvatarFallback>U</AvatarFallback>
+                                        </Avatar>
+                                    )}
+                                    <div className="flex flex-col gap-1 max-w-[80%]">
+                                        <div className={`${msg.sender === "user" ? "bg-gray-800 text-white rounded-tl-none" : "bg-gray-100 rounded-tr-none"} p-3 rounded-lg`}>
+                                            <p className="text-sm">{msg.text}</p>
+                                        </div>
                                     </div>
+                                    {msg.sender === "server" && (
+                                        <Image src="/chat.jpg" alt="WorkScout" width={32} height={32} className="w-8 h-8 rounded-full mt-1" />
+                                    )}
                                 </div>
-                            </div>
-
-                            {/* WorkScout UK Response */}
-                            <div className="flex items-start gap-2 self-end">
-                                <div className="flex flex-col gap-1 max-w-[80%]">
-                                    <div className="bg-gray-100 p-3 rounded-lg rounded-tr-none">
-                                        <p className="text-sm">
-                                            Hi there! We apply for jobs on your behalf based on your qualifications and preferences. We also offer CV and LinkedIn profile optimization to increase your chances of landing a job.
-                                        </p>
-                                    </div>
-                                </div>
-                                <Image
-                                    src="/chat.jpg"
-                                    alt="WorkScout UK"
-                                    width={32}
-                                    height={32}
-                                    className="w-8 h-8 rounded-full mt-1"
-                                />
-                            </div>
-
-                            {/* Client Message */}
-                            <div className="flex items-start gap-2">
-                                <Image
-                                    src="https://github.com/shadcn.png"
-                                    alt="Client"
-                                    width={32}
-                                    height={32}
-                                    className="w-8 h-8 rounded-full mt-1"
-                                />
-                                <div className="flex flex-col gap-1 max-w-[80%]">
-                                    <div className="bg-gray-800 text-white p-3 rounded-lg rounded-tl-none">
-                                        <p className="text-sm">
-                                            That sounds great! What are your subscription options, and how do they differ?
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* WorkScout UK Response */}
-                            <div className="flex items-start gap-2 self-end">
-                                <div className="flex flex-col gap-1 max-w-[80%]">
-                                    <div className="bg-gray-100 p-3 rounded-lg rounded-tr-none">
-                                        <p className="text-sm">
-                                            We have different subscription tiers, from Basic to Premium. The Basic plan includes a set number of job applications per month, while the Premium plan offers unlimited applications along with resume and LinkedIn optimization. Would you like a detailed breakdown?
-                                        </p>
-                                    </div>
-                                </div>
-                                <Image
-                                    src="/chat.jpg"
-                                    alt="WorkScout UK"
-                                    width={32}
-                                    height={32}
-                                    className="w-8 h-8 rounded-full mt-1"
-                                />
-                            </div>
+                            ))}
+                            <div ref={messagesEndRef} />
                         </div>
 
-                        {/* Message Input */}
                         <div className="border-t p-3 flex items-center gap-2">
                             <input
                                 type="text"
-                                placeholder="Type your message here..."
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                                placeholder="Type your message..."
+                                onKeyDown={(e) => e.key === "Enter" && sendMessage()}
                                 className="flex-1 py-2 px-3 text-sm bg-white rounded-full focus:outline-none"
                             />
-                            <button className="text-gray-400 hover:text-gray-600">
+                            <button className="text-gray-400 hover:text-gray-600" onClick={sendMessage}>
                                 <Send size={20} />
                             </button>
                         </div>
@@ -163,35 +172,22 @@ export default function ChatWidget() {
                 )}
             </AnimatePresence>
 
-            {/* Toggle Button */}
             <motion.div whileTap={{ scale: 0.9 }} whileHover={{ scale: 1.05 }} className="relative">
                 <Button
                     onClick={toggleChat}
                     className="h-10 w-10 rounded-full shadow-lg relative bg-primary900 animate-pulse hover:bg-primary900 p-0"
                 >
                     <div className="relative h-8 w-8">
-                        <motion.div transition={{ duration: 0.3, ease: "easeInOut" }} className="absolute inset-0">
+                        <motion.div className="absolute inset-0">
                             {!isOpen ? (
-                                <motion.div
-                                    className="w-8 h-8 rounded-full shadow-lg overflow-hidden"
-                                    initial={{ scale: 0, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    transition={{ delay: 0.2 }}
-                                >
-                                    <Image
-                                        src="/chat.jpg"
-                                        alt="User"
-                                        width={32}
-                                        height={32}
-                                        className="w-full h-full object-cover"
-                                    />
+                                <motion.div className="w-8 h-8 rounded-full overflow-hidden">
+                                    <Image src="/chat.jpg" alt="Chat" width={32} height={32} className="w-full h-full object-cover" />
                                 </motion.div>
                             ) : (
                                 <motion.div
                                     initial={isOpen ? "hidden" : "visible"}
                                     animate={isOpen ? "visible" : "hidden"}
                                     variants={closeIconVariants}
-                                    transition={{ duration: 0.3, ease: "easeInOut" }}
                                     className="w-8 h-8 flex justify-center items-center"
                                 >
                                     <X className="text-white" />
@@ -202,5 +198,5 @@ export default function ChatWidget() {
                 </Button>
             </motion.div>
         </>
-    )
+    );
 }
