@@ -1,7 +1,8 @@
 
 import { io } from "socket.io-client";
 
-const socket = io("https://workscout-backend.vercel.app/api/v1", {
+
+const socket = io("https://workscout-backend.vercel.app", 
   withCredentials: true,
 });
 
