@@ -1,17 +1,64 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useOptimistic } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Send, Loader2 } from "lucide-react"
 import MessageBubble from "@/components/Chat/message-bubble"
+import { get } from "http"
+import { createMessage, getMessages } from "@/app/data-access/actions/messages.service"
+import { useMutation } from "@tanstack/react-query"
 
-export default function ChatInterface({ currentUser, selectedUser, roomId, onBack, onMessageSent }) {
-  const [messages, setMessages] = useState([])
+type User = {
+  id: string
+  profile: {
+    name: string
+  }
+}
+
+export default function ChatInterface({ currentUser, selectedUser, roomId, onBack, onMessageSent }: {
+  currentUser: User
+  selectedUser: User
+  roomId: string | null
+  onBack?: () => void
+  onMessageSent?: (message: any) => void
+  onSelectNewUser?: (userId: string) => void,
+}) {
+  type Message = {
+    id?: string
+    content: string
+    senderId: string
+    receiverId: string
+    roomId: string
+    sender?: {
+      id: string
+      profile: {
+        name: string
+      }
+    }
+    receiver?: {
+      id: string
+      profile: {
+        name: string
+      }
+    }
+    createdAt?: string
+    pending?: boolean
+    failed?: boolean
+  }
+
+  const [messages, setMessages] = useState<Message[]>([])
+  const [optimisticmessages, addOptimisticMesssages] = useOptimistic(
+    messages,
+    (state, newMessage) => [
+
+      ...state,
+    ]
+  )
   const [newMessage, setNewMessage] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [isSending, setIsSending] = useState(false)
-  const messagesEndRef = useRef(null)
+  const messagesEndRef = useRef<HTMLDivElement | null>(null)
 
   // Fetch messages when room changes or periodically
   useEffect(() => {
@@ -19,13 +66,11 @@ export default function ChatInterface({ currentUser, selectedUser, roomId, onBac
 
     const fetchMessages = async () => {
       setIsLoading(true)
+      // console.log("Fetching messages for room:", roomId)
       try {
-        const response = await fetch(`http://localhost:8000/api/v1/messages/${roomId}`)
-        if (!response.ok) {
-          throw new Error("Failed to fetch messages")
-        }
-        const data = await response.json()
-        setMessages(data)
+        const response = await getMessages(roomId)
+        console.log("Fetched messages:", response)
+        setMessages(response.data)
       } catch (error) {
         console.error("Error fetching messages:", error)
       } finally {
@@ -47,7 +92,7 @@ export default function ChatInterface({ currentUser, selectedUser, roomId, onBac
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
-  const handleSendMessage = async (e) => {
+  const handleSendMessage = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
 
     if (!newMessage.trim() || !roomId) return
@@ -56,45 +101,20 @@ export default function ChatInterface({ currentUser, selectedUser, roomId, onBac
 
     // Optimistically add message to UI
     const tempMessage = {
-      id: `temp-${Date.now()}`,
+      id: Date.now().toString(),
       content: newMessage,
       senderId: currentUser.id,
       receiverId: selectedUser.id,
-      timestamp: new Date().toISOString(),
-      pending: true,
+      roomId: roomId
     }
 
     setMessages((prev) => [...prev, tempMessage])
     setNewMessage("")
 
     try {
-      const response = await fetch("http://localhost:8000/api/v1/message", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          roomId,
-          content: tempMessage.content,
-          senderId: currentUser.id,
-          receiverId: selectedUser.id,
-        }),
-      })
-
-      if (!response.ok) {
-        throw new Error("Failed to send message")
-      }
-
-      // Replace optimistic message with real one from server
-      const data = await response.json()
-      const sentMessage = { ...data, pending: false }
-
-      setMessages((prev) => prev.map((msg) => (msg.id === tempMessage.id ? sentMessage : msg)))
-
-      // Update the conversation list with the new message
-      if (onMessageSent) {
-        onMessageSent(sentMessage)
-      }
+      
+      handleSendMessageMutation.mutate({...tempMessage})
+      
     } catch (error) {
       console.error("Error sending message:", error)
       // Mark message as failed
@@ -106,6 +126,33 @@ export default function ChatInterface({ currentUser, selectedUser, roomId, onBac
     }
   }
 
+
+  const handleSendMessageMutation = useMutation({
+    mutationFn: async (message:{
+      roomId: string
+      content: string
+      senderId: string
+      receiverId: string
+    }) => {
+      const res= await createMessage(message)
+      return res
+    },
+    onSuccess: (data) => {
+      console.log("Message sent successfully:", data)
+   
+      setMessages((prev) => [...prev, data.data])
+         const sentMessage = { ...data, pending: false }
+      setNewMessage("")
+      if (onMessageSent) {
+        onMessageSent(sentMessage)
+      }
+    },
+    onError: (error) => {
+      console.error("Error sending message:", error)
+      
+    }
+  })
+
   return (
     <div className="flex flex-col h-full">
       {/* Chat header */}
@@ -116,10 +163,10 @@ export default function ChatInterface({ currentUser, selectedUser, roomId, onBac
           </Button>
         )}
         <div className="bg-gray-200 rounded-full h-10 w-10 flex items-center justify-center mr-3 flex-shrink-0">
-          <span className="text-gray-600 font-medium">{selectedUser.name.charAt(0).toUpperCase()}</span>
+          <span className="text-gray-600 font-medium">{selectedUser.profile.name.charAt(0).toUpperCase()}</span>
         </div>
         <div className="flex-1">
-          <h3 className="font-medium">{selectedUser.name}</h3>
+          <h3 className="font-medium">{selectedUser.profile.name}</h3>
           <p className="text-xs text-gray-500">Online</p>
         </div>
       </div>
@@ -137,9 +184,15 @@ export default function ChatInterface({ currentUser, selectedUser, roomId, onBac
           </div>
         ) : (
           <>
-            {messages.map((message) => (
-              <MessageBubble key={message.id} message={message} isCurrentUser={message.senderId === currentUser.id} />
-            ))}
+            {messages
+              .filter((message) => message.id) // Only render messages with a defined id
+              .map((message, idx) => (
+                <MessageBubble
+                  key={message.id ?? `temp-${idx}`}
+                  message={message}
+                  isCurrentUser={message.senderId === currentUser.id || message.sender?.id === currentUser.id}
+                />
+              ))}
             <div ref={messagesEndRef} />
           </>
         )}

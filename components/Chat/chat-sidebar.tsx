@@ -13,13 +13,48 @@ export default function ChatSidebar({
   onSelectConversation,
   onSelectNewUser,
   activeConversationId,
+}:{
+  currentUser: {
+    id: string;
+    profile: {
+      name: string;
+    }
+  } | {};
+  conversations: {
+        content: string;
+        createdAt: string;
+        id: string
+        read: boolean
+        receiver: {
+            id: string;
+            profile: {
+                name: string;
+                email: string;
+            }
+        }
+        roomId: string;
+        sender: {
+            id: string;
+            profile: {
+                name: string;
+                email: string;
+            }
+        }
+    }[]
+  onSelectConversation: (conversationId: string) => void
+  onSelectNewUser: (userId: string) => Promise<void>
+  activeConversationId: string | null
 }) {
+
+  
+
+
   const [showUserSearch, setShowUserSearch] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
 
   // Filter conversations based on search query
   const filteredConversations = conversations.filter((conv) =>
-    conv.user.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    conv.sender.profile.name.toLowerCase().includes(searchQuery.toLowerCase()),
   )
 
   return (
@@ -30,7 +65,7 @@ export default function ChatSidebar({
           <div className="bg-green-100 p-2 rounded-full mr-2">
             <User className="h-5 w-5 text-green-600" />
           </div>
-          <span className="font-medium">{currentUser.name}</span>
+          <span className="font-medium">{currentUser?.profile?.name}</span>
         </div>
         <Button
           variant="ghost"
