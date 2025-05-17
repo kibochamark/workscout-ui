@@ -51,6 +51,7 @@ export const config = {
   matcher: [
     "/(api|trpc)(.*)",
     "/",
+    "/test",
     "/privacy-policy",
     "/terms-of-use",
     "/contact-us",

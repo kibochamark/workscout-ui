@@ -40,6 +40,7 @@ export default function ProfileForm({customerid}:{customerid:string}) {
       if (!user?.id) return
       try {
         const response = await axios.get(`${baseUrl}profile/${user.id}`)
+        console.log(response.data, "response")
         setProfile(response.data)
       } catch (err) {
         console.error("Failed to fetch profile", err)
