@@ -171,7 +171,7 @@ console.log(user, "user");
                   {step === 1 ? (
                     <div className="space-y-6">
                       <div>
-                        <p className="text-sm text-muted-foreground">Let us get started</p>
+                        {/* <p className="text-sm text-muted-foreground">Let us get started</p> */}
                         <h1 className="text-2xl font-semibold mt-1">What is your job description?</h1>
                       </div>
 
