@@ -9,7 +9,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { Bell, ChartNoAxesColumnIncreasing, MessageSquare } from "lucide-react";
+import { ChartNoAxesColumnIncreasing, } from "lucide-react";
 import { useAppDispatch } from "@/redux/store";
 import { setIsOpen } from "@/redux/Slices/MenuSlice";
 import Image from "next/image"
@@ -72,7 +72,7 @@ export function Navbar() {
                 </div>
                 <div className="flex items-center space-x-4">
 
-                    <div className="relative group">
+                    {/* <div className="relative group">
                         <MessageSquare className="w-6 h-6 group-hover:cursor-pointer" />
                         <div className="absolute top-0 right-0 rounded-full bg-secondary900 w-2 h-2"></div>
                     </div>
@@ -81,7 +81,7 @@ export function Navbar() {
 
                         <Bell className="w-6 h-6 group-hover:cursor-pointer" />
                         <div className="absolute top-0 right-0 rounded-full bg-secondary900 w-2 h-2"></div>
-                    </div>
+                    </div> */}
 
                     <Popover>
                         <PopoverTrigger>
