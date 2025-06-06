@@ -52,7 +52,7 @@ export const columns: ColumnDef<Job>[] = [
     {
         accessorKey: "workscoutId",
         header: ({ column }) => (
-            <DataTableColumnHeader column={column} title="Work Scout" />
+            <DataTableColumnHeader column={column} title="WorkScout" />
         ),
     },
     {
