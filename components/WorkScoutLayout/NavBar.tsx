@@ -9,7 +9,7 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { Bell, ChartNoAxesColumnIncreasing, MessageSquare } from "lucide-react";
+import { ChartNoAxesColumnIncreasing, } from "lucide-react";
 import { useAppDispatch } from "@/redux/store";
 import { setIsOpen } from "@/redux/Slices/MenuSlice";
 import Image from "next/image"
