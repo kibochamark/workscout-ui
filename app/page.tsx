@@ -48,7 +48,7 @@ const page =() => {
               Welcome to WorkScout UK, Your Trusted Job Search Partner
             </h2>
             <p className="text-gray-700 text-md leading-6">
-              Workscout Uk simplifies job hunting by handling searches, applications and updates for you. We save you
+              WorkScout UK simplifies job hunting by handling searches, applications and updates for you. We save you
               time and reduce stress so that you can focus on your goals while we turn opportunities into success.
             </p>
             <Link href="/contact-us" className="inline-block px-8 py-4 bg-primary900 text-white rounded-md font-medium">

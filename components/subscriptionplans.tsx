@@ -50,13 +50,13 @@ export const plans: Plan[] = [
   },
   {
     name: "Basic Plan",
-    subtitle: "Bronze",
+    subtitle: "",
     monthlyPrice: 5,
     annualPrice: 48,
     color: "bg-gradient-to-br from-teal-400 to-teal-500",
     icon: Shield,
     features: [
-      "Everything in the Basic Plan",
+      "Everything in the Free Plan",
       "10 tailored job applications per month",
       "Basic resume review",
       "Access to a limited selection of career tips & resources",
@@ -69,7 +69,7 @@ export const plans: Plan[] = [
   },
   {
     name: "Standard Plan",
-    subtitle: "Silver",
+    subtitle: "",
     monthlyPrice: 10,
     annualPrice: 96,
     color: "bg-gradient-to-br from-blue-500 to-blue-600",
@@ -89,7 +89,7 @@ export const plans: Plan[] = [
   },
   {
     name: "Pro Plan",
-    subtitle: "Gold",
+    subtitle: "",
     monthlyPrice: 25,
     annualPrice: 240,
     color: "bg-gradient-to-br from-amber-400 to-amber-500",
@@ -111,7 +111,7 @@ export const plans: Plan[] = [
   },
   {
     name: "Premium Plan",
-    subtitle: "Platinum",
+    subtitle: "",
     monthlyPrice: 50,
     annualPrice: 480,
     color: "bg-gradient-to-br from-purple-500 to-purple-600",

@@ -171,7 +171,7 @@ console.log(user, "user");
                   {step === 1 ? (
                     <div className="space-y-6">
                       <div>
-                        <p className="text-sm text-muted-foreground">Let us get started</p>
+                        {/* <p className="text-sm text-muted-foreground">Let us get started</p> */}
                         <h1 className="text-2xl font-semibold mt-1">What is your job description?</h1>
                       </div>
 
@@ -215,7 +215,7 @@ console.log(user, "user");
                     </div>
                   ) : (
                     <form onSubmit={formik.handleSubmit} className="space-y-6">
-                      <h1 className="md:text-2xl text-labe font-semibold mt-1">Please fill out the below details to continue</h1>
+                      <h1 className="md:text-2xl text-labe font-semibold mt-1">Please fill out the details below to continue</h1>
 
                       <div className="space-y-4">
                         <InputGroup label="Full Name" id="fullName" {...formik.getFieldProps("fullName")} />
