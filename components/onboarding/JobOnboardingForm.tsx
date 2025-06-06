@@ -20,6 +20,8 @@ import { CheckCircle } from "lucide-react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import {useKindeBrowserClient} from "@kinde-oss/kinde-auth-nextjs";
+import { UploadCloud } from "lucide-react"; 
+
 
 const LOCATIONS = [
   "London", "Manchester", "Birmingham", "Leeds", "Glasgow",
@@ -162,9 +164,9 @@ console.log(user, "user");
 
               <div className="p-8 flex flex-col bg-transparent">
                 <div className="mb-8">
-                  <Link href="/" className="flex items-center space-x-2">
+                  {/* <Link href="/" className="flex items-center space-x-2">
                     <Image src={"/logo (2).png"} alt="logo" width="200" height="32" />
-                  </Link>
+                  </Link> */}
                 </div>
 
                 <div className="w-full">
@@ -260,12 +262,38 @@ console.log(user, "user");
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="resume">Upload Resume</Label>
-                          <Input id="resume" type="file" accept=".pdf,.doc,.docx" onChange={handleFileChange} />
-                          {resumeFile && (
-                            <p className="text-sm text-muted-foreground">Selected file: {resumeFile.name}</p>
-                          )}
-                        </div>
+  <Label htmlFor="resume" className="block text-sm font-medium">
+    Upload Resume
+  </Label>
+
+  <div className="flex items-center gap-2">
+    <label htmlFor="resume">
+      <input
+        id="resume"
+        type="file"
+        accept=".pdf,.doc,.docx"
+        onChange={handleFileChange}
+        className="hidden"
+      />
+      <Button variant="outline" type="button" asChild>
+        <span className="flex items-center gap-2">
+          <UploadCloud className="h-4 w-4" />
+          Choose File
+        </span>
+      </Button>
+    </label>
+    {resumeFile && (
+      <p className="text-sm text-muted-foreground">
+        {resumeFile.name}
+      </p>
+    )}
+  </div>
+
+  <p className="text-xs text-gray-500">
+    Accepted formats: PDF, DOC, DOCX
+  </p>
+</div>
+
                       </div>
 
                       <div className="flex gap-4 mt-8">
