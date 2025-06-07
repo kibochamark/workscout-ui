@@ -169,7 +169,7 @@ export function SubscriptionPlans() {
     onSuccess(data) {
       if (data.status == 201) {
         return redirect(
-          "/workscout/redirected-route"
+          "/workscout/dashboard"
         )
       } else {
         toast.warning("Something went wrong!, please try again later")
