@@ -24,7 +24,7 @@ interface ProfileData {
   }
 }
 
-export default function ProfileForm({ profile, customerid }: { profile: ProfileData, customerid: string }) {
+export default function ProfileForm({ profile }: { profile: ProfileData, customerid: string }) {
 
   // async function CustomerPortal() {
   //   "use server"
