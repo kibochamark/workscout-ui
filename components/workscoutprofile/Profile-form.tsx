@@ -26,18 +26,18 @@ interface ProfileData {
 
 export default function ProfileForm({ profile, customerid }: { profile: ProfileData, customerid: string }) {
 
-  async function CustomerPortal() {
-    "use server"
-    const res = await fetch("/api/stripe/customer-portal?redirect=https://workscout-ui.vercel.app/workscout/profile", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ customerid }),
-    });
-    const data = await res.json();
-    if (data.url) {
-      return data.url;
-    }
-  }
+  // async function CustomerPortal() {
+  //   "use server"
+  //   const res = await fetch("/api/stripe/customer-portal?redirect=https://workscout-ui.vercel.app/workscout/profile", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ customerid }),
+  //   });
+  //   const data = await res.json();
+  //   if (data.url) {
+  //     return data.url;
+  //   }
+  // }
 
   return (
     <div className="p-4 md:p-6 lg:p-8">
