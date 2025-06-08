@@ -1,16 +1,10 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs"
-
-import axios from "axios"
+// components/workscoutprofile/ProfileForm.tsx
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
-import { baseUrl } from "@/app/utils/constants"
 
 interface ProfileData {
   name: string
@@ -30,56 +24,19 @@ interface ProfileData {
   }
 }
 
-export default function ProfileForm({customerid}:{customerid:string}) {
-  const { user } = useKindeBrowserClient()
-  const [profile, setProfile] = useState<ProfileData | null>(null)
-  const [loading, setLoading] = useState(true)
+export default function ProfileForm({ profile, customerid }: { profile: ProfileData, customerid: string }) {
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      if (!user?.id) return
-      try {
-        const response = await axios.get(`${baseUrl}profile/${user.id}`)
-        setProfile(response.data)
-      } catch (err) {
-        console.error("Failed to fetch profile", err)
-      } finally {
-        setLoading(false)
-      }
+  async function CustomerPortal() {
+    "use server"
+    const res = await fetch("/api/stripe/customer-portal?redirect=https://workscout-ui.vercel.app/workscout/profile", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ customerid }),
+    });
+    const data = await res.json();
+    if (data.url) {
+      return data.url;
     }
-
-    fetchProfile()
-  }, [user?.id])
-
-  if (loading) {
-    return <div className="p-6">Loading profile...</div>
-  }
-
-  if (!profile) {
-    return <div className="p-6 text-red-500">Failed to load profile.</div>
-  }
-
-
-  function CustomerPortal() {
-    const handleClick = async () => {
-      const res = await fetch("/api/stripe/customer-portal?redirect=https://workscout-ui.vercel.app/workscout/profile", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body:JSON.stringify({
-          customerid:customerid
-        })
-      });
-
-
-
-      const data = await res.json();
-      console.log(data, "data")
-      if (data.url) {
-        window.location.href = data.url;
-      }
-    };
-
-    handleClick()
   }
 
   return (
@@ -135,9 +92,9 @@ export default function ProfileForm({customerid}:{customerid:string}) {
               </Badge>
               <span className="text-sm text-muted-foreground">Subscription Active</span>
             </div>
-            <button onClick={CustomerPortal} type="button" className="text-sm text-primary900 cursor-pointer hover:underline">
+            {/* <a href={`/api/stripe/customer-portal?redirect=https://workscout-ui.vercel.app/workscout/profile&customerid=${customerid}`} className="text-sm text-primary900 hover:underline">
               Change subscription plan
-            </button>
+            </a> */}
           </div>
 
           <div className="flex justify-start gap-4">
